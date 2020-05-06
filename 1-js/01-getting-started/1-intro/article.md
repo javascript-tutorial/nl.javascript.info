@@ -32,7 +32,7 @@ De bovenstaande termen zijn goed om te onthouden, omdat ze worden gebruikt in ar
 
 ```smart header="Hoe werken de engines?"
 
-Motoren zijn ingewikkeld. Maar de basis is eenvoudig.
+Engines zijn ingewikkeld. Maar de basis is eenvoudig.
 
 1. De engine (ingebed als het een browser is) leest ("parses") het script.
 2. Vervolgens zet het het script om ("compileert") naar de machinetaal.
