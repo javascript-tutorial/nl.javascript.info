@@ -24,7 +24,7 @@ De browser heeft een embedded engine die soms een "JavaScript virtuele machine" 
 
 Verschillende engines hebben verschillende "codenamen". Bijvoorbeeld:
 
-- V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome en Opera.
+- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome en Opera.
 - [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
 - ...Er zijn andere codenamen zoals "Trident" en "Chakra" voor verschillende versies van IE, "ChakraCore" voor Microsoft Edge, "Nitro" en "SquirrelFish" voor Safari, enz.
 
