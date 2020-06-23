@@ -18,25 +18,25 @@ De standaard interface van IndexedDB, omschreven in de specificatie <https://www
 
 We kunnen ook `async/await` gebruiken door deze events om te zetten naar promises, zoals bij <https://github.com/jakearchibald/idb>. Dat is best gemakkelijk, maar is niet perfect, het kan niet de events in alle gevallen vervangen. Daarom beginnen we met events, en dan, nadat we IndexedDB begrijpen gebruiken we een library met promises. 
 
-## Open database
+## Verbinding maken met de database
 
-To start working with IndexedDB, we first need to `open` (connect to) a database.
+Om te werken met IndexedDB, moeten we eerst verbinding maken met een database met `open`.
 
-The syntax:
+De syntax:
 
 ```js
 let openRequest = indexedDB.open(name, version);
 ```
 
-- `name` -- a string, the database name.
-- `version` -- a positive integer version, by default `1` (explained below).
+- `name` -- een string, de database naam.
+- `version` -- een positieve integer als versienummer, standaard `1` (onderstaand toegelicht).
 
-We can have many databases with different names, but all of them exist within the current origin (domain/protocol/port). Different websites can't access databases of each other.
+We kunnen meerdere databases met verschillende namen hebben, maar ze bestaan allemaal in de huidige origine (domein/protocol/port); Verschillende websites hebben geen toegang tot elkanders databases.
 
-The call returns `openRequest` object, we should listen to events on it:
-- `success`: database is ready, there's the "database object" in `openRequest.result`, that we should use it for further calls.
-- `error`: opening failed.
-- `upgradeneeded`: database is ready, but its version is outdated (see below).
+De functie geeft een `openRequest` object, we kunnen naar de events in dit object luisteren:
+- `success`: de database is gereed, er is een "database object" in `openRequest.result`, die we kunnen gebruiken voor verdere functie invocaties.
+- `error`: openen van de database is gefaald.
+- `upgradeneeded`: de database is gereed, maar de versie is verouderd ( zie onderstaand )
 
 **IndexedDB has a built-in mechanism of "schema versioning", absent in server-side databases.**
 
