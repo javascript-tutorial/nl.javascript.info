@@ -5,18 +5,18 @@ libs:
 
 # IndexedDB
 
-IndexedDB is a database that is built into browser, much more powerful than `localStorage`.
+IndexedDB is een database ingebouwd in een browser, met veel meer mogelijkheden dan `localStorage`
 
 - Stores almost any kind of values by keys, multiple key types.
 - Supports transactions for reliability.
 - Supports key range queries, indexes.
-- Can store much bigger volumes of data than `localStorage`.
+- Kan een groter volumes data opslaan dan `localStorage`.
 
-That power is usually excessive for traditional client-server apps. IndexedDB is intended for offline apps, to be combined with ServiceWorkers and other technologies.
+Deze mogelijkheden zijn normaal gesproken excessief voor traditionele client-server apps. IndexedDB is bedoeld voor offline apps, om gecombineerd te worden met met ServiceWorkers en andere technologiën.
 
-The native interface to IndexedDB, described in the specification <https://www.w3.org/TR/IndexedDB>, is event-based.
+De standaard interface van IndexedDB, omschreven in de specificatie <https://www.w3.org/TR/IndexedDB>, is gebaseerd op events.
 
-We can also use `async/await` with the help of a promise-based wrapper, like <https://github.com/jakearchibald/idb>. That's pretty convenient, but the wrapper is not perfect, it can't replace events for all cases. So we'll start with events, and then, after we gain understanding of IndexedDb, we'll use the wrapper.
+We kunnen ook `async/await` gebruiken door deze events om te zetten naar promises, zoals bij <https://github.com/jakearchibald/idb>. Dat is best gemakkelijk, maar is niet perfect, het kan niet de events in alle gevallen vervangen. Daarom beginnen we met events, en dan, nadat we IndexedDB begrijpen gebruiken we een library met promises. 
 
 ## Open database
 
