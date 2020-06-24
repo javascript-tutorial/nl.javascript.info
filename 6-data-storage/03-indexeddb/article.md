@@ -169,21 +169,19 @@ Dergelijke update conflicten gebeuren zelden, maar we zouden ze op zijn minst af
 
 ## Object opslag
 
-To store something in IndexedDB, we need an *object store*.
 Om iets op te slaan in indexedDB, hebben we een *object store* (object opslag) nodig.
 
 Een object store is een kernconcept in IndexedDB. Het is hetzelfde principe als een tabel of collectie in andere databases. Hier wordt data opgeslagen. Een database kan meerdere stores hebben: één voor gebruikers, één voor goederen, etc.
 
-Despite being named an "object store", primitives can be stored too.
 Ondanks de benaming "object store", kunnen andere primitieve waarden ook opgeslagen worden.
 
-**We can store almost any value, including complex objects.**
+**We kunnen bijna elke waarde opslaan, inclusief complexe objecten**
 
-IndexedDB uses the [standard serialization algorithm](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) to clone-and-store an object. It's like `JSON.stringify`, but more powerful, capable of storing much more datatypes.
+IndexedDB gebruikt het [standard serialization algorithm](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) om een object te dupliceren en op te slaan. Het lijkt op `JSON.stringify`, maar met meer mogelijkheden, in staat om veel meer datatypes op te slaan.
 
-An example of object that can't be stored: an object with circular references. Such objects are not serializable. `JSON.stringify` also fails for such objects.
+Een voorbeeld van objecten die niet opgeslagen kunnen worden: Een object met circulaire verwijzigingen. Dergelijke objecten zijn niet te serialiseren. `JSON.stringify` kan dergelijke objecten ook niet opslaan.
 
-**There must be a unique `key` for every value in the store.**     
+**There must be a unique `key` for every value in the store.**   
 
 A key must have a type one of: number, date, string, binary, or array. It's an unique identifier: we can search/remove/update values by the key.
 
