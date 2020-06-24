@@ -38,7 +38,7 @@ De functie geeft een `openRequest` object, we kunnen naar de events in dit objec
 - `error`: openen van de database is gefaald.
 - `upgradeneeded`: de database is gereed, maar de versie is verouderd ( zie onderstaand )
 
-**IndexedDB heeft een ingebouwd mechanisme van "schema versies", afwezig in server-side databases**
+**IndexedDB heeft een ingebouwd mechanisme van "schema versies", in tegenstelling tot een server-side databases**
 
 In tegenstelling met server-side databases, is IndexedDB client-side, de data wordt opgeslagen in de browser, dus wij, programmeurs, hebben niet altijd toegang tot de database. Dus, wanneer we een nieuwe versie van een app publiceren, en de gebruikers bezoeken onze website, moeten we mogelijk de database updaten.
 
@@ -165,16 +165,17 @@ Hier doen we twee dingen:
 
 Er zijn andere varianten. We kunnen bijvoorbeeld de tijd nemen om dingen netjes af te handelen in het `db.onversionchange` event en de bezoeker te vragen data op te slaan voordat de verbinding wordt verbroken. De nieuwe verbinding met de update zal direct geblokkeerd worden nadat `db.onversionchange` is voltooid zonder af te sluiten en we kunnen de bezoeker vragen de andere tabs te sluiten voor de update. 
 
-Such update collision happens rarely, but we should at least have some handling for it, e.g. `onblocked` handler, so that our script doesn't surprise the user by dying silently.
-Dergelijke update conflicten gebeuren zelden, maar we zouden ze op zijn minst af kunnen handelen, bijvoorbeeld het `onblocked` event, opdat onze code de bezoeker niet verrast door de database stilletjes te laten falen.
+Dergelijke update conflicten gebeuren zelden, maar we zouden ze op zijn minst af kunnen handelen, bijvoorbeeld in het `onblocked` event, opdat onze code de bezoeker niet verrast door de database stilletjes te laten falen.
 
-## Object store
+## Object opslag
 
 To store something in IndexedDB, we need an *object store*.
+Om iets op te slaan in indexedDB, hebben we een *object store* (object opslag) nodig.
 
-An object store is a core concept of IndexedDB. Counterparts in other databases are called "tables" or "collections". It's where the data is stored. A database may have multiple stores: one for users, another one for goods, etc.
+Een object store is een kernconcept in IndexedDB. Het is hetzelfde principe als een tabel of collectie in andere databases. Hier wordt data opgeslagen. Een database kan meerdere stores hebben: één voor gebruikers, één voor goederen, etc.
 
 Despite being named an "object store", primitives can be stored too.
+Ondanks de benaming "object store", kunnen andere primitieve waarden ook opgeslagen worden.
 
 **We can store almost any value, including complex objects.**
 
