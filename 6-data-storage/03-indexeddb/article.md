@@ -181,33 +181,33 @@ IndexedDB gebruikt het [standard serialization algorithm](https://www.w3.org/TR/
 
 Een voorbeeld van objecten die niet opgeslagen kunnen worden: Een object met circulaire verwijzigingen. Dergelijke objecten zijn niet te serialiseren. `JSON.stringify` kan dergelijke objecten ook niet opslaan.
 
-**There must be a unique `key` for every value in the store.**   
+**Er moet een unieke `key` zijn voor elke waarde in de opslag**  
 
-A key must have a type one of: number, date, string, binary, or array. It's an unique identifier: we can search/remove/update values by the key.
+Een key moet een van de volgende types hebben: nummer, datum, string binary of array, Het is een unieke indentificatie: met de key kunnen we specifieke waardes zoeken/verwijderen/updaten.
 
 ![](indexeddb-structure.svg)
 
 
-As we'll see very soon, we can provide a key when we add a value to the store, similar to `localStorage`. But when we store objects, IndexedDB allows to setup an object property as the key, that's much more convenient. Or we can auto-generate keys.
+Zoals we snel zullen zien, we kunnen een key toevoegen als we een waarde aan de opslag toevoegen, net zoals `localStorage`. Maar wanneer we objecten opslaan is indexedDB in staat een property als key op te slaan, dat is veel gemakkelijker. Of we kunnen automatisch keys genereren. 
 
-But we need to create an object store first.
+Maar we moeten eerst een object opslag maken.
 
 
-The syntax to create an object store:
+De syntax om object opslag te maken:
 ```js
 db.createObjectStore(name[, keyOptions]);
 ```
 
-Please note, the operation is synchronous, no `await` needed.
+Let op: Deze operatie is synchroon, dus `await` is niet nodig.
 
-- `name` is the store name, e.g. `"books"` for books,
-- `keyOptions` is an optional object with one of two properties:
-  - `keyPath` -- a path to an object property that IndexedDB will use as the key, e.g. `id`.
-  - `autoIncrement` -- if `true`, then the key for a newly stored object is generated automatically, as an ever-incrementing number.
+- `name` is de naam van de opslag, bijvoorbeeld `"books"` voor boeken,
+- `keyOptions` is een optioneel object met één van twee properties:
+  - `keyPath` -- een pad naar een object property, welke IndexedDB zal gebruiken als key, bijvoorbeeld `id`.
+  - `autoIncrement` -- indien `true`, zal de key voor een niew opgeslagen object automatisch worden gegenereerd, als een oneindig toenemend nummer.
 
-If we don't supply `keyOptions`, then we'll need to provide a key explicitly later, when storing an object.
+Als we geen `keyOptions` voorzien, dan moeten we de key later expliciet definiëren, wanneer we een object opslaan.
 
-For instance, this object store uses `id` property as the key:
+Bijvoorbeeld, deze object opslag gebruikt een `id` property als key:
 ```js
 db.createObjectStore('books', {keyPath: 'id'});
 ```
