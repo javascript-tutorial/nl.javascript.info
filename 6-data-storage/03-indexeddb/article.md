@@ -216,7 +216,7 @@ db.createObjectStore('books', {keyPath: 'id'});
 
 Dat is een technische limitatie. Buiten het `upgradeneeded` event om zijn we in staat om data toe te voegen/verwijderen/updaten, maar de object opslag zelf kan alleen gemaakt/verwijderd/aangepast worden tijdens een versie-update. 
 
-Om een database verzie upgrade uit te voeren zijn er hoofdzakelijk twee benaderingen:
+Om een database versie upgrade uit te voeren zijn er hoofdzakelijk twee benaderingen:
 1. We kunnen upgrade functies per versie implementeren: van 1 naar 2, van 2 naar 3, va 3 naar 4, etc.. Tijdens het `upgradeneeded` event kunnen we versies vergelijken ( e.g. oud 2, nu 4 ) en upgrades per versie in stappen uitvoeren, voor elke tussenliggende versie ( 2 naar 3 en dan 3 naar 4 ).
 2. Of we kunnen de database inspecteren: verkrijg een lijst van van bestaande object opslag als `db.objectStoreNames`. Dat object is een [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) met een `contains(name)` methode om te bevestigen of een opslag bestaat. En dan kunnen we updates uitvoeren, afhankelijk van wat bestaat en wat niet bestaat. 
 
@@ -243,19 +243,19 @@ Om een object opslag te verwijderen:
 db.deleteObjectStore('books')
 ```
 
-## Transactions
+## Transacties
 
-The term "transaction" is generic, used in many kinds of databases.
+De term "transactie" is algemeen, gebruikt in veel soorten databases.
 
-A transaction is a group operations, that should either all succeed or all fail.
+Een transactie is een groep operaties, die allemaal successvol zijn of falen.
 
-For instance, when a person buys something, we need:
-1. Subtract the money from their account.
-2. Add the item to their inventory.
+Bijvoorbeeld, als een persoon iets koopt moeten we:
+1. Geld op hun account in mindering brengen
+2. Het product toevoegen aan hun voorraad
 
-It would be pretty bad if we complete the 1st operation, and then something goes wrong, e.g. lights out, and we fail to do the 2nd. Both should either succeed (purchase complete, good!) or both fail (at least the person kept their money, so they can retry).
+Het zal vrij slecht zijn als we de eerste operatie voltooien, en er daarna iets fout gaat. Beide horen te slagen ( aankoop compleet, goed! ) of beide falen ( de persoon houdt op het minst zijn geld, dus kan het nogmaals proberen ).
 
-Transactions can guarantee that.
+Transacties geven deze garantie.
 
 **All data operations must be made within a transaction in IndexedDB.**
 
