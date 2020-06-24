@@ -212,32 +212,32 @@ Bijvoorbeeld, deze object opslag gebruikt een `id` property als key:
 db.createObjectStore('books', {keyPath: 'id'});
 ```
 
-**An object store can only be created/modified while updating the DB version, in `upgradeneeded` handler.**
+**Een object opslag kan alleen gemaakt/aangepast worden terwijl de databaseversie wordt geupdate, tijdens het `upgradeneeded` event**
 
-That's a technical limitation. Outside of the handler we'll be able to add/remove/update the data, but object stores can be created/removed/altered only during version update.
+Dat is een technische limitatie. Buiten het `upgradeneeded` event om zijn we in staat om data toe te voegen/verwijderen/updaten, maar de object opslag zelf kan alleen gemaakt/verwijderd/aangepast worden tijdens een versie-update. 
 
-To perform database version upgrade, there are two main approaches:
-1. We can implement per-version upgrade functions: from 1 to 2, from 2 to 3, from 3 to 4 etc. Then, in `upgradeneeded` we can compare versions (e.g. old 2, now 4) and run per-version upgrades step by step, for every intermediate version (2 to 3, then 3 to 4).
-2. Or we can just examine the database: get a list of existing object stores as `db.objectStoreNames`. That object is a [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) that provides `contains(name)` method to check for existance. And then we can do updates depending on what exists and what doesn't.
+Om een database verzie upgrade uit te voeren zijn er hoofdzakelijk twee benaderingen:
+1. We kunnen upgrade functies per versie implementeren: van 1 naar 2, van 2 naar 3, va 3 naar 4, etc.. Tijdens het `upgradeneeded` event kunnen we versies vergelijken ( e.g. oud 2, nu 4 ) en upgrades per versie in stappen uitvoeren, voor elke tussenliggende versie ( 2 naar 3 en dan 3 naar 4 ).
+2. Of we kunnen de database inspecteren: verkrijg een lijst van van bestaande object opslag als `db.objectStoreNames`. Dat object is een [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) met een `contains(name)` methode om te bevestigen of een opslag bestaat. En dan kunnen we updates uitvoeren, afhankelijk van wat bestaat en wat niet bestaat. 
 
-For small databases the second variant may be simpler.
+Voor kleine databases kan de tweede variant simpeler zijn.
 
-Here's the demo of the second approach:
+Hier is een demo van de tweede benadering:
 
 ```js
 let openRequest = indexedDB.open("db", 2);
 
-// create/upgrade the database without version checks
+// creëer/update de database zonder versie checks
 openRequest.onupgradeneeded = function() {
   let db = openRequest.result;
-  if (!db.objectStoreNames.contains('books')) { // if there's no "books" store
-    db.createObjectStore('books', {keyPath: 'id'}); // create it
+  if (!db.objectStoreNames.contains('books')) { // if er geen "books" in de opslag zijn
+    db.createObjectStore('books', {keyPath: 'id'}); // voeg 'books' toe
   }
 };
 ```
 
 
-To delete an object store:
+Om een object opslag te verwijderen:
 
 ```js
 db.deleteObjectStore('books')
