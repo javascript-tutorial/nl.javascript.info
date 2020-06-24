@@ -437,38 +437,39 @@ transaction.onabort = function() {
 };
 ```
 
-### Event delegation
+### Event delegatie
 
-Do we need onerror/onsuccess for every request? Not every time. We can use event delegation instead.
+Hebben we een onerror/onsuccess event nodig voor elk verzoek? Niet altijd. We kunnen gebruik maken van event delegatie.
 
-**IndexedDB events bubble: `request` -> `transaction` -> `database`.**
+**IndexedDB events 'bubble': `request` -> `transaction` -> `database`**
 
-All events are DOM events, with capturing and bubbling, but usually only bubbling stage is used.
+Alle events zijn DOM events, met 'capturing' and 'bubbling', maar gebruikelijk wordt alleen de 'bubbling' stage gebruikt.
 
-So we can catch all errors using `db.onerror` handler, for reporting or other purposes:
+Dus we kunnen alle foutmeldingen afhandelen met behulp van het `db.onerror` event, om een melding te maken of andere doeleinden.
 
 ```js
 db.onerror = function(event) {
-  let request = event.target; // the request that caused the error
+  let request = event.target; // het verzoek dat een foutmelding veroorzaakte
 
   console.log("Error", request.error);
 };
 ```
 
-...But what if an error is fully handled? We don't want to report it in that case.
+...Maar wat als een foutmelding volledig verwerkt wordt? In dat geval willen we geen melding maken.
 
 We can stop the bubbling and hence `db.onerror` by using `event.stopPropagation()` in `request.onerror`.
+We kunnen 'bubbling' en dus `de.onerror` stoppen met `event.stopPropagation()` in `request.onerror`.
 
 ```js
 request.onerror = function(event) {
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    event.stopPropagation(); // don't bubble error up, "chew" it
+    console.log("Boek met dit id bestaat al"); // behandel de fout
+    event.preventDefault(); // sto pde transactie niet
+    event.stopPropagation(); // 'bubble' de transactie niet verder
   } else {
-    // do nothing
-    // transaction will be aborted
-    // we can take care of error in transaction.onabort
+    // doe niks
+    // transactie wordt beëindigd
+    // we kunnen de foutmelding afhandelen in transaction.onabort
   }
 };
 ```
