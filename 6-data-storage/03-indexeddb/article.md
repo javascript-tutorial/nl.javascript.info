@@ -406,11 +406,12 @@ Scrijf verzoeken kunnen falen.
 
 Dat is te verwachten, niet alleen door mogelijke fouten in onze code, maar ook voor redenen, die niet aan de transactie zelf gerelateerd zijn. Bijvoorbeeld, het opslagmaximum kan overschreden zijn. Dus we moeten deze situaties afhandelen.
 
-**A failed request automatically aborts the transaction, canceling all its changes.**
+**Een falend verzoek beëindigt de transactie, en maakt al de veranderingen ongedaan.**
 
-In some situations, we may want to handle the failure (e.g. try another request), without canceling existing changes, and continue the transaction. That's possible. The `request.onerror` handler is able to prevent the transaction abort by calling `event.preventDefault()`.
+In sommige situatieskan het gewenst zijn een falend verzoek te behandelen zonder gemaakte veranderingen door te voeren en verder te gaan met de transactie. Dat is mogelijk. In het `request.onerror` event is in staat de transactie niet te beëindigen door `event.preventDefault` te gebruiken.  
 
 In the example below a new book is added with the same key (`id`) as the existing one. The `store.add` method generates a `"ConstraintError"` in that case. We handle it without canceling the transaction:
+In het onderstaande voorbeeld wordt een nieuw boek toegevoegd een identieke key (`id`) als een al bestaande. In dat geval genereert de `store.add` methode een `"ConstrantError"`. We verwerken deze zonder de transactie te beëindigen.
 
 ```js
 let transaction = db.transaction("books", "readwrite");
@@ -420,14 +421,14 @@ let book = { id: 'js', price: 10 };
 let request = transaction.objectStore("books").add(book);
 
 request.onerror = function(event) {
-  // ConstraintError occurs when an object with the same id already exists
+  // ConstraintError komt voor als er al een object met een identiek id bestaat
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    // use another key for the book?
+    console.log("Boek met dit id bestaat al"); // verwerk de foutmelding
+    event.preventDefault(); // stop de transactie
+    // gebruik een ander id voor het boek
   } else {
-    // unexpected error, can't handle it
-    // the transaction will abort
+    // onverwachte foutmelding, die we niet afhandelen
+    // de transactie beëindigt
   }
 };
 
