@@ -327,23 +327,25 @@ Net zoals bij het openen van databases, kunnen we een verzoek versturen: `books.
 - De `request.result` voor `add` is de key voor het nieuwe object.
 - De foutmelding is te vinden in de response van `request.error` ( als die er zijn )
 
-## Transactions' autocommit
+## Transactie's autocommit
 
 In the example above we started the transaction and made `add` request. But as we stated previously, a transaction may have multiple associated requests, that must either all success or all fail. How do we mark the transaction as finished, no more requests to come?
+In het bovenstaande voorbeeld zijn we een transactie begonnen en maakte een `add` verzoek. Maar zoals we eerder zeiden, een trnsactie kan meerdere geassocieerde verzoeken bevatten, die allemaal successvol zijn of allemaal falen. Hoe markeren we een transactie als voltooid na het laatste verzoek.
 
-The short answer is: we don't.
+Het korte antwoord is: dat doen we niet.
 
-In the next version 3.0 of the specification, there will probably be a manual way to finish the transaction, but right now in 2.0 there isn't.
+In de volgende versie 3.0 van de specificatie, zal er waarschijnlijk een handmatige manier zijn om transacties te voltooien, maar nu in versie 2.0 is dat niet het geval.
 
-**When all transaction requests are finished, and the [microtasks queue](info:microtask-queue) is empty, it is committed automatically.**
+**Als alle transacties zijn beëindigd, en de [microtasks queue](info:microtask-queue) leeg is, worden deze automatisch voltooid.**
 
-Usually, we can assume that a transaction commits when all its requests are complete, and the current code finishes.
+Normaal gesproken, nemen we aan dat een transactie voltooit, zodra alle requests compleet zijn en de huidige code eindigt.
 
-So, in the example above no special call is needed to finish the transaction.
+Dus, in het bovenstaande voorbeeld is er geen speciale code nodig om de transactie te voltooien.
 
-Transactions auto-commit principle has an important side effect. We can't insert an async operation like `fetch`, `setTimeout` in the middle of transaction. IndexedDB will not keep the transaction waiting till these are done.
+Het auto-commit principe van transacties heeft een belangrijk neveneffect. We kunnen geen asynchrome operaties, zoals `fetch` en `setTimeout` uitvoeren in het midden van een transactie. IndexedDB zal de transactie niet open laten totdat deze zijn voltooid.
 
 In the code below `request2` in line `(*)` fails, because the transaction is already committed, can't make any request in it:
+In de onderstaande code `request2` op de met `(*)` gemarkeerde regel genereert een foutmelding, omdat de transactie al voltooid is.
 
 ```js
 let request1 = books.add(book);
@@ -360,41 +362,42 @@ request1.onsuccess = function() {
 };
 ```
 
-That's because `fetch` is an asynchronous operation, a macrotask. Transactions are closed before the browser starts doing macrotasks.
+De oorzaak is `fetch`, wat een asynchrome operatie is, een macro-operatie. Transacties zijn voltooid, voordat de browser macro-operaties uitvoert. 
 
-Authors of IndexedDB spec believe that transactions should be short-lived. Mostly for performance reasons.
+De auteurs van IndexedDB specificatie geloven dat transacties kort horen te zijn. Hoofdzakelijk voor prestatie redenen.
 
-Notably, `readwrite` transactions "lock" the stores for writing. So if one part of application initiated `readwrite` on `books` object store, then another part that wants to do the same has to wait: the new transaction "hangs" till the first one is done. That can lead to strange delays if transactions take a long time.
+Noemenswardig is dat `readwrite` transacties de opslagruimtes blokkeert voor updates. Dus als één deel van een applicate een `readwrite` transactie begint op een `books` opslagruimte, dan moet een ander deel dat hetzelfde wil doen wachten; De nieuwe transactie 'lags' totdat de eerste transactie voltooid is. Als transacties een lange tijd duren, kan dit leiden tot rare vertragingen ( en moeilijk op te lossen bugs ).
 
-So, what to do?
+Dus, wat doen we dan?
 
 In the example above we could make a new `db.transaction` right before the new request `(*)`.
+In het bovenstaande voorbeeld zouden we een nieuwe `db.transaction` kunnen maken net voor de nieuwe request `(*)`.
 
-But it will be even better, if we'd like to keep the operations together, in one transaction, to split apart IndexedDB transactions and "other" async stuff.
+Maar ,als we alle operaties tezamen willen houden, is het beter om de IndexedDB transacties te scheiden van de "andere" asynchrome operaties.
 
-First, make `fetch`, prepare the data if needed, afterwards create a transaction and perform all the database requests, it'll work then.
+Voer eerst de `fetch` uit, en creëer vervolgens een transactie en maak alle database verzoeken. Dan werkt het.
 
-To detect the moment of successful completion, we can listen to `transaction.oncomplete` event:
+Om het moment van het successvol voltooien te detecteren, kunnen we luisteren naar het `transaction.oncomplete` event.
 
 ```js
 let transaction = db.transaction("books", "readwrite");
 
-// ...perform operations...
+// ...voer operaties uit...
 
 transaction.oncomplete = function() {
-  console.log("Transaction is complete");
+  console.log("Transactie is voltooid");
 };
 ```
 
-Only `complete` guarantees that the transaction is saved as a whole. Individual requests may succeed, but the final write operation may go wrong (e.g. I/O error or something).
+Alleen `complete` garandeert dat een transactie geheel wordt opgeslagen. Individuele veroeken kunnen slagen, maar de laatste update operatie kan foutgaan ( e.g. I/O foutmelding of iets dergelijks )
 
-To manually abort the transaction, call:
+Om handmatig een transactie te beëindigen, gebruik `abort()`:
 
 ```js
 transaction.abort();
 ```
 
-That cancels all modification made by the requests in it and triggers `transaction.onabort` event.
+Dat annuleert alle modificaties gemaakt door de requests in de transactie en activeert het `transaction.abort` event.
 
 
 ## Error handling
