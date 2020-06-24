@@ -108,26 +108,26 @@ Dat is vreemd, maar zulke dingen kunnen gebeuren wanneer een bezoeker oude javas
 Om zulke foutmeldingen te voorkomen, zullen we `db.version` moeten controleren en voorstellen de pagina te herladen. Gebruik de gepaste HTTP caching headers om te voorkomen dat oude code geladen wordt, updat je nooit een dergelijk probleem hebt.
 ```
 
-### Parallel update problem
+### Gelijktijdig update probleem
 
-As we're talking about versioning, let's tackle a small related problem.
+Nu we het toch hebben over versies, laten we een klein gerelateerd probleem behandelen.
 
-Let's say:
-1. A visitor opened our site in a browser tab, with database version `1`.
-2. Then we rolled out an update, so our code is newer.
-3. And then the same visitor opens our site in another tab.
+Stel je voor:
+1. Een bezoeker opent onze site in een browser tab met database versie `1`.
+2. Vervolgens voeren we een update uit, dus onze code is nieuwer.
+3. En dan opent de bezoeker onze site in een andere tab.
 
-So there's a tab with an open connection to DB version `1`, while the second tab one attempts to update it to version `2` in its `upgradeneeded` handler.
+Dus nu is er een tab open met een verbing met databaseversie `1`, terwijl de tweede tab een update probeert uit te voeren in haar `upgradeended` handler.
 
-The problem is that a database is shared between two tabs, as it's the same site, same origin. And it can't be both version `1` and `2`. To perform the update to version `2`, all connections to version 1 must be closed, including the one in the first tab.
+Het probleem is dat een database gedeeld wordt tussen twee tabs, aangezien de database afkomstig is van dezelfde site / origin. En deze database kan niet tegelijkertijd versie `1` en `2` zijn. Om eenupdate uit te voeren naar versie twee moeten alle verbindingen met de database gesloten zijn, inclusief die in de eerste tab.
 
-In order to organize that, the `versionchange` event triggers in such case on the "outdated" database object. We should listen to it and close the old database connection (and probably suggest the visitor to reload the page, to load the updated code).
+Om dit te af te handelen, activeert een `versionchange` event in het "verlopen" database-object. We zouden op dit event moeten reageren en de databaseverbinding sluiten ( en waarschijnlijk de bezoeker voorstellen de pagina te herladen, om de nieuwe code in te laden ).
 
-If we don't listen to `versionchange` event and don't close the old connection, then the second, new connection won't be made. The `openRequest` object will emit the `blocked` event instead of `success`. So the second tab won't work.
+Als we niet luisteren naar een `versionchange` event en de verbinding verbreken, dan wordt de tweede, nieuwe verbinding, niet gemaakt. Het `openRequest` object activeert een `blocked` event in plaats van `success`. Dus de tweede tab werkt dan niet.
 
-Here's the code to correctly handle the parallel upgrade.
+Hier is code om een geljktijdige upgrade uit te voeren.
 
-It installs `onversionchange` handler after the database is opened, that closes the old connection:
+Onderstaande code installeert de `onversionchange` afhandeling nadat de database geopend is, welke de oude verbinding verbreekt.
 
 ```js
 let openRequest = indexedDB.open("store", 2);
@@ -145,27 +145,28 @@ openRequest.onsuccess = function() {
   };
   */!*
 
-  // ...the db is ready, use it...
+  // ...de database is gereed, gebruik het...
 };
 
 *!*
 openRequest.onblocked = function() {
-  // this event shouldn't trigger if we handle onversionchange correctly
+  // dit event zal niet activeren als we onversionchange correct afhandelen
 
-  // it means that there's another open connection to same database
-  // and it wasn't closed after db.onversionchange triggered for them
+  // Dit betekent dat er een andere verbinding met de database is
+  // en niet was gesloten nadat db.onversionchange voor hen activeerde
 };
 */!*
 ```
 
-Here we do two things:
+Hier doen we twee dingen:
 
-1. Add `db.onversionchange` listener after a successful opening, to be informed about a parallel update attempt.
-2. Add `openRequest.onblocked` listener to handle the case when an old connection wasn't closed. This doesn't happen if we close it in `db.onversionchange`.
+1. Voeg een implementatie van het `db.onversionchange` event toe na het successvol openen, om op de hoogte te zijn van een gelijktijdige updatepoging.
+2. Voeg een implementatie van het `openRequest.onblocked` event toe om het scenario waar de oude verbinding niet verbroken was af te handelen. Dit event activeert niet als we de verbinding verbreken in `db.onversionchange`.
 
-There are other variants. For example, we can take time to close things gracefully in `db.onversionchange`, prompt the visitor to save the data before the connection is closed. The new updating connection will be blocked immediatelly after `db.onversionchange` finished without closing, and we can ask the visitor in the new tab to close other tabs for the update.
+Er zijn andere varianten. We kunnen bijvoorbeeld de tijd nemen om dingen netjes af te handelen in het `db.onversionchange` event en de bezoeker te vragen data op te slaan voordat de verbinding wordt verbroken. De nieuwe verbinding met de update zal direct geblokkeerd worden nadat `db.onversionchange` is voltooid zonder af te sluiten en we kunnen de bezoeker vragen de andere tabs te sluiten voor de update. 
 
 Such update collision happens rarely, but we should at least have some handling for it, e.g. `onblocked` handler, so that our script doesn't surprise the user by dying silently.
+Dergelijke update conflicten gebeuren zelden, maar we zouden ze op zijn minst af kunnen handelen, bijvoorbeeld het `onblocked` event, opdat onze code de bezoeker niet verrast door de database stilletjes te laten falen.
 
 ## Object store
 
