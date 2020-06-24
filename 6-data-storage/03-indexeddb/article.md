@@ -257,33 +257,33 @@ Het zal vrij slecht zijn als we de eerste operatie voltooien, en er daarna iets 
 
 Transacties geven deze garantie.
 
-**All data operations must be made within a transaction in IndexedDB.**
+**Alle data operaties moeten in een transactie gemaakt worden in IndexedDB**
 
-To start a transaction:
+Om een transactie te starten:
 
 ```js run
 db.transaction(store[, type]);
 ```
 
-- `store` is a store name that the transaction is going to access, e.g. `"books"`. Can be an array of store names if we're going to access multiple stores.
-- `type` – a transaction type, one of:
-  - `readonly` -- can only read, the default.
-  - `readwrite` -- can only read and write the data, but not create/remove/alter object stores.
+- `store` is de naam van een opslagruimte, waar de transactie toegang tot zal krijgen, e.g. "books". Dit argument kan ook een array van diverse opslagruimtes zijn om toegang te krijgen tot meerdere opslagruimtes.
+- `type` – een transactie type, mogelijke waardes zijn:
+  - `readonly` -- kan alleen data uitlezen, de standaard.
+  - `readwrite` -- kan alleen de data uitlezen en naar de opslagruimte schrijven, maar opslagruimte kan niet worden gecreëerd/verwijderd/aangepast.
 
-There's also `versionchange` transaction type: such transactions can do everything, but we can't create them manually. IndexedDB automatically creates a `versionchange` transaction when opening the database, for `updateneeded` handler. That's why it's a single place where we can update the database structure, create/remove object stores.
+Er is ook een `versionchange` transactie type: deze transacties kunnen alles, maar we kunnen ze niet handmatig aanmaken. IndexedDB maakt automatisch een `versionchange` transactie aan wanneer de database wordt geopend, voor het `updateneeded` event. Dat is waarom er maar één plaats is waar we de structuur van de databse kunnen veranderen en opslagruimte voor objects kan worden gecreëerd/verwijderd.
 
-```smart header="Why there exist different types of transactions?"
-Performance is the reason why transactions need to be labeled either `readonly` and `readwrite`.
+```smart header="Waarom zijn er verschillende type transacties?"
+Prestatie is de reden waarom transacties `readonly` of `readwrite` genaamd moet worden.
 
-Many `readonly` transactions are able to access concurrently the same store, but `readwrite` transactions can't. A `readwrite` transaction "locks" the store for writing. The next transaction must wait before the previous one finishes before accessing the same store.
+Vele `readonly` transacties zijn in staat tegelijkertijd toegang te verkrijgen tot dezelfde opslagruimte, maar `readwrite` transacties kunnen dit niet. Een `readwrite` transactie "bevriest" de opslagruimte voor nieuwe opslag. De volgende transactie moet wachten tot de voorgaande transactie voltooid is, voordat deze toegang krijgt tot dezelfde opslagruimte.
 ```
 
-After the transaction is created, we can add an item to the store, like this:
+Nadat een transactie is gecreëerd, kunnen we items in de opslagruimte opslaan, als volgt:
 
 ```js
 let transaction = db.transaction("books", "readwrite"); // (1)
 
-// get an object store to operate on it
+// open een opslagruimte om er operaties op uit te voeren
 *!*
 let books = transaction.objectStore("books"); // (2)
 */!*
@@ -299,7 +299,7 @@ let request = books.add(book); // (3)
 */!*
 
 request.onsuccess = function() { // (4)
-  console.log("Book added to the store", request.result);
+  console.log("book aan de opslagruimte toegevoegd", request.result);
 };
 
 request.onerror = function() {
@@ -307,25 +307,25 @@ request.onerror = function() {
 };
 ```
 
-There were basically four steps:
+Er zijn vier stappen:
 
-1. Create a transaction, mention all stores it's going to access, at `(1)`.
-2. Get the store object using `transaction.objectStore(name)`, at `(2)`.
-3. Perform the request to the object store `books.add(book)`, at `(3)`.
-4. ...Handle request success/error `(4)`, then we can make other requests if needed, etc.
+1. Creëer een transactie, benoem alle opslagruimtes, die zullen worden gebruikt, zie `(1)`.
+2. Verkrijg een opslagruimte met `transaction.objectStore(name)`, zie `(2)`.
+3. Voer de operaties op de opslagruimte `books.add(book)`, zie `(3)`.
+4. ...Verwerk de success/error events `(4)`, vervolgens kunnen we andere verzoeken maken indien nodig, etc.
 
-Object stores support two methods to store a value:
+Opslagruimtes ondersteunen twee methodes om een waarde op te slaan.
 
 - **put(value, [key])**
-    Add the `value` to the store. The `key` is supplied only if the object store did not have `keyPath` or `autoIncrement` option. If there's already a value with same key, it will be replaced.
+    Voeg de `value` aan de opslagruimte toe. De `key` moet alleen worden voorzien als de opslagruimte zonder `keyPath` of `autoIncrement` voorheen gedefiniëerd was. Als er al een waarde bestaat met dezelfde key, dan wordt deze vervangen.
 
 - **add(value, [key])**
-    Same as `put`, but if there's already a value with the same key, then the request fails, and an error with the name `"ConstraintError"` is generated.
+    Hetzelfde als `put`, maar als er al een waarde met dezelfde key is, dan faalt het verzoek, en wordt een foutmelding met de naam `"ConstraintError"` gegenereerd.
 
-Similar to opening a database, we can send a request: `books.add(book)`, and then wait for `success/error` events.
+Net zoals bij het openen van databases, kunnen we een verzoek versturen: `books.add(book)`, en vervolgens wachten op `success/error` events.
 
-- The `request.result` for `add` is the key of the new object.
-- The error is in `request.error` (if any).
+- De `request.result` voor `add` is de key voor het nieuwe object.
+- De foutmelding is te vinden in de response van `request.error` ( als die er zijn )
 
 ## Transactions' autocommit
 
