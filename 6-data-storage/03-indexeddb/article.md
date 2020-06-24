@@ -38,24 +38,24 @@ De functie geeft een `openRequest` object, we kunnen naar de events in dit objec
 - `error`: openen van de database is gefaald.
 - `upgradeneeded`: de database is gereed, maar de versie is verouderd ( zie onderstaand )
 
-**IndexedDB has a built-in mechanism of "schema versioning", absent in server-side databases.**
+**IndexedDB heeft een ingebouwd mechanisme van "schema versies", afwezig in server-side databases**
 
-Unlike server-side databases, IndexedDB is client-side, the data is stored in the browser, so we, developers, don't have "any time" access to it. So, when we published a new version of our app, and the user visits our webpage, we may need to update the database.
+In tegenstelling met server-side databases, is IndexedDB client-side, de data wordt opgeslagen in de browser, dus wij, programmeurs, hebben niet altijd toegang tot de database. Dus, wanneer we een nieuwe versie van een app publiceren, en de gebruikers bezoeken onze website, moeten we mogelijk de database updaten.
 
-If the local database version is less than specified in `open`, then a special event `upgradeneeded` is triggered, and we can compare versions and upgrade data structures as needed.
+Als de lokale database versie lager is dan die aangegeven in `open`, dan wordt een speciaal event, `upgradeended` geactiveerd, en kunnen we versies vergelijken en data-structuren updaten waar nodig.
 
-The `upgradeneeded` event also triggers when the database did not exist yet (technically, it's version is `0`), so we can perform initialization.
+Het `upgradeneeded` event wordt ook geactiveerd als er nog geen database bestaat ( technisch gesproken is de versie `0`), opdat we het een en ander kunnen initialiseren.
 
-Let's say we published the first version of our app.
+Laten we zeggen dat we de eerste versie van onze app publiceren.
 
-Then we can open the database with version `1` and perform the initialization in `upgradeneeded` handler like this:
+Nu kunnen we de de database met versie `1` openen en initialisatie uitvoeren in `upgradeended`:
 
 ```js
 let openRequest = indexedDB.open("store", *!*1*/!*);
 
 openRequest.onupgradeneeded = function() {
-  // triggers if the client had no database
-  // ...perform initialization...
+  // activeert als de client geen database had
+  // ...voer de initialisatie uit...
 };
 
 openRequest.onerror = function() {
@@ -64,48 +64,48 @@ openRequest.onerror = function() {
 
 openRequest.onsuccess = function() {
   let db = openRequest.result;
-  // continue to work with database using db object
+  // werk verder met de database gebruik makend van het db object
 };
 ```
 
-Then, later, we publish the 2nd version.
+Later publiceren we de tweede versie.
 
-We can open it with version `2` and perform the upgrade like this:
+We kunnen de `open` methode gebruiken met versie `2` en de upgrade als volgt uitvoeren:
 
 ```js
 let openRequest = indexedDB.open("store", *!*2*/!*);
 
 openRequest.onupgradeneeded = function(event) {
-  // the existing database version is less than 2 (or it doesn't exist)
+  // de huidige database verzie is 2 of lager ( of bestaat niet )
   let db = openRequest.result;
-  switch(event.oldVersion) { // existing db version
+  switch(event.oldVersion) { // huidige database versie
     case 0:
-      // version 0 means that the client had no database
-      // perform initialization
+      // versie 0 betekent dat de client geen database heeft
+      // voer database initialisatie uit
     case 1:
-      // client had version 1
+      // de client had versie 1
       // update
   }
 };
 ```
 
-Please note: as our current version is `2`, `onupgradeneeded` handler has a code branch for version `0`, suitable for users that come for the first time and have no database, and also for version `1`, for upgrades.
+Let op: De huidige versie is `2`, de `onupgradeneeded` heeft code voor de upgrade vanaf versie `0`, voor gebruikers die de eerste keer de website bezoeken en nog geen database hebben, maar ook voor versie `1`.
 
-And then, only if `onupgradeneeded` handler finishes without errors, `openRequest.onsuccess` triggers, and the database is considered successfully opened.
+En dan, alleen als `onupgradeneeded` zonder foutmeldingen voltooid is, wordt `openRequest.onsuccess`  geactiveerd en is de database succesvol geopend.
 
-To delete a database:
+Om een database te verwijderen:
 
 ```js
 let deleteRequest = indexedDB.deleteDatabase(name)
-// deleteRequest.onsuccess/onerror tracks the result
+// deleteRequest.onsuccess/onerror geeft het resultaat weer
 ```
 
-```warn header="We can't open an older version of the database"
-If the current user database has a higher version than in the `open` call, e.g. the existing DB version is `3`, and we try to `open(...2)`, then that's an error, `openRequest.onerror` triggers.
+```warn header="We kunnen geen oude versie van de database openen"
+Als de huidige database een hogere versie heeft in de `open` method, e.g. de bestaande databaseversie is `3`, en we proberen `open(...2)`, dan resulteerd dat in een foutmelding; `openRequest.onerror` activeert.
 
-That's odd, but such thing may happen when a visitor loaded an outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
+Dat is vreemd, maar zulke dingen kunnen gebeuren wanneer een bezoeker oude javascript code laadt, bijvoorbeeld uit een proxy cache. Dan is de code oud, maar de database nieuw.
 
-To protect from errors, we should check `db.version` and suggest him to reload the page. Use proper HTTP caching headers to avoid loading the old code, so that you'll never have such problem.
+Om zulke foutmeldingen te voorkomen, zullen we `db.version` moeten controleren en voorstellen de pagina te herladen. Gebruik de gepaste HTTP caching headers om te voorkomen dat oude code geladen wordt, updat je nooit een dergelijk probleem hebt.
 ```
 
 ### Parallel update problem
