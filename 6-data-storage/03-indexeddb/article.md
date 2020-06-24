@@ -464,66 +464,67 @@ We kunnen 'bubbling' en dus `de.onerror` stoppen met `event.stopPropagation()` i
 request.onerror = function(event) {
   if (request.error.name == "ConstraintError") {
     console.log("Boek met dit id bestaat al"); // behandel de fout
-    event.preventDefault(); // sto pde transactie niet
+    event.preventDefault(); // stop de transactie niet
     event.stopPropagation(); // 'bubble' de transactie niet verder
   } else {
     // doe niks
     // transactie wordt beëindigd
-    // we kunnen de foutmelding afhandelen in transaction.onabort
+    // we kunnen de foutmelding afhandelen 
   }
 };
 ```
 
-## Searching by keys
+## Zoeken op keys
 
-There are two main types of search in an object store:
-1. By a key or a key range. That is: by `book.id` in our "books" storage.
-2. By another object field, e.g. `book.price`.
+Er zijn twee zoektypes in een opslagruimte:
+1. Op basis van een key of key range. Dat wil zeggen: Bij `book.id` in onze "books" opslagruimte.
+2. Op basis van een ander veld in een object, e.g. `book.price`
 
-First let's deal with the keys and key ranges `(1)`.
+Laten we eerst de keys en key ranges behandelen `(1)`.
 
-Methods that involve searching support either exact keys or so-called "range queries" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objects that specify a "key range".
+Methodes, welke betrekking hebben op zoek functionaliteit gebruiken exaxte keys of zogenaamde "range queries" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objecten die een "key range" specificeren.
 
-Ranges are created using following calls:
+Ranges worden gemaakt met de volgende code:
 
-- `IDBKeyRange.lowerBound(lower, [open])` means: `≥lower` (or `>lower` if `open` is true)
-- `IDBKeyRange.upperBound(upper, [open])` means: `≤upper` (or `<upper` if `open` is true)
-- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` means: between `lower` and `upper`. If the open flags is true, the corresponding key is not included in the range.
-- `IDBKeyRange.only(key)` -- a range that consists of only one `key`, rarely used.
+- `IDBKeyRange.lowerBound(lower, [open])` betekent: `≥lower` (of `>lower` als `open` true is)
+- `IDBKeyRange.upperBound(upper, [open])` betekent: `≤upper` (of `<upper` als `open` true is)
+- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` betekent: tussen `lower` en `upper`. Als de open flag true is, dan is de corresponderende key niet inbegrepen in de range.
+- `IDBKeyRange.only(key)` -- een range dat bestaat uit één `key`, wordt nauwelijks gebruikt.
 
-All searching methods accept a `query` argument that can be either an exact key or a key range:
+Alle zoekmethodes accepteren een `query` argument, welke een exacte key of een key range kan zijn:
 
-- `store.get(query)` -- search for the first value by a key or a range.
-- `store.getAll([query], [count])` -- search for all values, limit by `count` if given.
-- `store.getKey(query)` -- search for the first key that satisfies the query, usually a range.
-- `store.getAllKeys([query], [count])` -- search for all keys that satisfy the query, usually a range, up to `count` if given.
-- `store.count([query])` -- get the total count of keys that satisfy the query, usually a range.
+- `store.get(query)` -- zoek naar de eerst waarde op basis van key of range.
+- `store.getAll([query], [count])` -- zoek naar alle waardes, gelimiteerd door `count` als gegeven.
+- `store.getKey(query)` -- zoek naar de eerste key in de query, meestal een range.
+- `store.getAllKeys([query], [count])` -- zoek naar alle keys in een query, meestal een range, met een maximum aantal van `count` als gegeven.
+- `store.count([query])` -- krijg het aantal sleutels in een quesry, meestal een range
 
-For instance, we have a lot of books in our store. Remember, the `id` field is the key, so all these methods can search by `id`.
+Bijvoorbeeld, we hebben veel boeken in onze opslagruimte. Denk eraan dat het `id` veld de key is, dus al deze methodes kunnen zoeken op `id`. 
 
-Request examples:
+Zoek voorbeelden:
 
 ```js
-// get one book
+// verkrijg een boek
 books.get('js')
 
-// get books with 'css' <= id <= 'html'
+// verkrijg boeken waar 'css' <= id <= 'html'
 books.getAll(IDBKeyRange.bound('css', 'html'))
 
-// get books with id < 'html'
+// verkrijg boeken met een id < 'html'
 books.getAll(IDBKeyRange.upperBound('html', true))
 
-// get all books
+// verkrijg alle boeken
 books.getAll()
 
-// get all keys: id > 'js'
+// verkrijg alle keys id > 'js'
 books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
-```smart header="Object store is always sorted"
+```smart header="De opslagruimte is altijd gesorteerd"
 Object store sorts values by key internally.
+Een opslagruimte sorteerd waardes intern op basis van de keys.
 
-So requests that return many values always return them in sorted by key order.
+Dus verzoeken welke in meerdere waarder resulteren, geeft deze resultaten altijd gesorteerd op basis van de key.
 ```
 
 
