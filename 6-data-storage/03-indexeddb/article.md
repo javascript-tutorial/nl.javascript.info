@@ -400,11 +400,11 @@ transaction.abort();
 Dat annuleert alle modificaties gemaakt door de requests in de transactie en activeert het `transaction.abort` event.
 
 
-## Error handling
+## Error afhandeling
 
-Write requests may fail.
+Scrijf verzoeken kunnen falen.
 
-That's to be expected, not only because of possible errors at our side, but also for reasons not related to the transaction itself. For instance, the storage quota may be exceeded. So we must be ready to handle such case.
+Dat is te verwachten, niet alleen door mogelijke fouten in onze code, maar ook voor redenen, die niet aan de transactie zelf gerelateerd zijn. Bijvoorbeeld, het opslagmaximum kan overschreden zijn. Dus we moeten deze situaties afhandelen.
 
 **A failed request automatically aborts the transaction, canceling all its changes.**
 
