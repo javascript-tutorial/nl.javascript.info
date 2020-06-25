@@ -721,16 +721,16 @@ request.onsuccess = function() {
 
 ## Promise wrapper
 
-Adding `onsuccess/onerror` to every request is quite a cumbersome task. Sometimes we can make our life easier by using event delegation, e.g. set handlers on the whole transactions, but `async/await` is much more convenient.
+Een `onsuccess/onerror` toevoegen aan elke request is best veel gedoe. Soms kunnen we ons leven makkelijker maken door gebruik te maken van event delegatie, e.g. implementeer afhandeling voor complete transacties, maar `async/await` is gemakkelijker.
 
-Let's use a thin promise wrapper <https://github.com/jakearchibald/idb> further in this chapter. It creates a global `idb` object with [promisified](info:promisify) IndexedDB methods.
+Laten we vanaf hier een kleine promise wrapper <https://github.com/jakearchibald/idb> gebruiken. Het maakt een globaal `idb` object met [promisified](info:promisify) IndexedDB methodes.
 
-Then, instead of `onsuccess/onerror` we can write like this:
+Nu kunnen we als volgt code schrijven in plaats van `onsuccess/onerror`:
 
 ```js
 let db = await idb.openDb('store', 1, db => {
   if (db.oldVersion == 0) {
-    // perform the initialization
+    // voer initialisatie uit
     db.createObjectStore('books', {keyPath: 'id'});
   }
 });
@@ -751,7 +751,7 @@ try {
 
 ```
 
-So we have all the sweet "plain async code" and "try..catch" stuff.
+Dus nu hebben we asynchrome code en "try..catch".
 
 ### Error handling
 
