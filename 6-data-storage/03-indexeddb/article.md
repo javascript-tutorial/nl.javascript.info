@@ -646,27 +646,27 @@ Wat te doen?
 
 Cursors geven de middelen om dit te omzeilen.
 
-**A *cursor* is a special object that traverses the object storage, given a query, and returns one key/value at a time, thus saving memory.**
+**Een *cursor* is een speciaal object, dat de opslagruimte doorkruist, met een query en geeft één key/waarde per keer, en bespaart dus geheugen.**
 
-As an object store is sorted internally by key, a cursor walks the store in key order (ascending by default).
+Als een opslagruimte van een object intern is gesorteerd op basis van key, doorloopt de cursor de opslagruimte in volgorde van key ( standaard oplopend ).
 
-The syntax:
+De syntax:
 ```js
-// like getAll, but with a cursor:
+// zoals getAll, maar met een cursor:
 let request = store.openCursor(query, [direction]);
 
-// to get keys, not values (like getAllKeys): store.openKeyCursor
+// om keys te verkrijgen, geen waardes (zoals getAllKeys): store.openKeyCursor
 ```
 
-- **`query`** is a key or a key range, same as for `getAll`.
-- **`direction`** is an optional argument, which order to use:
-  - `"next"` -- the default, the cursor walks up from the record with the lowest key.
-  - `"prev"` -- the reverse order: down from the record with the biggest key.
-  - `"nextunique"`, `"prevunique"` -- same as above, but skip records with the same key (only for cursors over indexes, e.g. for multiple books with price=5 only the first one will be returned).
+- **`query`** is een key of key range, identiek aan `getAll`.
+- **`direction`** is een optioneel argument, in welke de te gebruiken volgorde wordt aangegeven.
+  - `"next"` -- de standaard, de cursor doorloopt de records van de laagste naar de hoogste key waarde.
+  - `"prev"` -- de omgekeerde volgorde: van de hoogste naar de laagste record.
+  - `"nextunique"`, `"prevunique"` -- Het zelfde als hierboven, maar slaat records met dezelfde key over ( alleen voor cursors die itereren over een index. e.g. voor meerdere boeken met price=5 wordt alleen de eerste match terguggegeven in het resultaat ). 
 
-**The main difference of the cursor is that `request.onsuccess` triggers multiple times: once for each result.**
+**Het hoofdzakelijke verschil met een cursor is dat `request.onsuccess` meerdere keren geactiveert wordt: Een maal voor elk resultaat**
 
-Here's an example of how to use a cursor:
+Hier is een voorbeeld hoe je een cursor gebruikt:
 
 ```js
 let transaction = db.transaction("books");
@@ -674,47 +674,47 @@ let books = transaction.objectStore("books");
 
 let request = books.openCursor();
 
-// called for each book found by the cursor
+// geactiveerd voor elk boek gevonden door de cursor
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let key = cursor.key; // book key (id field)
+    let key = cursor.key; // book key (id veld)
     let value = cursor.value; // book object
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Geen boeken meer beschikbaar");
   }
 };
 ```
 
-The main cursor methods are:
+De belangrijkste cursor methodes zijn:
 
-- `advance(count)` -- advance the cursor `count` times, skipping values.
-- `continue([key])` -- advance the cursor to the next value in range matching (or immediately after `key` if given).
+- `advance(count)` -- sla een aantal waardes over. Het aantal waardes dat overgeslagen wordt is gelijk aan `count`.
+- `continue([key])` -- zet de cursor op de volgende waarde in de selectie (of direct na de `key` als deze gegeven is).
 
-Whether there are more values matching the cursor or not -- `onsuccess` gets called, and then in `result` we can get the cursor pointing to the next record, or `undefined`.
+Of er meerdere waardes gevonden zijn of niet -- Het `onsuccess` event wordt geactiveerd, en vervolgens kunnen we in het `result` de cursor, die naar de volgende waarde verwijst verkrijgen of `undefined`.
 
-In the example above the cursor was made for the object store.
+In het bovenstaande voorbeeld werd een cursor gemaakt voor de opslagruimte voor objecten.
 
-But we also can make a cursor over an index. As we remember, indexes allow to search by an object field. Cursors over indexes to precisely the same as over object stores -- they save memory by returning one value at a time.
+Maar we kunnen ook een cursor maken op basis van een index. Zoals we weten, staan indexes het toe om een object veld te doorzoeken. Een cursor op basis van indexen doet hetzelfde als een cursor toegepast op een opslagruimte -- ze besparen geheugen door één waarde per keer te verkrijgen.
 
-For cursors over indexes, `cursor.key` is the index key (e.g. price), and we should use `cursor.primaryKey` property for the object key:
+Voor cursors op basis van indexen, is de `cursor.key` de index key ( e.g. price ), en we zouden de `cursor.primaryKey` key moeten gebruiken als object key:
 
 ```js
 let request = priceIdx.openCursor(IDBKeyRange.upperBound(5));
 
-// called for each record
+// geactiveert voor elke record
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let key = cursor.primaryKey; // next object store key (id field)
-    let value = cursor.value; // next object store object (book object)
-    let key = cursor.key; // next index key (price)
+    let key = cursor.primaryKey; // volgend opslagruimte voor objecten key (id field)
+    let value = cursor.value; // volgend object uit opslagruimte voor objecten  (book object)
+    let key = cursor.key; // volgende index key (price)
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Geen boeken meer beschikbaar");
   }
 };
 ```
