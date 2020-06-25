@@ -794,23 +794,23 @@ De workaround is hetzelfde als wanneer we werken met de standaard IndexedDB: Maa
 1. Bereid de data voor en verkrijg alle informatie die nodig is.
 2. Sla het dan o pin de database
 
-### Getting native objects
+### Oorspronkelijke objecten verkrijgen
 
-Internally, the wrapper performs a native IndexedDB request, adding `onerror/onsuccess` to it, and returns a promise that rejects/resolves with the result.
+Intern voert de wrapper een oorspronkelijk IndexedDB request uit, voegt er `onerror/onsuccess` aan toe, en resulteerd in eem promise dat op basis van het resultaat rejects/resolves.
 
-That works fine most of the time. The examples are at the lib page <https://github.com/jakearchibald/idb>.
+Dat werkt normaal gesproken prima. Er zijn voorbeelden bij de library pagina <https://github.com/jakearchibald/idb>.
 
-In few rare cases, when we need the original `request` object, we can access it as `promise.request` property of the promise:
+In een paar zeldzame gevallen hebben we het originele `request` object nodig, we kunnen toegang verkrijgen door de `promise.request` property van de promise:
 
 ```js
-let promise = books.add(book); // get a promise (don't await for its result)
+let promise = books.add(book); // verkrijg een promise (wacht niet voor het resultaat)
 
-let request = promise.request; // native request object
-let transaction = request.transaction; // native transaction object
+let request = promise.request; // oorsprokelijk request object
+let transaction = request.transaction; // oorspronkelijk transaction object
 
-// ...do some native IndexedDB voodoo...
+// ...doe wat voodoo met de oorspronkelijke IndexedDB...
 
-let result = await promise; // if still needed
+let result = await promise; // als het nog nodig is
 ```
 
 ## Summary
