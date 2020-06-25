@@ -813,24 +813,24 @@ let transaction = request.transaction; // oorspronkelijk transaction object
 let result = await promise; // als het nog nodig is
 ```
 
-## Summary
+## Samenvatting
 
-IndexedDB can be thought of as a "localStorage on steroids". It's a simple key-value database, powerful enough for offline apps, yet simple to use.
+Je kunt over IndexedDB denken als een "localStorage op steroïden". Het is een simple key-value database, met genoeg functionaliteit voor offline apps, maar gemakkelijk te gebruiken.
 
-The best manual is the specification, [the current one](https://w3c.github.io/IndexedDB) is 2.0, but few methods from [3.0](https://w3c.github.io/IndexedDB/) (it's not much different) are partially supported.
+De beste handleiding is de specificatie, [de huidige](https://w3c.github.io/IndexedDB) is 2.0, maar een paar methodes van [3.0](https://w3c.github.io/IndexedDB/) (er is weinig verschil) zijn maar deels ondersteund.
 
-The basic usage can be described with a few phrases:
+Het basisgebruik kan in eenn paar regels samengevat worden:
 
-1. Get a promise wrapper like [idb](https://github.com/jakearchibald/idb).
-2. Open a database: `idb.openDb(name, version, onupgradeneeded)`
-    - Create object storages and indexes in `onupgradeneeded` handler or perform version update if needed.
-3. For requests:
-    - Create transaction `db.transaction('books')` (readwrite if needed).
-    - Get the object store `transaction.objectStore('books')`.
-4. Then, to search by a key, call methods on the object store directly.
-    - To search by an object field, create an index.
-5. If the data does not fit in memory, use a cursor.
+1. Zoek een promise warapper, zoals [idb](https://github.com/jakearchibald/idb).
+2. Open een database: `idb.openDb(name, version, onupgradeneeded)`
+    - Maak opslagruimtes voor objecten en indexen in de `onupgradeneeded` event behandeling of voer een versie update uit, indien nodig.
+3. Voor verzoeken:
+    - Maak een transactie aan `db.transaction('books')` (readwrite alsnodig)
+    - Verkrijg een opslagruimte `transaction.objectStore('books')`.
+4. Gebruik methodes o pde opslagruimte om te zoeken op bass van key.
+    - om een object veld te doorzoeken, creëer een index
+5. Als de data niet in het geheugen past, gebruik een cursor
 
-Here's a small demo app:
+Hier is een kleine demo app:
 
 [codetabs src="books" current="index.html"]
