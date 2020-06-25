@@ -5,22 +5,23 @@ libs:
 
 # IndexedDB
 
-IndexedDB is een database ingebouwd in een browser, met veel meer mogelijkheden dan `localStorage`
+IndexedDB is een database ingebouwd in browsers, met veel meer mogelijkheden dan `localStorage`
 
-- Stores almost any kind of values by keys, multiple key types.
-- Supports transactions for reliability.
-- Supports key range queries, indexes.
+- Slaat bijna elke soort waarde per key op, er zijn meerdere types key nodig.
+- Ondersteund transacties voor betrouwbaarheid.
+- Ondersteunt queries van key ranges en indexen.
 - Kan een groter volumes data opslaan dan `localStorage`.
 
 Deze mogelijkheden zijn normaal gesproken excessief voor traditionele client-server apps. IndexedDB is bedoeld voor offline apps, om gecombineerd te worden met met ServiceWorkers en andere technologiën.
 
+
 De standaard interface van IndexedDB, omschreven in de specificatie <https://www.w3.org/TR/IndexedDB>, is gebaseerd op events.
 
-We kunnen ook `async/await` gebruiken door deze events om te zetten naar promises, zoals bij <https://github.com/jakearchibald/idb>. Dat is best gemakkelijk, maar is niet perfect, het kan niet de events in alle gevallen vervangen. Daarom beginnen we met events, en dan, nadat we IndexedDB begrijpen gebruiken we een library met promises. 
+We kunnen ook `async/await` gebruiken door deze events om te zetten naar promises, zoals bij <https://github.com/jakearchibald/idb>. Dat is best gemakkelijk, maar is niet perfect, het kan niets in alle gevallen de event vervangen. Daarom beginnen we met events, en dan, nadat we IndexedDB begrijpen gebruiken we een library met promises. 
 
 ## Verbinding maken met de database
 
-Om te werken met IndexedDB, moeten we eerst verbinding maken met een database met `open`.
+Om te werken met IndexedDB, moeten we eerst verbinding maken met een database met behulp van `open`.
 
 De syntax:
 
@@ -38,13 +39,13 @@ De functie geeft een `openRequest` object, we kunnen naar de events in dit objec
 - `error`: openen van de database is gefaald.
 - `upgradeneeded`: de database is gereed, maar de versie is verouderd ( zie onderstaand )
 
-**IndexedDB heeft een ingebouwd mechanisme van "schema versies", in tegenstelling tot een server-side databases**
+**IndexedDB heeft een ingebouwd mechanisme van "schema versies", in tegenstelling tot server-side databases**
 
-In tegenstelling met server-side databases, is IndexedDB client-side, de data wordt opgeslagen in de browser, dus wij, programmeurs, hebben niet altijd toegang tot de database. Dus, wanneer we een nieuwe versie van een app publiceren, en de gebruikers bezoeken onze website, moeten we mogelijk de database updaten.
+In tegenstelling met server-side databases, is IndexedDB client-side, de data wordt opgeslagen in de browser, dus wij, programmeurs, hebben niet altijd toegang tot de database. Wanneer we een nieuwe versie van een app publiceren, en de gebruikers bezoeken onze website, moeten we mogelijk de database updaten.
 
-Als de lokale database versie lager is dan die aangegeven in `open`, dan wordt een speciaal event, `upgradeended` geactiveerd, en kunnen we versies vergelijken en data-structuren updaten waar nodig.
+Als de lokale versie van de database lager is dan die aangegeven in `open`, dan wordt een speciaal event, `upgradeended` geactiveerd, en kunnen we versies vergelijken en data-structuren updaten waar nodig.
 
-Het `upgradeneeded` event wordt ook geactiveerd als er nog geen database bestaat ( technisch gesproken is de versie `0`), opdat we het een en ander kunnen initialiseren.
+Het `upgradeneeded` event wordt ook geactiveerd als er nog geen database bestaat ( technisch gesproken is de versie dan `0`), opdat we het een en ander kunnen initialiseren.
 
 Laten we zeggen dat we de eerste versie van onze app publiceren.
 
@@ -54,7 +55,7 @@ Nu kunnen we de de database met versie `1` openen en initialisatie uitvoeren in 
 let openRequest = indexedDB.open("store", *!*1*/!*);
 
 openRequest.onupgradeneeded = function() {
-  // activeert als de client geen database had
+  // activeert als de client geen database heeft
   // ...voer de initialisatie uit...
 };
 
@@ -76,20 +77,20 @@ We kunnen de `open` methode gebruiken met versie `2` en de upgrade als volgt uit
 let openRequest = indexedDB.open("store", *!*2*/!*);
 
 openRequest.onupgradeneeded = function(event) {
-  // de huidige database verzie is 2 of lager ( of bestaat niet )
+  // de huidige database versie is 2 of lager ( of bestaat niet )
   let db = openRequest.result;
   switch(event.oldVersion) { // huidige database versie
     case 0:
-      // versie 0 betekent dat de client geen database heeft
+      // versie 0 betekent dat de browser geen database heeft
       // voer database initialisatie uit
     case 1:
-      // de client had versie 1
+      // de browser had versie 1
       // update
   }
 };
 ```
 
-Let op: De huidige versie is `2`, de `onupgradeneeded` heeft code voor de upgrade vanaf versie `0`, voor gebruikers die de eerste keer de website bezoeken en nog geen database hebben, maar ook voor versie `1`.
+Let op: De huidige versie is `2`, het `onupgradeneeded` event heeft code voor de upgrade vanaf versie `0`, voor gebruikers die de eerste keer de website bezoeken en nog geen database hebben, maar ook voor versie `1`.
 
 En dan, alleen als `onupgradeneeded` zonder foutmeldingen voltooid is, wordt `openRequest.onsuccess`  geactiveerd en is de database succesvol geopend.
 
@@ -101,11 +102,11 @@ let deleteRequest = indexedDB.deleteDatabase(name)
 ```
 
 ```warn header="We kunnen geen oude versie van de database openen"
-Als de huidige database een hogere versie heeft in de `open` method, e.g. de bestaande databaseversie is `3`, en we proberen `open(...2)`, dan resulteerd dat in een foutmelding; `openRequest.onerror` activeert.
+Als de huidige database een hogere versie heeft in de `open` method, e.g. de bestaande databaseversie is `3`, en we proberen `open(...2)`, dan resulteert dat in een foutmelding; `openRequest.onerror` activeert.
 
 Dat is vreemd, maar zulke dingen kunnen gebeuren wanneer een bezoeker oude javascript code laadt, bijvoorbeeld uit een proxy cache. Dan is de code oud, maar de database nieuw.
 
-Om zulke foutmeldingen te voorkomen, zullen we `db.version` moeten controleren en voorstellen de pagina te herladen. Gebruik de gepaste HTTP caching headers om te voorkomen dat oude code geladen wordt, updat je nooit een dergelijk probleem hebt.
+Om zulke foutmeldingen te voorkomen, zullen we `db.version` moeten controleren en voorstellen de pagina te herladen. Gebruik de gepaste HTTP caching headers om te voorkomen dat oude code geladen wordt, opdat je nooit een dergelijk probleem hebt.
 ```
 
 ### Gelijktijdig update probleem
@@ -117,7 +118,7 @@ Stel je voor:
 2. Vervolgens voeren we een update uit, dus onze code is nieuwer.
 3. En dan opent de bezoeker onze site in een andere tab.
 
-Dus nu is er een tab open met een verbing met databaseversie `1`, terwijl de tweede tab een update probeert uit te voeren in haar `upgradeended` handler.
+Dus nu is er een tab open met een verbinding met databaseversie `1`, terwijl de tweede tab een update probeert uit te voeren in haar `upgradeended` handler.
 
 Het probleem is dat een database gedeeld wordt tussen twee tabs, aangezien de database afkomstig is van dezelfde site / origin. En deze database kan niet tegelijkertijd versie `1` en `2` zijn. Om eenupdate uit te voeren naar versie twee moeten alle verbindingen met de database gesloten zijn, inclusief die in de eerste tab.
 
@@ -125,7 +126,7 @@ Om dit te af te handelen, activeert een `versionchange` event in het "verlopen" 
 
 Als we niet luisteren naar een `versionchange` event en de verbinding verbreken, dan wordt de tweede, nieuwe verbinding, niet gemaakt. Het `openRequest` object activeert een `blocked` event in plaats van `success`. Dus de tweede tab werkt dan niet.
 
-Hier is code om een geljktijdige upgrade uit te voeren.
+Hier is code om een gelijktijdige upgrade uit te voeren.
 
 Onderstaande code installeert de `onversionchange` afhandeling nadat de database geopend is, welke de oude verbinding verbreekt.
 
@@ -163,13 +164,13 @@ Hier doen we twee dingen:
 1. Voeg een implementatie van het `db.onversionchange` event toe na het successvol openen, om op de hoogte te zijn van een gelijktijdige updatepoging.
 2. Voeg een implementatie van het `openRequest.onblocked` event toe om het scenario waar de oude verbinding niet verbroken was af te handelen. Dit event activeert niet als we de verbinding verbreken in `db.onversionchange`.
 
-Er zijn andere varianten. We kunnen bijvoorbeeld de tijd nemen om dingen netjes af te handelen in het `db.onversionchange` event en de bezoeker te vragen data op te slaan voordat de verbinding wordt verbroken. De nieuwe verbinding met de update zal direct geblokkeerd worden nadat `db.onversionchange` is voltooid zonder af te sluiten en we kunnen de bezoeker vragen de andere tabs te sluiten voor de update. 
+Er zijn andere varianten. We kunnen bijvoorbeeld de tijd nemen om dingen netjes af te handelen in het `db.onversionchange` event en de bezoeker te vragen data op te slaan voordat de verbinding wordt verbroken. De nieuwe verbinding zal tijdens de update direct geblokkeerd worden nadat `db.onversionchange` is voltooid zonder af te sluiten en we kunnen de bezoeker vragen de andere tabs te sluiten voor de update. 
 
 Dergelijke update conflicten gebeuren zelden, maar we zouden ze op zijn minst af kunnen handelen, bijvoorbeeld in het `onblocked` event, opdat onze code de bezoeker niet verrast door de database stilletjes te laten falen.
 
 ## Object opslag
 
-Om iets op te slaan in indexedDB, hebben we een *object store* (object opslag) nodig.
+Om iets op te slaan in indexedDB, hebben we een *object store* (opslagruimte voor een object) nodig.
 
 Een object store is een kernconcept in IndexedDB. Het is hetzelfde principe als een tabel of collectie in andere databases. Hier wordt data opgeslagen. Een database kan meerdere stores hebben: één voor gebruikers, één voor goederen, etc.
 
@@ -179,16 +180,16 @@ Ondanks de benaming "object store", kunnen andere primitieve waarden ook opgesla
 
 IndexedDB gebruikt het [standard serialization algorithm](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) om een object te dupliceren en op te slaan. Het lijkt op `JSON.stringify`, maar met meer mogelijkheden, in staat om veel meer datatypes op te slaan.
 
-Een voorbeeld van objecten die niet opgeslagen kunnen worden: Een object met circulaire verwijzigingen. Dergelijke objecten zijn niet te serialiseren. `JSON.stringify` kan dergelijke objecten ook niet opslaan.
+Een voorbeeld van objecten die niet opgeslagen kunnen worden: Objecten met circulaire verwijzigingen. Dergelijke objecten zijn niet te serialiseren. `JSON.stringify` kan dergelijke objecten ook niet opslaan.
 
 **Er moet een unieke `key` zijn voor elke waarde in de opslag**  
 
-Een key moet een van de volgende types hebben: nummer, datum, string binary of array, Het is een unieke indentificatie: met de key kunnen we specifieke waardes zoeken/verwijderen/updaten.
+Een key moet een van de volgende types hebben: nummer, datum, string binary of array, Het is een unieke identificatie: met de key kunnen we specifieke waardes zoeken/verwijderen/updaten.
 
 ![](indexeddb-structure.svg)
 
 
-Zoals we snel zullen zien, we kunnen een key toevoegen als we een waarde aan de opslag toevoegen, net zoals `localStorage`. Maar wanneer we objecten opslaan is indexedDB in staat een property als key op te slaan, dat is veel gemakkelijker. Of we kunnen automatisch keys genereren. 
+Zoals we snel zullen zien, we kunnen een key toevoegen wanneer we een waarde aan de opslag toevoegen, net zoals `localStorage`. Maar wanneer we objecten opslaan is indexedDB in staat een property als key op te slaan, dat is veel gemakkelijker. Of we kunnen automatisch keys genereren. 
 
 Maar we moeten eerst een object opslag maken.
 
@@ -237,7 +238,7 @@ openRequest.onupgradeneeded = function() {
 ```
 
 
-Om een object opslag te verwijderen:
+Om een opslagruimte voor objecten te verwijderen:
 
 ```js
 db.deleteObjectStore('books')
@@ -257,7 +258,7 @@ Het zal vrij slecht zijn als we de eerste operatie voltooien, en er daarna iets 
 
 Transacties geven deze garantie.
 
-**Alle data operaties moeten in een transactie gemaakt worden in IndexedDB**
+**Alle data operaties moeten door middel van een transactie gemaakt worden in IndexedDB**
 
 Om een transactie te starten:
 
@@ -268,17 +269,17 @@ db.transaction(store[, type]);
 - `store` is de naam van een opslagruimte, waar de transactie toegang tot zal krijgen, e.g. "books". Dit argument kan ook een array van diverse opslagruimtes zijn om toegang te krijgen tot meerdere opslagruimtes.
 - `type` – een transactie type, mogelijke waardes zijn:
   - `readonly` -- kan alleen data uitlezen, de standaard.
-  - `readwrite` -- kan alleen de data uitlezen en naar de opslagruimte schrijven, maar opslagruimte kan niet worden gecreëerd/verwijderd/aangepast.
+  - `readwrite` -- kan de data uitlezen en naar de opslagruimte schrijven, maar opslagruimte kan niet worden gecreëerd/verwijderd/aangepast.
 
 Er is ook een `versionchange` transactie type: deze transacties kunnen alles, maar we kunnen ze niet handmatig aanmaken. IndexedDB maakt automatisch een `versionchange` transactie aan wanneer de database wordt geopend, voor het `updateneeded` event. Dat is waarom er maar één plaats is waar we de structuur van de databse kunnen veranderen en opslagruimte voor objects kan worden gecreëerd/verwijderd.
 
 ```smart header="Waarom zijn er verschillende type transacties?"
-Prestatie is de reden waarom transacties `readonly` of `readwrite` genaamd moet worden.
+Prestatie is de reden waarom `readonly` of `readwrite`-transacties moet worden.
 
 Vele `readonly` transacties zijn in staat tegelijkertijd toegang te verkrijgen tot dezelfde opslagruimte, maar `readwrite` transacties kunnen dit niet. Een `readwrite` transactie "bevriest" de opslagruimte voor nieuwe opslag. De volgende transactie moet wachten tot de voorgaande transactie voltooid is, voordat deze toegang krijgt tot dezelfde opslagruimte.
 ```
 
-Nadat een transactie is gecreëerd, kunnen we items in de opslagruimte opslaan, als volgt:
+Nadat een transactie is gecreëerd, kunnen we items in de opslagruimte opslaan:
 
 ```js
 let transaction = db.transaction("books", "readwrite"); // (1)
@@ -329,23 +330,21 @@ Net zoals bij het openen van databases, kunnen we een verzoek versturen: `books.
 
 ## Transactie's autocommit
 
-In the example above we started the transaction and made `add` request. But as we stated previously, a transaction may have multiple associated requests, that must either all success or all fail. How do we mark the transaction as finished, no more requests to come?
 In het bovenstaande voorbeeld zijn we een transactie begonnen en maakte een `add` verzoek. Maar zoals we eerder zeiden, een trnsactie kan meerdere geassocieerde verzoeken bevatten, die allemaal successvol zijn of allemaal falen. Hoe markeren we een transactie als voltooid na het laatste verzoek.
 
 Het korte antwoord is: dat doen we niet.
 
 In de volgende versie 3.0 van de specificatie, zal er waarschijnlijk een handmatige manier zijn om transacties te voltooien, maar nu in versie 2.0 is dat niet het geval.
 
-**Als alle transacties zijn beëindigd, en de [microtasks queue](info:microtask-queue) leeg is, worden deze automatisch voltooid.**
+**Als alle transacties zijn beëindigd, en de [microtasks queue](info:microtask-queue) leeg is, worden deze transacties automatisch voltooid.**
 
-Normaal gesproken, nemen we aan dat een transactie voltooit, zodra alle requests compleet zijn en de huidige code eindigt.
+Normaal gesproken, nemen we aan dat een transactie voltooit, zodra alle requests afgehandeld zijn en de huidige code eindigt.
 
 Dus, in het bovenstaande voorbeeld is er geen speciale code nodig om de transactie te voltooien.
 
 Het auto-commit principe van transacties heeft een belangrijk neveneffect. We kunnen geen asynchrome operaties, zoals `fetch` en `setTimeout` uitvoeren in het midden van een transactie. IndexedDB zal de transactie niet open laten totdat deze zijn voltooid.
 
-In the code below `request2` in line `(*)` fails, because the transaction is already committed, can't make any request in it:
-In de onderstaande code `request2` op de met `(*)` gemarkeerde regel genereert een foutmelding, omdat de transactie al voltooid is.
+In de onderstaande code na `request2` op de met `(*)` gemarkeerde regel genereert een foutmelding, omdat de transactie al voltooid is.
 
 ```js
 let request1 = books.add(book);
@@ -370,7 +369,6 @@ Noemenswardig is dat `readwrite` transacties de opslagruimtes blokkeert voor upd
 
 Dus, wat doen we dan?
 
-In the example above we could make a new `db.transaction` right before the new request `(*)`.
 In het bovenstaande voorbeeld zouden we een nieuwe `db.transaction` kunnen maken net voor de nieuwe request `(*)`.
 
 Maar ,als we alle operaties tezamen willen houden, is het beter om de IndexedDB transacties te scheiden van de "andere" asynchrome operaties.
@@ -402,16 +400,15 @@ Dat annuleert alle modificaties gemaakt door de requests in de transactie en act
 
 ## Error afhandeling
 
-Scrijf verzoeken kunnen falen.
+Schrijf verzoeken kunnen falen.
 
-Dat is te verwachten, niet alleen door mogelijke fouten in onze code, maar ook voor redenen, die niet aan de transactie zelf gerelateerd zijn. Bijvoorbeeld, het opslagmaximum kan overschreden zijn. Dus we moeten deze situaties afhandelen.
+Dat is te verwachten, niet alleen door mogelijke fouten in onze code, maar ook door redenen, die niet aan de transactie zelf gerelateerd zijn. Bijvoorbeeld, het opslagmaximum kan overschreden zijn. Dus we moeten deze situaties afhandelen.
 
 **Een falend verzoek beëindigt de transactie, en maakt al de veranderingen ongedaan.**
 
-In sommige situatieskan het gewenst zijn een falend verzoek te behandelen zonder gemaakte veranderingen door te voeren en verder te gaan met de transactie. Dat is mogelijk. In het `request.onerror` event is in staat de transactie niet te beëindigen door `event.preventDefault` te gebruiken.  
+In sommige situaties kan het gewenst zijn een falend verzoek te behandelen zonder gemaakte veranderingen door te voeren en verder te gaan met de transactie. Dat is mogelijk. In het `request.onerror` event is in staat de transactie niet te beëindigen door `event.preventDefault` te gebruiken.  
 
-In the example below a new book is added with the same key (`id`) as the existing one. The `store.add` method generates a `"ConstraintError"` in that case. We handle it without canceling the transaction:
-In het onderstaande voorbeeld wordt een nieuw boek toegevoegd een identieke key (`id`) als een al bestaande. In dat geval genereert de `store.add` methode een `"ConstrantError"`. We verwerken deze zonder de transactie te beëindigen.
+In het onderstaande voorbeeld wordt een nieuw boek toegevoegd met een identieke key (`id`) als een al bestaande. In dat geval genereert de `store.add` methode een `"ConstrantError"`. We verwerken deze zonder de transactie te beëindigen.
 
 ```js
 let transaction = db.transaction("books", "readwrite");
@@ -445,7 +442,7 @@ Hebben we een onerror/onsuccess event nodig voor elk verzoek? Niet altijd. We ku
 
 Alle events zijn DOM events, met 'capturing' and 'bubbling', maar gebruikelijk wordt alleen de 'bubbling' stage gebruikt.
 
-Dus we kunnen alle foutmeldingen afhandelen met behulp van het `db.onerror` event, om een melding te maken of andere doeleinden.
+Dus we kunnen alle foutmeldingen afhandelen met behulp van het `db.onerror` event, om een melding te maken of voor andere doeleinden.
 
 ```js
 db.onerror = function(event) {
@@ -457,7 +454,6 @@ db.onerror = function(event) {
 
 ...Maar wat als een foutmelding volledig verwerkt wordt? In dat geval willen we geen melding maken.
 
-We can stop the bubbling and hence `db.onerror` by using `event.stopPropagation()` in `request.onerror`.
 We kunnen 'bubbling' en dus `de.onerror` stoppen met `event.stopPropagation()` in `request.onerror`.
 
 ```js
@@ -477,12 +473,12 @@ request.onerror = function(event) {
 ## Zoeken op keys
 
 Er zijn twee zoektypes in een opslagruimte:
-1. Op basis van een key of key range. Dat wil zeggen: Bij `book.id` in onze "books" opslagruimte.
+1. Op basis van een key of key range. Dat wil zeggen: Op basis van `book.id` in onze "books" opslagruimte.
 2. Op basis van een ander veld in een object, e.g. `book.price`
 
 Laten we eerst de keys en key ranges behandelen `(1)`.
 
-Methodes, welke betrekking hebben op zoek functionaliteit gebruiken exaxte keys of zogenaamde "range queries" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objecten die een "key range" specificeren.
+Methodes, welke betrekking hebben op zoek functionaliteit gebruiken exacte keys of zogenaamde "range queries" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objecten die een "key range" specificeren.
 
 Ranges worden gemaakt met de volgende code:
 
@@ -497,7 +493,7 @@ Alle zoekmethodes accepteren een `query` argument, welke een exacte key of een k
 - `store.getAll([query], [count])` -- zoek naar alle waardes, gelimiteerd door `count` als gegeven.
 - `store.getKey(query)` -- zoek naar de eerste key in de query, meestal een range.
 - `store.getAllKeys([query], [count])` -- zoek naar alle keys in een query, meestal een range, met een maximum aantal van `count` als gegeven.
-- `store.count([query])` -- krijg het aantal sleutels in een quesry, meestal een range
+- `store.count([query])` -- krijg het aantal sleutels in een query, meestal een range
 
 Bijvoorbeeld, we hebben veel boeken in onze opslagruimte. Denk eraan dat het `id` veld de key is, dus al deze methodes kunnen zoeken op `id`. 
 
@@ -521,10 +517,9 @@ books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
 ```smart header="De opslagruimte is altijd gesorteerd"
-Object store sorts values by key internally.
 Een opslagruimte sorteerd waardes intern op basis van de keys.
 
-Dus verzoeken welke in meerdere waarder resulteren, geeft deze resultaten altijd gesorteerd op basis van de key.
+Dus verzoeken welke in meerdere waarden resulteren, geven deze resultaten altijd gesorteerd op basis van de key weer.
 ```
 
 
@@ -532,8 +527,7 @@ Dus verzoeken welke in meerdere waarder resulteren, geeft deze resultaten altijd
 
 Om andere velden in een object te zoeken, hebben we een extra datasctructuur nodig genaamd "index".
 
-An index is an "add-on" to the store that tracks a given object field. For each value of that field, it stores a list of keys for objects that have that value. There will be a more detailed picture below.
-Een index is een "add-on" voor de opslagruimte, die een gegeven veld van een object traceert. Voor elke waarde van dat veld slaat het een lijst van keys voor objecten, die deze waarde hebben. Er is onderstaand een gedetailleerder plaatje.
+Een index is een "add-on" voor de opslagruimte, die een gegeven veld van een object traceert. Voor elke waarde van dat veld slaat het een lijst van keys voor objecten op, die deze waarde hebben. Zie onderstaand een gedetailleerder plaatje.
 
 De syntax:
 
@@ -551,7 +545,6 @@ In ons voorbeeld slaan we boeken op met `id` als key.
 
 Laten we zeggen dat we op `price` willen zoeken.
 
-First, we need to create an index. It must be done in `upgradeneeded`, just like an object store:
 Eerst moeten we een index aanmaken. Dit moet gedaan worden in `upgradeended`, net zoals de object opslagruimte.
 
 ```js
@@ -597,8 +590,7 @@ request.onsuccess = function() {
 };
 ```
 
-We can also use `IDBKeyRange` to create ranges and looks for cheap/expensive books:
-We kunnen ook gebruik maken van `IDBKeyRange` om een reange te maken en voor dure/goedkope boeken zoeken.
+We kunnen ook gebruik maken van `IDBKeyRange` om een range te maken en naar voor dure/goedkope boeken zoeken.
 
 ```js
 // verkrijg boeken waar price <= 5
@@ -609,7 +601,7 @@ Indexes worden intern gesorteerd op het bijgehouden object veld, in ons geval `p
 
 ## Verwijderen uit opslagruimte
 
-De `delete` methode selecteert op basis van waardes om te verwijderen, de methode lijkt op `getAll`.
+De `delete` methode selecteert op basis van te verwijderen waardes om, de methode lijkt op `getAll`.
 
 - **`delete(query)`** -- verwijder waardes, die aan de query voldoen
 
@@ -662,7 +654,7 @@ let request = store.openCursor(query, [direction]);
 - **`direction`** is een optioneel argument, in welke de te gebruiken volgorde wordt aangegeven.
   - `"next"` -- de standaard, de cursor doorloopt de records van de laagste naar de hoogste key waarde.
   - `"prev"` -- de omgekeerde volgorde: van de hoogste naar de laagste record.
-  - `"nextunique"`, `"prevunique"` -- Het zelfde als hierboven, maar slaat records met dezelfde key over ( alleen voor cursors die itereren over een index. e.g. voor meerdere boeken met price=5 wordt alleen de eerste match terguggegeven in het resultaat ). 
+  - `"nextunique"`, `"prevunique"` -- Het zelfde als hierboven, maar slaat records met dezelfde key over ( alleen voor cursors die itereren over een index. e.g. voor meerdere boeken met price=5 wordt alleen de eerste match teruggegeven in het resultaat ). 
 
 **Het hoofdzakelijke verschil met een cursor is dat `request.onsuccess` meerdere keren geactiveert wordt: Een maal voor elk resultaat**
 
@@ -695,7 +687,7 @@ De belangrijkste cursor methodes zijn:
 
 Of er meerdere waardes gevonden zijn of niet -- Het `onsuccess` event wordt geactiveerd, en vervolgens kunnen we in het `result` de cursor, die naar de volgende waarde verwijst verkrijgen of `undefined`.
 
-In het bovenstaande voorbeeld werd een cursor gemaakt voor de opslagruimte voor objecten.
+In het bovenstaande voorbeeld werd een cursor gemaakt voor de opslagruimte van objecten.
 
 Maar we kunnen ook een cursor maken op basis van een index. Zoals we weten, staan indexes het toe om een object veld te doorzoeken. Een cursor op basis van indexen doet hetzelfde als een cursor toegepast op een opslagruimte -- ze besparen geheugen door één waarde per keer te verkrijgen.
 
@@ -704,7 +696,7 @@ Voor cursors op basis van indexen, is de `cursor.key` de index key ( e.g. price 
 ```js
 let request = priceIdx.openCursor(IDBKeyRange.upperBound(5));
 
-// geactiveert voor elke record
+// activeert voor elke record
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
@@ -771,7 +763,7 @@ window.addEventListener('unhandledrejection', event => {
 
 ### De "Interactieve transactie" valkuil
 
-Zoals we al weten, een transactie vlotooid zo snel als de browser klaar is met de huidige code en microtaks. Dus wanneer we een *macrotask* zoals `fetch` in het midden van een transactie zetten, dan zal de transactie niet wachten todat de macrotask voltooid is. Het voltooid alleen de transactie. Dus daaropvolgende code op basis van de transactie zal falen.
+Zoals we al weten, een transactie voltooid zo snel als de browser klaar is met de huidige code en microtasks. Dus wanneer we een *macrotask* zoals `fetch` in het midden van een transactie zetten, dan zal de transactie niet wachten todat de macrotask voltooid is. Het voltooid alleen de transactie. Dus daaropvolgende code op basis van de transactie zal falen.
 
 Voor een promise wrapper en `async/await` is de situatie hetzelfde.
 
@@ -792,11 +784,11 @@ De `inventory.add`, die volgt na `fetch` `(*)` faalt met een "inactive transacti
 
 De workaround is hetzelfde als wanneer we werken met de standaard IndexedDB: Maak een nieuwe transactie of scheidt de code af.
 1. Bereid de data voor en verkrijg alle informatie die nodig is.
-2. Sla het dan o pin de database
+2. Sla het dan op in de database
 
 ### Oorspronkelijke objecten verkrijgen
 
-Intern voert de wrapper een oorspronkelijk IndexedDB request uit, voegt er `onerror/onsuccess` aan toe, en resulteerd in eem promise dat op basis van het resultaat rejects/resolves.
+Intern voert de wrapper een oorspronkelijk IndexedDB request uit, voegt er `onerror/onsuccess` aan toe, en resulteert in een promise dat op basis van het resultaat rejects/resolves.
 
 Dat werkt normaal gesproken prima. Er zijn voorbeelden bij de library pagina <https://github.com/jakearchibald/idb>.
 
@@ -821,13 +813,13 @@ De beste handleiding is de specificatie, [de huidige](https://w3c.github.io/Inde
 
 Het basisgebruik kan in eenn paar regels samengevat worden:
 
-1. Zoek een promise warapper, zoals [idb](https://github.com/jakearchibald/idb).
+1. Zoek een promise wrapper, zoals [idb](https://github.com/jakearchibald/idb).
 2. Open een database: `idb.openDb(name, version, onupgradeneeded)`
     - Maak opslagruimtes voor objecten en indexen in de `onupgradeneeded` event behandeling of voer een versie update uit, indien nodig.
 3. Voor verzoeken:
     - Maak een transactie aan `db.transaction('books')` (readwrite alsnodig)
     - Verkrijg een opslagruimte `transaction.objectStore('books')`.
-4. Gebruik methodes o pde opslagruimte om te zoeken op bass van key.
+4. Gebruik methodes op de opslagruimte om te zoeken op bass van key.
     - om een object veld te doorzoeken, creëer een index
 5. Als de data niet in het geheugen past, gebruik een cursor
 
