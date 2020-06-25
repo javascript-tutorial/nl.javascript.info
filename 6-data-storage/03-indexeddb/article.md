@@ -638,13 +638,13 @@ books.clear(); // leeg de opslagruimte
 
 ## Cursors
 
-Methods like `getAll/getAllKeys` return an array of keys/values.
+Methodes als `getAll/getAllKeys` geven een array van keys/waardes.
 
-But an object storage can be huge, bigger than the available memory. Then `getAll` will fail to get all records as an array.
+Maar de opslagruimte van een object kan gigantisch zijn, groter dan het beschikbare geheugen. Dan zal `getAll` geen array van alle objects kunnen geven.
 
-What to do?
+Wat te doen?
 
-Cursors provide the means to work around that.
+Cursors geven de middelen om dit te omzeilen.
 
 **A *cursor* is a special object that traverses the object storage, given a query, and returns one key/value at a time, thus saving memory.**
 
