@@ -528,33 +528,35 @@ Dus verzoeken welke in meerdere waarder resulteren, geeft deze resultaten altijd
 ```
 
 
-## Searching by any field with an index
+## Op basis van willekeurig veld zoeken met een index
 
-To search by other object fields, we need to create an additional data structure named "index".
+Om andere velden in een object te zoeken, hebben we een extra datasctructuur nodig genaamd "index".
 
 An index is an "add-on" to the store that tracks a given object field. For each value of that field, it stores a list of keys for objects that have that value. There will be a more detailed picture below.
+Een index is een "add-on" voor de opslagruimte, die een gegeven veld van een object traceert. Voor elke waarde van dat veld slaat het een lijst van keys voor objecten, die deze waarde hebben. Er is onderstaand een gedetailleerder plaatje.
 
-The syntax:
+De syntax:
 
 ```js
 objectStore.createIndex(name, keyPath, [options]);
 ```
 
-- **`name`** -- index name,
-- **`keyPath`** -- path to the object field that the index should track (we're going to search by that field),
-- **`option`** -- an optional object with properties:
-  - **`unique`** -- if true, then there may be only one object in the store with the given value at the `keyPath`. The index will enforce that by generating an error if we try to add a duplicate.
-  - **`multiEntry`** -- only used if the value on `keyPath` is an array. In that case, by default, the index will treat the whole array as the key. But if `multiEntry` is true, then the index will keep a list of store objects for each value in that array. So array members become index keys.
+- **`name`** -- index naam,
+- **`keyPath`** -- pad naar een object veld welke je wilt dat de index traceert ( we gaan zoeken op basis van dat veld ),
+- **`option`** -- een optioneel object met de properties:
+  - **`unique`** -- als true, dan mag er maar één object in de opslagruimte met de gegeven waarde zijn in de `keyPath`. De index zal een foutmelding garanderen wanneer we de waarde proberen te dupliceren.
+  - **`multiEntry`** -- alleen in gebruik als de waarde van `keyPath` een array is. In dat geval behandelt de index de gehele array als key. Maar wanneer `multiEntry` true is, dan houdt de index een lijst van opslagruimte objecten voor elke waarde in die array. Dus de waardes in de array worden index keys. 
 
-In our example, we store books keyed by `id`.
+In ons voorbeeld slaan we boeken op met `id` als key.
 
-Let's say we want to search by `price`.
+Laten we zeggen dat we op `price` willen zoeken.
 
 First, we need to create an index. It must be done in `upgradeneeded`, just like an object store:
+Eerst moeten we een index aanmaken. Dit moet gedaan worden in `upgradeended`, net zoals de object opslagruimte.
 
 ```js
 openRequest.onupgradeneeded = function() {
-  // we must create the index here, in versionchange transaction
+  // we moeten hier een index maken, in de versionchange transactie
   let books = db.createObjectStore('books', {keyPath: 'id'});
 *!*
   let index = inventory.createIndex('price_idx', 'price');
@@ -562,19 +564,20 @@ openRequest.onupgradeneeded = function() {
 };
 ```
 
-- The index will track `price` field.
-- The price is not unique, there may be multiple books with the same price, so we don't set `unique` option.
-- The price is not an array, so `multiEntry` flag is not applicable.
+- De index zal het `price` veld traceren.
+- De `price` is niet uniek, er kunnen meerde boeken met dezelfde prijs zijn, daarom maken we geen gebruik van de `unique` optie.
+- De `price` is geen array, dus `multiEntry` is niet van toepassing.
 
 Imagine that our `inventory` has 4 books. Here's the picture that shows exactly what the `index` is:
+Stel je voor dat onze `inventory` 4 boeken heeft. Hier is een afbeelding, welke exact laat zien wat de `index` is.
 
 ![](indexeddb-index.svg)
 
-As said, the index for each value of `price` (second argument) keeps the list of keys that have that price.
+Zoals gezegd, de index voor elke waarde van `price` (tweede argument) houdt een lijst van keys bij, die deze `price` hebben.
 
-The index keeps itself up to date automatically, we don't have to care about it.
+De index houdt zichzelf automatisch up-to-date, hier hoeven we ons geen zorgen over te maken.
 
-Now, when we want to search for a given price, we simply apply the same search methods to the index:
+Nu, wanneer we een bepaalde prijs willen vinden, gebruiken we simpelweg dezelfde methodes als bij de index.
 
 ```js
 let transaction = db.transaction("books"); // readonly
@@ -595,13 +598,15 @@ request.onsuccess = function() {
 ```
 
 We can also use `IDBKeyRange` to create ranges and looks for cheap/expensive books:
+We kunnen ook gebruik maken van `IDBKeyRange` om een reange te maken en voor dure/goedkope boeken zoeken.
 
 ```js
-// find books where price <= 5
+// verkrijg boeken waar price <= 5
 let request = priceIndex.getAll(IDBKeyRange.upperBound(5));
 ```
 
 Indexes are internally sorted by the tracked object field, `price` in our case. So when we do the search, the results are also sorted by `price`.
+Indexes worden intern gesorteerd op het bijgehouden object veld, in ons geval `price`. Dus wanneer we zoeken, worden de resultaten op `price` gesorteerd.
 
 ## Deleting from store
 
