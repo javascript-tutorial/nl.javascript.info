@@ -753,31 +753,29 @@ try {
 
 Dus nu hebben we asynchrome code en "try..catch".
 
-### Error handling
+### Fout afhandeling
 
-If we don't catch an error, then it falls through, till the closest outer `try..catch`.
+Als we geen `catch` implementeren voor een error, wordt de fout gepropageerd naar het dichtsbijzijnde `try...catch` block waarbinnen de code zich bevindt.
 
-An uncaught error becomes an "unhandled promise rejection" event on `window` object.
+Een onafgehandelde fout, wordt een "unhandled promise rejection" event op het `window` object.
 
-We can handle such errors like this:
+We kunnen fouten als volgt afhandelen:
 
 ```js
 window.addEventListener('unhandledrejection', event => {
   let request = event.target; // IndexedDB native request object
-  let error = event.reason; //  Unhandled error object, same as request.error
-  ...report about the error...
+  let error = event.reason; //  Onafgehandelde fout object, net als request.error
+  ...maak melding van de fout...
 });
 ```
 
-### "Inactive transaction" pitfall
+### De "Interactieve transactie" valkuil
 
+Zoals we al weten, een transactie vlotooid zo snel als de browser klaar is met de huidige code en microtaks. Dus wanneer we een *macrotask* zoals `fetch` in het midden van een transactie zetten, dan zal de transactie niet wachten todat de macrotask voltooid is. Het voltooid alleen de transactie. Dus daaropvolgende code op basis van de transactie zal falen.
 
-As we already know, a transaction auto-commits as soon as the browser is done with the current code and microtasks. So if we put a *macrotask* like `fetch` in the middle of a transaction, then the transaction won't wait for it to finish. It just auto-commits. So the next request in it would fail.
+Voor een promise wrapper en `async/await` is de situatie hetzelfde.
 
-
-For a promise wrapper and `async/await` the situation is the same.
-
-Here's an example of `fetch` in the middle of the transaction:
+Hier is een voorbeeld van `fetch` middenin een transactie:
 
 ```js
 let transaction = db.transaction("inventory", "readwrite");
@@ -787,14 +785,14 @@ await inventory.add({ id: 'js', price: 10, created: new Date() });
 
 await fetch(...); // (*)
 
-await inventory.add({ id: 'js', price: 10, created: new Date() }); // Error
+await inventory.add({ id: 'js', price: 10, created: new Date() }); // Fout
 ```
 
-The next `inventory.add` after `fetch` `(*)` fails with an "inactive transaction" error, because the transaction is already committed and closed at that time.
+De `inventory.add`, die volgt na `fetch` `(*)` faalt met een "inactive transaction" foutmelding, omdat de transactie op dat moment al voltooid en gesloten is.
 
-The workaround is same as when working with native IndexedDB: either make a new transaction or just split things apart.
-1. Prepare the data and fetch all that's needed first.
-2. Then save in the database.
+De workaround is hetzelfde als wanneer we werken met de standaard IndexedDB: Maak een nieuwe transactie of scheidt de code af.
+1. Bereid de data voor en verkrijg alle informatie die nodig is.
+2. Sla het dan o pin de database
 
 ### Getting native objects
 
