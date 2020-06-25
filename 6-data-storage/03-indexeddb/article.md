@@ -605,25 +605,24 @@ We kunnen ook gebruik maken van `IDBKeyRange` om een reange te maken en voor dur
 let request = priceIndex.getAll(IDBKeyRange.upperBound(5));
 ```
 
-Indexes are internally sorted by the tracked object field, `price` in our case. So when we do the search, the results are also sorted by `price`.
 Indexes worden intern gesorteerd op het bijgehouden object veld, in ons geval `price`. Dus wanneer we zoeken, worden de resultaten op `price` gesorteerd.
 
-## Deleting from store
+## Verwijderen uit opslagruimte
 
-The `delete` method looks up values to delete by a query, the call format is similar to `getAll`:
+De `delete` methode selecteert op basis van waardes om te verwijderen, de methode lijkt op `getAll`.
 
-- **`delete(query)`** -- delete matching values by query.
+- **`delete(query)`** -- verwijder waardes, die aan de query voldoen
 
-For instance:
+Bijvoorbeeld:
 ```js
-// delete the book with id='js'
+// verwijder het boek met id='js'
 books.delete('js');
 ```
 
-If we'd like to delete books based on a price or another object field, then we should first find the key in the index, and then call `delete`:
+Als we boeken willen verwijderen op basis van `price` of een ander object veld, dan moeten we eerst de key in de index vinden, en dan `delete` gebruiken:
 
 ```js
-// find the key where price = 5
+// vind een key waar de price = 5
 let request = priceIndex.getKey(5);
 
 request.onsuccess = function() {
@@ -632,9 +631,9 @@ request.onsuccess = function() {
 };
 ```
 
-To delete everything:
+Om alles te verwijderen:
 ```js
-books.clear(); // clear the storage.
+books.clear(); // leeg de opslagruimte
 ```
 
 ## Cursors
