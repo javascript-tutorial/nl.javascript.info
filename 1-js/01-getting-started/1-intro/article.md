@@ -1,120 +1,120 @@
-# An Introduction to JavaScript
+# Een inleiding tot JavaScript
 
-Let's see what's so special about JavaScript, what we can achieve with it, and which other technologies play well with it.
+Laten we eens kijken wat er zo bijzonder is aan JavaScript, wat we ermee kunnen bereiken en welke andere technologieën er goed mee spelen.
 
-## What is JavaScript?
+## Wat is JavaScript?
 
-*JavaScript* was initially created to "make web pages alive".
+*Javascript* is in eerste instantie gemaakt om "webpagina's levendig te maken".
 
-The programs in this language are called *scripts*. They can be written right in a web page's HTML and run automatically as the page loads.
+De programma's in deze taal heten *scripts*. Ze kunnen direct in de HTML van een webpagina worden geschreven en automatisch worden uitgevoerd als de pagina wordt geladen.
 
-Scripts are provided and executed as plain text. They don't need special preparation or compilation to run.
+Scripts worden geleverd en uitgevoerd als platte tekst. Ze hebben geen speciale voorbereiding of compilatie nodig om te draaien.
 
-In this aspect, JavaScript is very different from another language called [Java](https://en.wikipedia.org/wiki/Java_(programming_language)).
+In dit aspect is JavaScript heel anders dan een andere taal die [Java](https://en.wikipedia.org/wiki/Java_(programming_language)) heet.
 
-```smart header="Why is it called <u>Java</u>Script?"
-When JavaScript was created, it initially had another name: "LiveScript". But Java was very popular at that time, so it was decided that positioning a new language as a "younger brother" of Java would help.
+```smart header="Waarom heet het <u>Java</u>Script?".
+Toen JavaScript werd gecreëerd, had het aanvankelijk een andere naam: "LiveScript". Maar Java was in die tijd erg populair, dus werd besloten dat het positioneren van een nieuwe taal als een "jongere broer" van Java zou helpen.
 
-But as it evolved, JavaScript became a fully independent language with its own specification called [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript), and now it has no relation to Java at all.
+Maar naarmate het zich ontwikkelde, werd JavaScript een volledig onafhankelijke taal met een eigen specificatie genaamd [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript), en nu heeft het geen enkele relatie meer met Java.
 ```
 
-Today, JavaScript can execute not only in the browser, but also on the server, or actually on any device that has a special program called [the JavaScript engine](https://en.wikipedia.org/wiki/JavaScript_engine).
+Tegenwoordig kan JavaScript niet alleen in de browser worden uitgevoerd, maar ook op de server, of eigenlijk op elk apparaat dat een speciaal programma heeft dat [de JavaScript-engine] heet (https://en.wikipedia.org/wiki/JavaScript_engine).
 
-The browser has an embedded engine sometimes called a "JavaScript virtual machine".
+De browser heeft een embedded engine die soms een "JavaScript virtuele machine" wordt genoemd.
 
-Different engines have different "codenames". For example:
+Verschillende engines hebben verschillende "codenamen". Bijvoorbeeld:
 
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
+- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome en Opera.
 - [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
-- ...There are other codenames like "Trident" and "Chakra" for different versions of IE, "ChakraCore" for Microsoft Edge, "Nitro" and "SquirrelFish" for Safari, etc.
+- ...Er zijn andere codenamen zoals "Trident" en "Chakra" voor verschillende versies van IE, "ChakraCore" voor Microsoft Edge, "Nitro" en "SquirrelFish" voor Safari, enz.
 
-The terms above are good to remember because they are used in developer articles on the internet. We'll use them too. For instance, if "a feature X is supported by V8", then it probably works in Chrome and Opera.
+De bovenstaande termen zijn goed om te onthouden, omdat ze worden gebruikt in artikelen voor ontwikkelaars op het internet. We zullen ze ook gebruiken. Als bijvoorbeeld "een functie X wordt ondersteund door V8", dan werkt het waarschijnlijk in Chrome en Opera.
 
-```smart header="How do engines work?"
+```smart header="Hoe werken de engines?"
 
-Engines are complicated. But the basics are easy.
+Engines zijn ingewikkeld. Maar de basis is eenvoudig.
 
-1. The engine (embedded if it's a browser) reads ("parses") the script.
-2. Then it converts ("compiles") the script to the machine language.
-3. And then the machine code runs, pretty fast.
+1. De engine (ingebed als het een browser is) leest ("parses") het script.
+2. Vervolgens zet het het script om ("compileert") naar de machinetaal.
+3. En dan draait de machinecode, vrij snel.
 
-The engine applies optimizations at each step of the process. It even watches the compiled script as it runs, analyzes the data that flows through it, and further optimizes the machine code based on that knowledge.
+De engine past bij elke stap van het proces optimalisaties toe. Hij kijkt zelfs naar het gecompileerde script terwijl het draait, analyseert de gegevens die erdoorheen stromen en optimaliseert de machinecode verder op basis van die kennis.
 ```
 
-## What can in-browser JavaScript do?
+## Wat kan in-browser JavaScript doen?
 
-Modern JavaScript is a "safe" programming language. It does not provide low-level access to memory or CPU, because it was initially created for browsers which do not require it.
+Modern JavaScript is een "veilige" programmeertaal. Het biedt geen low-level toegang tot het geheugen of de CPU, omdat het in eerste instantie is gemaakt voor browsers die het niet nodig hebben.
 
-JavaScript's capabilities greatly depend on the environment it's running in. For instance, [Node.js](https://wikipedia.org/wiki/Node.js) supports functions that allow JavaScript to read/write arbitrary files, perform network requests, etc.
+De mogelijkheden van JavaScript zijn sterk afhankelijk van de omgeving waarin het draait. Bijvoorbeeld, [Node.js](https://wikipedia.org/wiki/Node.js) ondersteunt functies die JavaScript toestaan om willekeurige bestanden te lezen/schrijven, netwerkverzoeken uit te voeren, enz.
 
-In-browser JavaScript can do everything related to webpage manipulation, interaction with the user, and the webserver.
+In-browser JavaScript kan alles doen met betrekking tot webpagina manipulatie, interactie met de gebruiker en de webserver.
 
-For instance, in-browser JavaScript is able to:
+In-browser JavaScript kan dat bijvoorbeeld:
 
-- Add new HTML to the page, change the existing content, modify styles.
-- React to user actions, run on mouse clicks, pointer movements, key presses.
-- Send requests over the network to remote servers, download and upload files (so-called [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) and [COMET](https://en.wikipedia.org/wiki/Comet_(programming)) technologies).
-- Get and set cookies, ask questions to the visitor, show messages.
-- Remember the data on the client-side ("local storage").
+- Nieuwe HTML toe te voegen aan de pagina, de bestaande inhoud te wijzigen, stijlen aan te passen.
+- Reageren op acties van de gebruiker, uitvoeren op muisklikken, aanwijsbewegingen, toetsaanslagen.
+- Verzoeken via het netwerk naar externe servers sturen, bestanden downloaden en uploaden (zogenaamde [AJAX](https://en.wikipedia.org/wiki/Ajax_(programmering)) en [COMET](https://en.wikipedia.org/wiki/Comet_(programmering)) technologieën).
+- Krijg en stel cookies, stel vragen aan de bezoeker, toon berichten.
+- Onthoud de gegevens aan de klantzijde ("lokale opslag").
 
-## What CAN'T in-browser JavaScript do?
+## Wat kan in-browser JavaScript niet doen?
 
-JavaScript's abilities in the browser are limited for the sake of the user's safety. The aim is to prevent an evil webpage from accessing private information or harming the user's data.
+De mogelijkheden van JavaScript in de browser zijn beperkt omwille van de veiligheid van de gebruiker. Het doel is om te voorkomen dat een kwaadaardige webpagina toegang krijgt tot privé-informatie of schade toebrengt aan de gegevens van de gebruiker.
 
-Examples of such restrictions include:
+Voorbeelden van dergelijke beperkingen zijn:
 
-- JavaScript on a webpage may not read/write arbitrary files on the hard disk, copy them or execute programs. It has no direct access to OS functions.
+- JavaScript op een webpagina mag geen willekeurige bestanden op de harde schijf lezen/schrijven, kopiëren of programma's uitvoeren. Het heeft geen directe toegang tot OS-functies.
 
-    Modern browsers allow it to work with files, but the access is limited and only provided if the user does certain actions, like "dropping" a file into a browser window or selecting it via an `<input>` tag.
+    Moderne browsers staan het toe om met bestanden te werken, maar de toegang is beperkt en wordt alleen verleend als de gebruiker bepaalde acties uitvoert, zoals het "droppen" van een bestand in een browservenster of het selecteren van het bestand via een `<input>` tag.
 
-    There are ways to interact with camera/microphone and other devices, but they require a user's explicit permission. So a JavaScript-enabled page may not sneakily enable a web-camera, observe the surroundings and send the information to the [NSA](https://en.wikipedia.org/wiki/National_Security_Agency).
-- Different tabs/windows generally do not know about each other. Sometimes they do, for example when one window uses JavaScript to open the other one. But even in this case, JavaScript from one page may not access the other if they come from different sites (from a different domain, protocol or port).
+    Er zijn manieren om met de camera/microfoon en andere apparaten te communiceren, maar daarvoor is de uitdrukkelijke toestemming van de gebruiker nodig. Een JavaScript-pagina mag dus niet stiekem een webcamera inschakelen, de omgeving observeren en de informatie naar de [NSA](https://en.wikipedia.org/wiki/National_Security_Agency) sturen.
+- Verschillende tabbladen/vensters kennen elkaar over het algemeen niet. Soms wel, bijvoorbeeld wanneer het ene venster JavaScript gebruikt om het andere te openen. Maar zelfs in dit geval kan het zijn dat JavaScript van de ene pagina de andere pagina niet opent als ze van verschillende sites komen (van een ander domein, protocol of poort).
 
-    This is called the "Same Origin Policy". To work around that, *both pages* must agree for data exchange and contain a special JavaScript code that handles it. We'll cover that in the tutorial.
+    Dit wordt de "Same Origin Policy" genoemd. Om daar omheen te werken, moet *beide pagina's* akkoord gaan met gegevensuitwisseling en een speciale JavaScript-code bevatten die dit afhandelt. We zullen dat in de tutorial behandelen.
 
-    This limitation is, again, for the user's safety. A page from `http://anysite.com` which a user has opened must not be able to access another browser tab with the URL `http://gmail.com` and steal information from there.
-- JavaScript can easily communicate over the net to the server where the current page came from. But its ability to receive data from other sites/domains is crippled. Though possible, it requires explicit agreement (expressed in HTTP headers) from the remote side. Once again, that's a safety limitation.
+    Deze beperking is, nogmaals, voor de veiligheid van de gebruiker. Een pagina van `http://anysite.com` die een gebruiker heeft geopend moet niet in staat zijn om een ander browsertabblad met de URL `http://gmail.com` te openen en van daaruit informatie te stelen.
+- JavaScript kan eenvoudig over het net communiceren met de server waar de huidige pagina vandaan komt. Maar de mogelijkheid om gegevens van andere sites/domeinen te ontvangen is kreupel. Hoewel het mogelijk is, vereist het expliciete toestemming (uitgedrukt in HTTP-headers) van de andere kant. Ook dat is een veiligheidsbeperking.
 
 ![](limitations.svg)
 
-Such limits do not exist if JavaScript is used outside of the browser, for example on a server. Modern browsers also allow plugin/extensions which may ask for extended permissions.
+Dergelijke limieten bestaan niet als JavaScript buiten de browser om wordt gebruikt, bijvoorbeeld op een server. Moderne browsers staan ook plugin/uitbreidingen toe die om uitgebreide rechten kunnen vragen.
 
-## What makes JavaScript unique?
+## Wat maakt JavaScript uniek?
 
-There are at least *three* great things about JavaScript:
+Er zijn minstens *drie* leuke dingen aan JavaScript:
 
-```compare
-+ Full integration with HTML/CSS.
-+ Simple things are done simply.
-+ Support by all major browsers and enabled by default.
+```vergelijken
++ Volledige integratie met HTML/CSS.
++ Eenvoudige dingen worden eenvoudig gedaan.
++ Ondersteuning door alle grote browsers en standaard ingeschakeld.
 ```
-JavaScript is the only browser technology that combines these three things.
+JavaScript is de enige browsertechnologie die deze drie dingen combineert.
 
-That's what makes JavaScript unique. That's why it's the most widespread tool for creating browser interfaces.
+Dat is wat JavaScript uniek maakt. Daarom is het de meest gebruikte tool voor het maken van browserinterfaces.
 
-That said, JavaScript also allows to create servers, mobile applications, etc.
+Maar JavaScript maakt het ook mogelijk om servers, mobiele applicaties, etc. te maken.
 
-## Languages "over" JavaScript
+## Talen "over" JavaScript
 
-The syntax of JavaScript does not suit everyone's needs. Different people want different features.
+De syntaxis van JavaScript past niet bij iedereen. Verschillende mensen willen verschillende functies.
 
-That's to be expected, because projects and requirements are different for everyone.
+Dat is te verwachten, want projecten en eisen zijn voor iedereen verschillend.
 
-So recently a plethora of new languages appeared, which are *transpiled* (converted) to JavaScript before they run in the browser.
+Zo is er onlangs een overvloed aan nieuwe talen verschenen, die *getranspilleerd* (geconverteerd) zijn naar JavaScript voordat ze in de browser draaien.
 
-Modern tools make the transpilation very fast and transparent, actually allowing developers to code in another language and auto-converting it "under the hood".
+Moderne tools maken de transpilatie zeer snel en transparant, waardoor ontwikkelaars eigenlijk in een andere taal kunnen coderen en deze "onder de motorkap" automatisch kunnen converteren.
 
-Examples of such languages:
+Voorbeelden van dergelijke talen:
 
-- [CoffeeScript](http://coffeescript.org/) is a "syntactic sugar" for JavaScript. It introduces shorter syntax, allowing us to write clearer and more precise code. Usually, Ruby devs like it.
-- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing" to simplify the development and support of complex systems. It is developed by Microsoft.
-- [Flow](http://flow.org/) also adds data typing, but in a different way. Developed by Facebook.
-- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps), but also can be transpiled to JavaScript. Developed by Google.
+- [CoffeeScript](http://coffeescript.org/) is een "syntactisch suiker" voor JavaScript. Het introduceert een kortere syntaxis, waardoor we duidelijkere en nauwkeurigere code kunnen schrijven. Gewoonlijk vindt Ruby het leuk.
+- [TypeScript](http://www.typescriptlang.org/) is geconcentreerd op het toevoegen van "strikte gegevenstypering" om de ontwikkeling en ondersteuning van complexe systemen te vereenvoudigen. Het is ontwikkeld door Microsoft.
+- [Flow](http://flow.org/) voegt ook datatypering toe, maar dan op een andere manier. Ontwikkeld door Facebook.
+- Dart](https://www.dartlang.org/) is een standalone taal die een eigen engine heeft die draait in niet-browseromgevingen (zoals mobiele apps), maar ook kan worden getransponeerd naar JavaScript. Ontwikkeld door Google.
 
-There are more. Of course, even if we use one of transpiled languages, we should also know JavaScript to really understand what we're doing.
+Er zijn er meer. Natuurlijk, zelfs als we een van de getransporteerde talen gebruiken, moeten we ook JavaScript kennen om echt te begrijpen wat we doen.
 
-## Summary
+## Samenvatting
 
-- JavaScript was initially created as a browser-only language, but is now used in many other environments as well.
-- Today, JavaScript has a unique position as the most widely-adopted browser language with full integration with HTML/CSS.
-- There are many languages that get "transpiled" to JavaScript and provide certain features. It is recommended to take a look at them, at least briefly, after mastering JavaScript.
+- JavaScript werd in eerste instantie gecreëerd als een browser-taal, maar wordt nu ook in veel andere omgevingen gebruikt.
+- Vandaag de dag heeft JavaScript een unieke positie als de meest gebruikte browsertaal met volledige integratie met HTML/CSS.
+- Er zijn veel talen die naar JavaScript worden "getransporteerd" en die bepaalde functies bieden. Het is aan te raden om ze te bekijken, in ieder geval kort, na het beheersen van JavaScript.
