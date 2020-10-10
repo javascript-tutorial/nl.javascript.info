@@ -1,9 +1,5 @@
-importance: 5
+# Toon een waarschuwing met een extern script
 
----
+Neem de oplossing van de vorige taak <info:task/hello-alert>. Wijzig het door de inhoud van het script uit te pakken in een extern bestand `alert.js`, dat zich in dezelfde map bevindt.
 
-# Show an alert with an external script
-
-Take the solution of the previous task <info:task/hello-alert>. Modify it by extracting the script content into an external file `alert.js`, residing in the same folder.
-
-Open the page, ensure that the alert works.
+Open de pagina, zorg ervoor dat de waarschuwing werkt.
