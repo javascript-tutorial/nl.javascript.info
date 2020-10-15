@@ -1,5 +1,5 @@
-We generally use upper case for constants that are "hard-coded". Or, in other words, when the value is known prior to execution and directly written into the code.
+We gebruiken over het algemeen hoofdletters voor constanten die "hard-coded" zijn. Of, met andere woorden, wanneer de waarde voorafgaand aan de uitvoering bekend is en direct in de code wordt geschreven.
 
-In this code, `birthday` is exactly like that. So we could use the upper case for it.
+In deze code is `birthday` precies zo. We zouden dus de hoofdletters kunnen gebruiken.
 
-In contrast, `age` is evaluated in run-time. Today we have one age, a year after we'll have another one. It is constant in a sense that it does not change through the code execution. But it is a bit "less of a constant" than `birthday`: it is calculated, so we should keep the lower case for it.
+Daarentegen wordt `leeftijd` geëvalueerd in run-time. Vandaag hebben we één leeftijd, een jaar nadat we een andere zullen hebben. Het is constant in zekere zin dat het niet verandert door de uitvoering van de code. Maar het is een beetje "minder constant" dan `verjaardag`: het is berekend, dus we moeten de kleine letters ervoor houden.
