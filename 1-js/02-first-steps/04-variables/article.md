@@ -31,7 +31,7 @@ bericht = 'Hallo'; // sla de string op
 De string wordt nu opgeslagen in het geheugengebied dat bij de variabele hoort. We kunnen het openen met behulp van de naam van de variabele:
 
 ```js draaien
-laat bericht;
+let bericht;
 bericht = 'Hallo!';
 
 *!*
@@ -42,7 +42,7 @@ alert(bericht); // toont de variabele inhoud
 Om het kort te houden, kunnen we de variabele declaratie en toewijzing in één regel combineren:
 
 ```js lopen
-laat bericht = 'Hallo!'; // definieer de variabele en wijs de waarde toe
+let bericht = 'Hallo!'; // definieer de variabele en wijs de waarde toe
 
 alert(bericht); // Hallo!
 ```
@@ -50,7 +50,7 @@ alert(bericht); // Hallo!
 We kunnen ook meerdere variabelen in één regel declareren:
 
 ```js geen-bevoegdheid
-laat gebruiker = 'John', leeftijd = 25, bericht = 'Hallo';
+let gebruiker = 'John', leeftijd = 25, bericht = 'Hallo';
 ```
 
 Dat lijkt misschien korter, maar we raden het niet aan. Voor een betere leesbaarheid kunt u een enkele regel per variabele gebruiken.
@@ -140,10 +140,10 @@ Een variabele moet slechts één keer worden aangegeven.
 Een herhaalde declaratie van dezelfde variabele is een fout:
 
 ```js run
-laat bericht = "Dit";
+let bericht = "Dit";
 
 // herhaald 'laten' leidt tot een fout
-laat bericht = "Dat"; // SyntaxError: 'bericht' is al gedeclareerd
+let bericht = "Dat"; // SyntaxError: 'bericht' is al gedeclareerd
 ```
 Dus, we moeten een keer een variabele aangeven en er dan naar verwijzen zonder `let`.
 ````
@@ -177,8 +177,8 @@ Wat interessant is -- het dollarteken `'$'` en het onderstrepingsteken `'_'` kun
 Deze namen zijn geldig:
 
 ```js run untrusted
-laat $ = 1; // een variabele met de naam "$" aangeven
-laat _ = 2; // en nu een variabele met de naam "_"
+let $ = 1; // een variabele met de naam "$" aangeven
+let _ = 2; // en nu een variabele met de naam "_"
 
 alert($ + _); // 3
 ```
