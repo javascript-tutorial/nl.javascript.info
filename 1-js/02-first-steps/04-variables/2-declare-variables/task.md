@@ -1,8 +1,4 @@
-importance: 3
+# Het geven van de juiste naam
 
----
-
-# Giving the right name
-
-1. Create a variable with the name of our planet. How would you name such a variable?
-2. Create a variable to store the name of a current visitor to a website. How would you name that variable?
+1. Creëer een variabele met de naam van onze planeet. Hoe zou je zo'n variabele noemen?
+2. Maak een variabele aan om de naam van een huidige bezoeker van een website op te slaan. Hoe zou u die variabele een naam geven?
