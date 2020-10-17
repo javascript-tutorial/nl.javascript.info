@@ -1,276 +1,276 @@
-# Data types
+# Datatypen
 
-A value in JavaScript is always of a certain type. For example, a string or a number.
+Een waarde in JavaScript is altijd van een bepaald type. Bijvoorbeeld een string of een nummer.
 
-There are eight basic data types in JavaScript. Here, we'll cover them in general and in the next chapters we'll talk about each of them in detail.
+Er zijn acht basistypes in JavaScript. Hier behandelen we ze in het algemeen en in de volgende hoofdstukken bespreken we ze allemaal in detail.
 
-We can put any type in a variable. For example, a variable can at one moment be a string and then store a number:
+We kunnen elk type in een variabele plaatsen. Een variabele kan bijvoorbeeld op een bepaald moment een string zijn en dan een nummer opslaan:
 
 ```js
-// no error
-let message = "hello";
-message = 123456;
+// geen fout
+let bericht = "hallo";
+bericht = 123456;
 ```
 
-Programming languages that allow such things, such as JavaScript, are called "dynamically typed", meaning that there exist data types, but variables are not bound to any of them.
+Programmeertalen die dergelijke zaken toestaan, zoals JavaScript, worden "dynamisch getypeerd" genoemd, wat betekent dat er wel datatypen bestaan, maar dat er geen variabelen aan gebonden zijn.
 
-## Number
+## Aantal
 
 ```js
 let n = 123;
 n = 12.345;
 ```
 
-The *number* type represents both integer and floating point numbers.
+Het *nummer* staat voor zowel een geheel getal als een getal met een zwevend punt.
 
-There are many operations for numbers, e.g. multiplication `*`, division `/`, addition `+`, subtraction `-`, and so on.
+Er zijn veel bewerkingen voor getallen, bijvoorbeeld vermenigvuldiging `*`, deling `/`, optelling `+`, aftrekking `-`, enzovoort.
 
-Besides regular numbers, there are so-called "special numeric values" which also belong to this data type: `Infinity`, `-Infinity` and `NaN`.
+Naast reguliere getallen zijn er zogenaamde "speciale numerieke waarden" die ook tot dit gegevenstype behoren: `Infinity`, `-Infinity` en `NaN`.
 
-- `Infinity` represents the mathematical [Infinity](https://en.wikipedia.org/wiki/Infinity) ∞. It is a special value that's greater than any number.
+- De `Infinity` staat voor de wiskundige [Oneindigheid](https://nl.wikipedia.org/wiki/Oneindigheid) ∞. Het is een speciale waarde die groter is dan een willekeurig getal.
 
-    We can get it as a result of division by zero:
-
-    ```js run
-    alert( 1 / 0 ); // Infinity
-    ```
-
-    Or just reference it directly:
+    We kunnen het krijgen als resultaat van deling door nul:
 
     ```js run
-    alert( Infinity ); // Infinity
+    alert( 1 / 0 ); // oneindig
     ```
-- `NaN` represents a computational error. It is a result of an incorrect or an undefined mathematical operation, for instance:
+
+    Of gewoon direct verwijzen naar het:
 
     ```js run
-    alert( "not a number" / 2 ); // NaN, such division is erroneous
+    alert( Oneindigheid ); // Oneindigheid
     ```
-
-    `NaN` is sticky. Any further operation on `NaN` returns `NaN`:
+- NaN' staat voor een rekenfout. Het is bijvoorbeeld het resultaat van een onjuiste of een ongedefinieerde wiskundige bewerking:
 
     ```js run
-    alert( "not a number" / 2 + 5 ); // NaN
+    alert("geen nummer" / 2 ); // NaN, een dergelijke verdeling is foutief.
     ```
 
-    So, if there's a `NaN` somewhere in a mathematical expression, it propagates to the whole result.
+    NaN' is kleverig. Elke verdere operatie op `NaN` geeft `NaN` terug:
 
-```smart header="Mathematical operations are safe"
-Doing maths is "safe" in JavaScript. We can do anything: divide by zero, treat non-numeric strings as numbers, etc.
+    ```js lopen
+    waarschuwing ("geen nummer" / 2 + 5 ); // NaN
+    ```
 
-The script will never stop with a fatal error ("die"). At worst, we'll get `NaN` as the result.
+    Dus, als er ergens een `NaN` is in een wiskundige uitdrukking, dan verspreidt het zich naar het hele resultaat.
+
+```smart header="Wiskundige bewerkingen zijn veilig"
+Rekenen is "veilig" in JavaScript. We kunnen alles doen: delen door nul, niet-numerieke reeksen behandelen als getallen, enz.
+
+Het script zal nooit stoppen met een fatale fout ("dood"). In het slechtste geval krijgen we `NaN` als resultaat.
 ```
 
-Special numeric values formally belong to the "number" type. Of course they are not numbers in the common sense of this word.
+Speciale numerieke waarden behoren formeel tot het type "nummer". Natuurlijk zijn het geen getallen in de gewone zin van het woord.
 
-We'll see more about working with numbers in the chapter <info:number>.
+We zien meer over het werken met getallen in het hoofdstuk <info:nummer>.
 
 ## BigInt
 
-In JavaScript, the "number" type cannot represent integer values larger than <code>(2<sup>53</sup>-1)</code> (that's `9007199254740991`), or less than <code>-(2<sup>53</sup>-1)</code> for negatives. It's a technical limitation caused by their internal representation.
+In JavaScript kan het type "getal" geen gehele waarden vertegenwoordigen die groter zijn dan <code>(2<sup>53</sup>-1)</code> (dat is `9007199254740991`), of minder dan <code>-(2<sup>53</sup>-1)</code> voor negatieven. Het is een technische beperking die wordt veroorzaakt door hun interne representatie.
 
-For most purposes that's quite enough, but sometimes we need really big numbers, e.g. for cryptography or microsecond-precision timestamps.
+Voor de meeste doeleinden is dat voldoende, maar soms hebben we echt grote getallen nodig, bijvoorbeeld voor cryptografie of microseconde-precisie tijdstempels.
 
-`BigInt` type was recently added to the language to represent integers of arbitrary length.
+Het `BigInt` type is recentelijk toegevoegd aan de taal om gehele getallen van willekeurige lengte weer te geven.
 
-A `BigInt` value is created by appending `n` to the end of an integer:
+Een `BigInt` waarde wordt gecreëerd door `n` toe te voegen aan het einde van een geheel getal:
 
 ```js
-// the "n" at the end means it's a BigInt
+// De "n" aan het einde betekent dat het een BigInt is...
 const bigInt = 1234567890123456789012345678901234567890n;
 ```
 
-As `BigInt` numbers are rarely needed, we don't cover them here, but devoted them a separate chapter <info:bigint>. Read it when you need such big numbers.
+Omdat `BigInt` nummers zelden nodig zijn, behandelen we ze hier niet, maar wijden ze een apart hoofdstuk <info:bigint>. Lees het als je zulke grote getallen nodig hebt.
 
 
-```smart header="Compatibility issues"
-Right now, `BigInt` is supported in Firefox/Chrome/Edge/Safari, but not in IE.
+```smart header="Compatibiliteitsproblemen"
+Op dit moment wordt `BigInt` ondersteund in Firefox/Chrome/Edge/Safari, maar niet in IE.
 ```
 
-You can check [*MDN* BigInt compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility) to know which versions of a browser are supported.
+U kunt [*MDN* BigInt compatibiliteitstabel](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility) controleren om te weten welke versies van een browser worden ondersteund.
 
 ## String
 
-A string in JavaScript must be surrounded by quotes.
+Een string in JavaScript moet worden omgeven door aanhalingstekens.
 
 ```js
-let str = "Hello";
-let str2 = 'Single quotes are ok too';
-let phrase = `can embed another ${str}`;
+let str = "Hallo";
+let str2 = 'Enkele aanhalingstekens zijn ook ok';
+let zin = `kan nog een ${str}`;
 ```
 
-In JavaScript, there are 3 types of quotes.
+In JavaScript zijn er 3 soorten aanhalingstekens.
 
-1. Double quotes: `"Hello"`.
-2. Single quotes: `'Hello'`.
-3. Backticks: <code>&#96;Hello&#96;</code>.
+1. Dubbele aanhalingstekens: "Hallo".
+2. Enkele aanhalingstekens: Hallo.
+3. Backticks: <code>&#96;Hallo&#96;</code>.
 
-Double and single quotes are "simple" quotes. There's practically no difference between them in JavaScript.
+Dubbele en enkele aanhalingstekens zijn "eenvoudige" aanhalingstekens. Er is praktisch geen verschil tussen deze aanhalingstekens in JavaScript.
 
-Backticks are "extended functionality" quotes. They allow us to embed variables and expressions into a string by wrapping them in `${…}`, for example:
+Backticks zijn "uitgebreide functionaliteit" aanhalingstekens. Ze laten ons toe om variabelen en uitdrukkingen in te bedden in een string door ze bijvoorbeeld in `${...}` te wikkelen:
 
 ```js run
-let name = "John";
+let naam = "John";
 
-// embed a variable
-alert( `Hello, *!*${name}*/!*!` ); // Hello, John!
+// een variabele insluiten
+alert( `Hello, *! *${naam}*/! *! ); // Hallo, John!
 
-// embed an expression
-alert( `the result is *!*${1 + 2}*/!*` ); // the result is 3
+// embed een uitdrukking...
+alert( `het resultaat is *! *${1 + 2}*/! *` ); // het resultaat is 3
 ```
 
-The expression inside `${…}` is evaluated and the result becomes a part of the string. We can put anything in there: a variable like `name` or an arithmetical expression like `1 + 2` or something more complex.
+De uitdrukking binnen `${...}` wordt geëvalueerd en het resultaat wordt een onderdeel van de string. We kunnen er alles in zetten: een variabele als `naam` of een rekenkundige uitdrukking als `1 + 2` of iets ingewikkelder.
 
-Please note that this can only be done in backticks. Other quotes don't have this embedding functionality!
+Merk op dat dit alleen in backticks kan worden gedaan. Andere aanhalingstekens hebben deze inbedrijfnamefunctionaliteit niet!
 ```js run
-alert( "the result is ${1 + 2}" ); // the result is ${1 + 2} (double quotes do nothing)
+alert( "het resultaat is ${1 + 2}" ); // het resultaat is ${1 + 2} (dubbele aanhalingstekens doen niets)
 ```
 
-We'll cover strings more thoroughly in the chapter <info:string>.
+In het hoofdstuk <info:string> gaan we dieper in op de snaren.
 
-```smart header="There is no *character* type."
-In some languages, there is a special "character" type for a single character. For example, in the C language and in Java it is called "char".
+```smart header="Er is geen *karakter* type."
+In sommige talen is er een speciaal "karakter" type voor een enkel karakter. Bijvoorbeeld, in de C taal en in Java heet het "char".
 
-In JavaScript, there is no such type. There's only one type: `string`. A string may consist of zero characters (be empty), one character or many of them.
+In JavaScript bestaat een dergelijk type niet. Er is maar één type: `string`. Een string kan bestaan uit nul karakters (leeg zijn), één karakter of veel van deze karakters.
 ```
 
-## Boolean (logical type)
+## Booleaans (logisch type)
 
-The boolean type has only two values: `true` and `false`.
+Het booleaanse type heeft slechts twee waarden: `true`(waar) en `false`(vals).
 
-This type is commonly used to store yes/no values: `true` means "yes, correct", and `false` means "no, incorrect".
+Dit type wordt vaak gebruikt om ja/nee waarden op te slaan: `true` betekent "ja, correct", en `false` betekent "nee, onjuist".
 
-For instance:
+Bijvoorbeeld:
 
 ```js
-let nameFieldChecked = true; // yes, name field is checked
-let ageFieldChecked = false; // no, age field is not checked
+let nameFieldChecked = true; // ja, naamveld is aangevinkt
+let ageFieldChecked = false; // nee, leeftijdsveld is niet aangevinkt
 ```
 
-Boolean values also come as a result of comparisons:
+Booleaanse waarden zijn ook het resultaat van vergelijkingen:
 
 ```js run
 let isGreater = 4 > 1;
 
-alert( isGreater ); // true (the comparison result is "yes")
+alert( isGreater ); // waar (het vergelijkingsresultaat is "ja")
 ```
 
-We'll cover booleans more deeply in the chapter <info:logical-operators>.
+We gaan dieper in op de booleans in het hoofdstuk <info:logische-operatoren>.
 
-## The "null" value
+## De "nul"-waarde
 
-The special `null` value does not belong to any of the types described above.
+De speciale `null` waarde behoort niet tot een van de hierboven beschreven typen.
 
-It forms a separate type of its own which contains only the `null` value:
+Het vormt een apart type dat alleen de `null` waarde bevat:
 
 ```js
-let age = null;
+let leeftijd = nul;
 ```
 
-In JavaScript, `null` is not a "reference to a non-existing object" or a "null pointer" like in some other languages.
+In JavaScript is `null` geen "verwijzing naar een niet-bestaand object" of een "null pointer" zoals in sommige andere talen.
 
-It's just a special value which represents "nothing", "empty" or "value unknown".
+Het is gewoon een speciale waarde die staat voor "niets", "leeg" of "waarde onbekend".
 
-The code above states that `age` is unknown.
+In bovenstaande code staat dat `leeftijd` onbekend is.
 
-## The "undefined" value
+## De "ongedefinieerde" waarde
 
-The special value `undefined` also stands apart. It makes a type of its own, just like `null`.
+De speciale waarde `ongedefinieerd` staat ook los van elkaar. Het maakt een eigen type, net als `null`.
 
-The meaning of `undefined` is "value is not assigned".
+De betekenis van `ongedefinieerd` is "waarde wordt niet toegekend".
 
-If a variable is declared, but not assigned, then its value is `undefined`:
+Als een variabele wordt gedeclareerd, maar niet toegewezen, dan is de waarde `ongedefinieerd`:
 
 ```js run
-let age;
+let leeftijd;
 
-alert(age); // shows "undefined"
+alert(leeftijd); // toont "undefined" (ongedefinieerd)
 ```
 
-Technically, it is possible to explicitly assign `undefined` to a variable:
+Technisch gezien is het mogelijk om `ongedefinieerd` expliciet toe te wijzen aan een variabele:
 
 ```js run
-let age = 100;
+let leeftijd = 100;
 
-// change the value to undefined
-age = undefined;
+// verander de waarde in ongedefinieerd
+leeftijd = ongedefinieerd;
 
-alert(age); // "undefined"
+alert(leeftijd); // "ongedefinieerd".
 ```
 
-...But we don't recommend doing that. Normally, one uses `null` to assign an "empty" or "unknown" value to a variable, while `undefined` is reserved as a default initial value for unassigned things.
+...maar dat raden we niet aan. Normaal gesproken gebruikt men `null` om een "lege" of "onbekende" waarde toe te kennen aan een variabele, terwijl `ongedefinieerd` wordt gereserveerd als een standaard beginwaarde voor niet-toegewezen dingen.
 
-## Objects and Symbols
+## Objecten en symbolen
 
-The `object` type is special.
+Het `object` type is speciaal.
 
-All other types are called "primitive" because their values can contain only a single thing (be it a string or a number or whatever). In contrast, objects are used to store collections of data and more complex entities.
+Alle andere typen worden "primitief" genoemd omdat hun waarden slechts één ding kunnen bevatten (of het nu een tekenreeks is of een getal of wat dan ook). Objecten worden daarentegen gebruikt om gegevensverzamelingen en complexere entiteiten op te slaan.
 
-Being that important, objects deserve a special treatment. We'll deal with them later in the chapter <info:object>, after we learn more about primitives.
+Omdat ze zo belangrijk zijn, verdienen objecten een speciale behandeling. We zullen ze later in het hoofdstuk <info:object> behandelen, nadat we meer over primitieven hebben geleerd.
 
-The `symbol` type is used to create unique identifiers for objects. We have to mention it here for the sake of completeness, but also postpone the details till we know objects.
+Het `symbool` wordt gebruikt om unieke identifiers voor objecten te maken. We moeten het hier vermelden voor de volledigheid, maar ook de details uitstellen tot we objecten kennen.
 
-## The typeof operator [#type-typeof]
+## Het type operator [#type-type van]
 
-The `typeof` operator returns the type of the argument. It's useful when we want to process values of different types differently or just want to do a quick check.
+De `type` operator geeft het type van het argument terug. Het is nuttig wanneer we waarden van verschillende typen anders willen verwerken of gewoon een snelle controle willen doen.
 
-It supports two forms of syntax:
+Het ondersteunt twee vormen van syntaxis:
 
-1. As an operator: `typeof x`.
-2. As a function: `typeof(x)`.
+1. Als operator: `type van x`.
+2. 2. Als functie: `typeof(x)`.
 
-In other words, it works with parentheses or without them. The result is the same.
+Met andere woorden, het werkt met haakjes of zonder. Het resultaat is hetzelfde.
 
-The call to `typeof x` returns a string with the type name:
+De aanroep naar `typeof x` geeft een tekenreeks met de naam van het type:
 
 ```js
-typeof undefined // "undefined"
+typeof undefined; // "ongedefinieerd"
 
-typeof 0 // "number"
+typeof 0; // "aantal"
 
-typeof 10n // "bigint"
+typeof 10n; // "bigint"
 
-typeof true // "boolean"
+typeof true;// "boolean"
 
-typeof "foo" // "string"
+typeof "foo"; // "string"
 
-typeof Symbol("id") // "symbol"
+typeof Symbol("id")// "symbool"
 
 *!*
-typeof Math // "object"  (1)
+typeof Math // "object" (1)
 */!*
 
 *!*
-typeof null // "object"  (2)
+typeof null // "object" (2)
 */!*
 
 *!*
-typeof alert // "function"  (3)
+typeof alert // "functie" (3)
 */!*
 ```
 
-The last three lines may need additional explanation:
+De laatste drie regels hebben wellicht extra uitleg nodig:
 
-1. `Math` is a built-in object that provides mathematical operations. We will learn it in the chapter <info:number>. Here, it serves just as an example of an object.
-2. The result of `typeof null` is `"object"`. That's an officially recognized error in `typeof` behavior, coming from the early days of JavaScript and kept for compatibility. Definitely, `null` is not an object. It is a special value with a separate type of its own.
-3. The result of `typeof alert` is `"function"`, because `alert` is a function. We'll study functions in the next chapters where we'll also see that there's no special "function" type in JavaScript. Functions belong to the object type. But `typeof` treats them differently, returning `"function"`. That also comes from the early days of JavaScript. Technically, such behavior isn't correct, but can be convenient in practice.
+1. `Math` is een ingebouwd object dat wiskundige bewerkingen uitvoert. We leren het in het hoofdstuk <info:nummer>. Hier dient het alleen als voorbeeld van een object.
+2. Het resultaat van `type nul` is `object`. Dat is een officieel erkende fout in `typeof` gedrag, afkomstig uit de begintijd van JavaScript en bewaard voor compatibiliteit. Zeker, `null` is geen object. Het is een speciale waarde met een eigen type.
+3. Het resultaat van `typeof alert` is `functie`, omdat `alert` een functie is. We zullen functies bestuderen in de volgende hoofdstukken waar we ook zullen zien dat er geen speciaal "functie"-type is in JavaScript. Functies behoren tot het objecttype. Maar `typeof` behandelt ze anders, waardoor `functie` terugkomt. Dat komt ook uit de begintijd van JavaScript. Technisch gezien is dergelijk gedrag niet correct, maar kan het in de praktijk wel handig zijn.
 
-## Summary
+## Samenvatting
 
-There are 8 basic data types in JavaScript.
+Er zijn 8 basisgegevenstypes in JavaScript.
 
-- `number` for numbers of any kind: integer or floating-point, integers are limited by <code>±(2<sup>53</sup>-1)</code>.
-- `bigint` is for integer numbers of arbitrary length.
-- `string` for strings. A string may have zero or more characters, there's no separate single-character type.
-- `boolean` for `true`/`false`.
-- `null` for unknown values -- a standalone type that has a single value `null`.
-- `undefined` for unassigned values -- a standalone type that has a single value `undefined`.
-- `object` for more complex data structures.
-- `symbol` for unique identifiers.
+- `number` voor getallen van welke aard dan ook: geheel getal of drijvend punt, gehele getallen worden beperkt door <code>±(2<sup>53</sup>-1)</code>.
+- De `bigint` is voor gehele getallen van willekeurige lengte.
+- `string` voor strings. Een string kan nul of meer karakters hebben, er is geen apart type enkelvoudige karakters.
+- `boolean` voor `true`/`false`.
+- `null` voor onbekende waarden -- een op zichzelf staand type dat een enkele waarde `null` heeft.
+- `undefined` voor niet-toegewezen waarden -- een op zichzelf staand type dat een enkele waarde `ongedefinieerd` heeft.
+- `object` voor complexere gegevensstructuren.
+- `symbol` voor unieke identifiers.
 
-The `typeof` operator allows us to see which type is stored in a variable.
+De `type van` operator geeft ons de mogelijkheid om te zien welk type in een variabele is opgeslagen.
 
-- Two forms: `typeof x` or `typeof(x)`.
-- Returns a string with the name of the type, like `"string"`.
-- For `null` returns `"object"` -- this is an error in the language, it's not actually an object.
+- Twee vormen: `type van x` of `type van (x)`.
+- Geeft als resultaat een string met de naam van het type, zoals `"string"`.
+- Voor `null` geeft `"object"-- dit is een fout in de taal, het is eigenlijk geen object.
 
-In the next chapters, we'll concentrate on primitive values and once we're familiar with them, we'll move on to objects.
+In de volgende hoofdstukken zullen we ons concentreren op primitieve waarden en als we er eenmaal mee bekend zijn, gaan we over op objecten.

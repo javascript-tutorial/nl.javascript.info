@@ -1,17 +1,13 @@
-importance: 5
-
----
-
 # String quotes
 
-What is the output of the script?
+Wat is de output van het script?
 
 ```js
-let name = "Ilya";
+let naam = "Ilya";
 
 alert( `hello ${1}` ); // ?
 
 alert( `hello ${"name"}` ); // ?
 
-alert( `hello ${name}` ); // ?
+alert( `hello ${naam}` ); // ?
 ```
