@@ -7,5 +7,5 @@ naam = "John";
 
 admin = naam;
 
-alert ( admin ); // "John"
+alert( admin ); // "John"
 ```
