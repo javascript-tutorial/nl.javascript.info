@@ -1,10 +1,6 @@
-importance: 2
+# Werken met variabelen
 
----
-
-# Working with variables
-
-1. Declare two variables: `admin` and `name`.
-2. Assign the value `"John"` to `name`.
-3. Copy the value from `name` to `admin`.
-4. Show the value of `admin` using `alert` (must output "John").
+1. Verklaar twee variabelen: `admin` en `naam`.
+2. Wijs de waarde `"John"` toe aan `naam`.
+3. Kopieer de waarde van `naam` naar `admin`.
+4. Toon de waarde van `admin` met behulp van `alert` (moet "John" aangeven).

@@ -1,12 +1,8 @@
-importance: 5
+# Toon een waarschuwing
 
----
+Maak een pagina aan met een bericht "Ik ben JavaScript!".
 
-# Show an alert
-
-Create a page that shows a message "I'm JavaScript!".
-
-Do it in a sandbox, or on your hard drive, doesn't matter, just ensure that it works.
+Doe het in een zandbak, of op je harde schijf, maakt niet uit, zorg er gewoon voor dat het werkt.
 
 [demo src="solution"]
 

@@ -1,12 +1,11 @@
-In the code below, each line corresponds to the item in the task list.
+In de onderstaande code komt elke regel overeen met het item in de takenlijst.
 
 ```js run
-let admin, name; // can declare two variables at once
+let admin, naam; // kan twee variabelen tegelijk aangeven
 
-name = "John";
+naam = "John";
 
-admin = name;
+admin = naam;
 
 alert( admin ); // "John"
 ```
-

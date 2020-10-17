@@ -1,8 +1,8 @@
-The HTML code:
+De HTML-code:
 
 [html src="index.html"]
 
-For the file `alert.js` in the same folder:
+Voor het bestand `alert.js` in dezelfde map:
 
 [js src="alert.js"]
 
