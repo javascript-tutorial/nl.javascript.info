@@ -1,63 +1,67 @@
-# Developer console
+# Ontwikkelaarsconsole
 
-Code is prone to errors. You will quite likely make errors... Oh, what am I talking about? You are *absolutely* going to make errors, at least if you're a human, not a [robot](https://en.wikipedia.org/wiki/Bender_(Futurama)).
+De code is gevoelig voor fouten. Je zult waarschijnlijk fouten maken... Oh, waar heb ik het over? Je gaat *absoluut* fouten maken, tenminste als je een mens bent, niet een [robot](https://en.wikipedia.org/wiki/Bender_(Futurama)).
 
-But in the browser, users don't see errors by default. So, if something goes wrong in the script, we won't see what's broken and can't fix it.
+Maar in de browser zien gebruikers standaard geen fouten. Dus, als er iets fout gaat in het script, zien we niet wat er kapot is en kunnen we het niet repareren.
 
-To see errors and get a lot of other useful information about scripts, "developer tools" have been embedded in browsers.
+Om fouten te zien en veel andere nuttige informatie over scripts te krijgen, zijn er "ontwikkelaarshulpmiddelen" in de browsers ingebouwd.
 
-Most developers lean towards Chrome or Firefox for development because those browsers have the best developer tools. Other browsers also provide developer tools, sometimes with special features, but are usually playing "catch-up" to Chrome or Firefox. So most developers have a "favorite" browser and switch to others if a problem is browser-specific.
+De meeste ontwikkelaars leunen voor de ontwikkeling naar Chrome of Firefox omdat die browsers de beste ontwikkelaarshulpmiddelen hebben. Andere browsers bieden ook ontwikkelaarshulpmiddelen aan, soms met speciale functies, maar spelen meestal een "inhaalslag" naar Chrome of Firefox. De meeste ontwikkelaars hebben dus een "favoriete" browser en schakelen over naar anderen als een probleem browser-specifiek is.
 
-Developer tools are potent; they have many features. To start, we'll learn how to open them, look at errors, and run JavaScript commands.
+Ontwikkelaarshulpmiddelen zijn krachtig; ze hebben veel mogelijkheden. Om te beginnen leren we hoe ze te openen, naar fouten te kijken en JavaScript-opdrachten uit te voeren.
 
 ## Google Chrome
 
-Open the page [bug.html](bug.html).
+Open de pagina [bug.html](bug.html).
 
-There's an error in the JavaScript code on it. It's hidden from a regular visitor's eyes, so let's open developer tools to see it.
+Er staat een fout in de JavaScript-code op. Het is verborgen voor de ogen van een gewone bezoeker, dus laten we de ontwikkelaarstools openen om het te zien.
 
-Press `key:F12` or, if you're on Mac, then `key:Cmd+Opt+J`.
+Druk op `toets:F12` of, als je op de Mac zit, op `toets:Cmd+Opt+J`.
 
-The developer tools will open on the Console tab by default.
+De ontwikkelaarshulpmiddelen worden standaard geopend op het tabblad Console.
 
-It looks somewhat like this:
+Het lijkt er een beetje op:
 
 ![chrome](chrome.png)
 
-The exact look of developer tools depends on your version of Chrome. It changes from time to time but should be similar.
+Het exacte uiterlijk van de ontwikkeltools is afhankelijk van uw versie van Chrome. Het verandert van tijd tot tijd, maar het zou vergelijkbaar moeten zijn.
 
-- Here we can see the red-colored error message. In this case, the script contains an unknown "lalala" command.
-- On the right, there is a clickable link to the source `bug.html:12` with the line number where the error has occurred.
+- Hier zien we de roodgekleurde foutmelding. In dit geval bevat het script een onbekend "lalala"-commando.
+- Aan de rechterkant staat een klikbare link naar de bron `bug.html:12` met het regelnummer waar de fout is opgetreden.
 
-Below the error message, there is a blue `>` symbol. It marks a "command line" where we can type JavaScript commands. Press `key:Enter` to run them.
+Onder de foutmelding staat een blauw `>`-symbool. Het markeert een "commandoregel" waar we JavaScript commando's kunnen typen. Druk op de `toets:Enter` om ze uit te voeren.
 
-Now we can see errors, and that's enough for a start. We'll come back to developer tools later and cover debugging more in-depth in the chapter <info:debugging-chrome>.
+Nu kunnen we fouten zien, en dat is genoeg om te beginnen. We komen later terug op de ontwikkelaarstools en gaan dieper in op het debuggen in het hoofdstuk <info:debugging-chroom>.
 
 ```smart header="Multi-line input"
-Usually, when we put a line of code into the console, and then press `key:Enter`, it executes.
+Meestal, wanneer we een regel code in de console zetten, en dan op de `toets:Enter` drukken, wordt deze uitgevoerd.
 
-To insert multiple lines, press `key:Shift+Enter`. This way one can enter long fragments of JavaScript code.
+Om meerdere regels in te voegen, druk op de `toets:Shift+Enter`. Op deze manier kan men lange fragmenten van JavaScript-code invoeren.
 ```
 
-## Firefox, Edge, and others
+## Firefox, Edge, en anderen
 
-Most other browsers use `key:F12` to open developer tools.
+De meeste andere browsers gebruiken `sleutel:F12` om ontwikkeltools te openen.
 
-The look & feel of them is quite similar. Once you know how to use one of these tools (you can start with Chrome), you can easily switch to another.
+De look & feel van deze tools lijkt er sterk op. Als je eenmaal weet hoe je een van deze tools moet gebruiken (je kunt beginnen met Chrome), kun je gemakkelijk overschakelen naar een andere.
 
 ## Safari
 
-Safari (Mac browser, not supported by Windows/Linux) is a little bit special here. We need to enable the "Develop menu" first.
+Safari (Mac-browser, niet ondersteund door Windows/Linux) is hier een beetje speciaal. We moeten eerst het "Developmentmenu" inschakelen.
 
-Open Preferences and go to the "Advanced" pane. There's a checkbox at the bottom:
+Open Preferences en ga naar het "Advanced" deelvenster. Er staat een selectievakje onderaan:
 
 ![safari](safari.png)
 
-Now `key:Cmd+Opt+C` can toggle the console. Also, note that the new top menu item named "Develop" has appeared. It has many commands and options.
+Nu kan de `toets:Cmd+Opt+C` de console schakelen. Merk ook op dat het nieuwe top menu item genaamd "Develop" is verschenen. Het heeft vele commando's en opties.
 
-## Summary
+## Samenvatting
 
-- Developer tools allow us to see errors, run commands, examine variables, and much more.
-- They can be opened with `key:F12` for most browsers on Windows. Chrome for Mac needs `key:Cmd+Opt+J`, Safari: `key:Cmd+Opt+C` (need to enable first).
+- Ontwikkelaarstools stellen ons in staat om fouten te zien, commando's uit te voeren, variabelen te onderzoeken en nog veel meer.
+- Ze kunnen worden geopend met `key:F12` voor de meeste browsers op Windows. Chrome voor Mac heeft `key:Cmd+Opt+J` nodig, Safari: `key:Cmd+Opt+C` (moet eerst worden ingeschakeld).
 
-Now we have the environment ready. In the next section, we'll get down to JavaScript.
+Nu hebben we de omgeving klaar. In de volgende sectie gaan we naar JavaScript.
+
+*** Vertaald met www.DeepL.com/Translator (gratis versie)
+ ***
+
