@@ -1,42 +1,42 @@
 
-# Manuals and specifications
+# Handleidingen en specificaties
 
-This book is a *tutorial*. It aims to help you gradually learn the language. But once you're familiar with the basics, you'll need other sources.
+Dit boek is een *tutorial*. Het is bedoeld om u te helpen de taal geleidelijk aan te leren. Maar als je eenmaal vertrouwd bent met de basis, heb je andere bronnen nodig.
 
-## Specification
+## Specificatie
 
-[The ECMA-262 specification](https://www.ecma-international.org/publications/standards/Ecma-262.htm) contains the most in-depth, detailed and formalized information about JavaScript. It defines the language.
+De ECMA-262-specificatie (https://www.ecma-international.org/publications/standards/Ecma-262.htm) bevat de meest diepgaande, gedetailleerde en geformaliseerde informatie over JavaScript. Het definieert de taal.
 
-But being that formalized, it's difficult to understand at first. So if you need the most trustworthy source of information about the language details, the specification is the right place. But it's not for everyday use.
+Maar omdat het zo geformaliseerd is, is het in eerste instantie moeilijk te begrijpen. Dus als u de meest betrouwbare bron van informatie over de taaldetails nodig hebt, is de specificatie de juiste plaats. Maar het is niet voor dagelijks gebruik.
 
-A new specification version is released every year. In-between these releases, the latest specification draft is at <https://tc39.es/ecma262/>.
+Elk jaar komt er een nieuwe versie van de specificatie uit. Tussen deze releases door staat de laatste specificatie draft op <https://tc39.es/ecma262/>.
 
-To read about new bleeding-edge features, including those that are "almost standard" (so-called "stage 3"), see proposals at <https://github.com/tc39/proposals>.
+Om te lezen over goednieuwe functies, inclusief diegene "bijna standaard" zijn (de zogenaamde "fase 3"), zie de voorstellen op <https://github.com/tc39/proposals>.
 
-Also, if you're in developing for the browser, then there are other specs covered in the [second part](info:browser-environment) of the tutorial.
+Ook, als u in ontwikkeling bent voor de browser, dan zijn er andere specificaties behandeld in het [tweede deel](info:browser-omgeving) van de tutorial.
 
-## Manuals
+## Handleidingen
 
-- **MDN (Mozilla) JavaScript Reference** is a manual with examples and other information. It's great to get in-depth information about individual language functions, methods etc.
+- **MDN (Mozilla) JavaScript Referentie** is een handleiding met voorbeelden en andere informatie. Het is geweldig om diepgaande informatie te krijgen over individuele taalfuncties, methoden, enz.
 
-    One can find it at <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference>.
+    Men kan deze vinden op <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference>.
 
-    Although, it's often best to use an internet search instead. Just use "MDN [term]" in the query, e.g. <https://google.com/search?q=MDN+parseInt> to search for `parseInt` function.
+    Hoewel het vaak het beste is om een internet zoekopdracht te gebruiken. Gebruik gewoon "MDN [term]" in de query, bijvoorbeeld <https://google.com/search?q=MDN+parseInt> om te zoeken naar de `parseInt` functie.
 
 
-- **MSDN** – Microsoft manual with a lot of information, including JavaScript (often referred to as JScript). If one needs something specific to Internet Explorer, better go there: <http://msdn.microsoft.com/>.
+- **MSDN** - Microsoft handleiding met veel informatie, waaronder JavaScript (vaak JScript genoemd). Als men iets specifieks nodig heeft voor Internet Explorer, kan men beter de volgende website gebruiken: <http://msdn.microsoft.com/>.
 
-    Also, we can use an internet search with phrases such as "RegExp MSDN" or "RegExp MSDN jscript".
+    Ook kunnen we gebruik maken van een internet zoekopdracht met zinnen als "RegExp MSDN" of "RegExp MSDN jscript".
 
-## Compatibility tables
+## Compatibiliteitstabellen
 
-JavaScript is a developing language, new features get added regularly.
+JavaScript is een ontwikkelende taal, er worden regelmatig nieuwe functies toegevoegd.
 
-To see their support among browser-based and other engines, see:
+Om hun ondersteuning te zien onder browser-gebaseerde en andere engines, zie:
 
-- <http://caniuse.com> - per-feature tables of support, e.g. to see which engines support modern cryptography functions: <http://caniuse.com/#feat=cryptography>.
-- <https://kangax.github.io/compat-table> - a table with language features and engines that support those or don't support.
+- <http://caniuse.com> - ondersteuningstabellen per functie, bijvoorbeeld om te zien welke engines moderne cryptografische functies ondersteunen: <http://caniuse.com/#feat=cryptography>.
+- <https://kangax.github.io/compat-table> - een tabel met taalfuncties en engines die deze wel of niet ondersteunen.
 
-All these resources are useful in real-life development, as they contain valuable information about language details, their support etc.
+Al deze bronnen zijn nuttig in de praktijk, omdat ze waardevolle informatie bevatten over taaldetails, hun ondersteuning, enz.
 
-Please remember them (or this page) for the cases when you need in-depth information about a particular feature.
+Onthoud ze (of deze pagina) voor de gevallen waarin u diepgaande informatie over een bepaalde functie nodig hebt.
