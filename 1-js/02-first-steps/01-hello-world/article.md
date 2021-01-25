@@ -9,7 +9,11 @@ Dus laten we eerst eens kijken hoe we een script aan een webpagina koppelen. Voo
 
 ## De "script" tag
 
+<<<<<<< HEAD
 JavaScript-programma's kunnen in elk deel van een HTML-document worden ingevoegd met behulp van de `<script>`-tag.
+=======
+JavaScript programs can be inserted almost anywhere into an HTML document using the `<script>` tag.
+>>>>>>> 97ef86242f9f236b13152e1baf52a55c4db8728a
 
 Bijvoorbeeld:
 
