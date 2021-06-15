@@ -64,7 +64,7 @@ Speciale numerieke waarden behoren formeel tot het type "nummer". Natuurlijk zij
 
 We zien meer over het werken met getallen in het hoofdstuk <info:nummer>.
 
-## BigInt
+## BigInt [#bigint-type]
 
 In JavaScript kan het type "getal" geen gehele waarden vertegenwoordigen die groter zijn dan <code>(2<sup>53</sup>-1)</code> (dat is `9007199254740991`), of minder dan <code>-(2<sup>53</sup>-1)</code> voor negatieven. Het is een technische beperking die wordt veroorzaakt door hun interne representatie.
 
