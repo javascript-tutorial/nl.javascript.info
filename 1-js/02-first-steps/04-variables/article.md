@@ -24,7 +24,11 @@ Nu kunnen we er wat gegevens in zetten door gebruik te maken van de opdrachtbehe
 let bericht;
 
 *!*
+<<<<<<< HEAD
 bericht = 'Hallo'; // sla de string op
+=======
+message = 'Hello'; // store the string 'Hello' in the variable named message
+>>>>>>> ef8d576821ff28c69bfb7410dc79fd216b0a315b
 */!*
 ```
 
