@@ -9,7 +9,11 @@ Dus laten we eerst eens kijken hoe we een script aan een webpagina koppelen. Voo
 
 ## De "script" tag
 
+<<<<<<< HEAD
 JavaScript-programma's kunnen in elk deel van een HTML-document worden ingevoegd met behulp van de `<script>`-tag.
+=======
+JavaScript programs can be inserted almost anywhere into an HTML document using the `<script>` tag.
+>>>>>>> a82915575863d33db6b892087975f84dea6cb425
 
 Bijvoorbeeld:
 
@@ -73,7 +77,11 @@ Scriptbestanden worden aan HTML gekoppeld met het `src` attribuut:
 <script src="/pad/naar/script.js"></script>
 ```
 
+<<<<<<< HEAD
 Hier is `/pad/naar/script.js` een absoluut pad naar het script vanuit de site-root. Men kan ook een relatief pad van de huidige pagina opgeven. Bijvoorbeeld, `src="script.js "betekent een bestand `"script.js"` in de huidige map.
+=======
+Here, `/path/to/script.js` is an absolute path to the script from the site root. One can also provide a relative path from the current page. For instance, `src="script.js"`, just like `src="./script.js"`, would mean a file `"script.js"` in the current folder.
+>>>>>>> a82915575863d33db6b892087975f84dea6cb425
 
 We kunnen ook een volledige URL geven. Bijvoorbeeld:
 
