@@ -1,46 +1,44 @@
-# Code editors
+# Code-editors
 
-A code editor is the place where programmers spend most of their time.
+Een code editor is de plaats waar programmeurs het grootste deel van hun tijd doorbrengen.
 
-There are two main types of code editors: IDEs and lightweight editors. Many people use one tool of each type.
+Er zijn twee soorten code-editors: IDE's en lichtgewicht editors. Veel mensen gebruiken een tool van elk type, zowel een IDE als lightweight.
 
 ## IDE
 
-The term [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (Integrated Development Environment) refers to a powerful editor with many features that usually operates on a "whole project." As the name suggests, it's not just an editor, but a full-scale "development environment."
+De term [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (Integrated Development Environment ofwel Geïntegreerde Ontwikkelingsomgeving) verwijst naar een krachtige editor met veel mogelijkheden die meestal werkt op een "volledig project". Zoals de naam al suggereert, is het niet alleen een editor, maar een volledige "ontwikkelomgeving".
 
-An IDE loads the project (which can be many files), allows navigation between files, provides autocompletion based on the whole project (not just the open file), and integrates with a version management system (like [git](https://git-scm.com/)), a testing environment, and other "project-level" stuff.
+Een IDE laadt het project (wat veel bestanden kunnen zijn), maakt het mogelijk om tussen bestanden te navigeren, biedt autocompletion op basis van het hele project (niet alleen het open bestand), en integreert met een versiebeheersysteem (zoals [git](https://git-scm.com/)), een testomgeving, en andere "project-niveau" zaken.
 
-If you haven't selected an IDE yet, consider the following options:
+Als u nog geen IDE hebt geselecteerd, overweeg dan de volgende opties:
 
-- [Visual Studio Code](https://code.visualstudio.com/) (cross-platform, free).
-- [WebStorm](http://www.jetbrains.com/webstorm/) (cross-platform, paid).
+- [Visuele Studio Code](https://code.visualstudio.com/) (cross-platform, gratis).
+- [WebStorm](http://www.jetbrains.com/webstorm/) (cross-platform, betalend).
 
-For Windows, there's also "Visual Studio", not to be confused with "Visual Studio Code". "Visual Studio" is a paid and mighty Windows-only editor, well-suited for the .NET platform. It's also good at JavaScript. There's also a free version [Visual Studio Community](https://www.visualstudio.com/vs/community/).
+Voor Windows is er ook "Visual Studio", niet te verwarren met "Visual Studio Code". "Visual Studio" is een en machtige Windows-only editor, zeer geschikt voor het .NET-platform, maar ook voor JavaScript. Er is ook een gratis versie [Visual Studio Community](https://www.visualstudio.com/vs/community/) en er is ook een MAC variant.
 
-Many IDEs are paid, but have a trial period. Their cost is usually negligible compared to a qualified developer's salary, so just choose the best one for you.
+Veel IDE's zijn betalend, maar hebben een proefperiode. Deze kosten zijn meestal verwaarloosbaar in vergelijking met het salaris van een gekwalificeerde ontwikkelaar, dus kies gewoon de beste die bij jou past.
 
-## Lightweight editors
+## Lichtgewicht editors
 
-"Lightweight editors" are not as powerful as IDEs, but they're fast, elegant and simple.
+"Lichtgewicht editors" zijn niet zo krachtig als IDE's, maar ze zijn snel, elegant, uitbreidbaar en eenvoudig.
 
-They are mainly used to open and edit a file instantly.
+Ze worden vooral gebruikt om een bestand direct te openen en te bewerken.
 
-The main difference between a "lightweight editor" and an "IDE" is that an IDE works on a project-level, so it loads much more data on start, analyzes the project structure if needed and so on. A lightweight editor is much faster if we need only one file.
+Het belangrijkste verschil tussen een "lichtgewicht editor" en een "IDE" is dat een IDE op projectniveau werkt, dus het laadt veel meer gegevens op bij het begin, analyseert de projectstructuur als dat nodig is, enzovoort. Een lichtgewicht editor is veel sneller als we maar één bestand nodig hebben.
 
-In practice, lightweight editors may have a lot of plugins including directory-level syntax analyzers and autocompleters, so there's no strict border between a lightweight editor and an IDE.
+In de praktijk kunnen lichtgewicht editors veel plugins hebben, inclusief directory-level syntax analyzers en autocompleters, dus er is geen strikte grens tussen een lichtgewicht editor en een IDE.
 
-The following options deserve your attention:
+De volgende opties verdienen uw aandacht:
 
-- [Atom](https://atom.io/) (cross-platform, free).
-- [Visual Studio Code](https://code.visualstudio.com/) (cross-platform, free).
-- [Sublime Text](http://www.sublimetext.com) (cross-platform, shareware).
-- [Notepad++](https://notepad-plus-plus.org/) (Windows, free).
-- [Vim](http://www.vim.org/) and [Emacs](https://www.gnu.org/software/emacs/) are also cool if you know how to use them.
+- [Atom](https://atom.io/) (cross-platform, gratis).
+- [Visuele Studio Code](https://code.visualstudio.com/) (cross-platform, gratis).
+- [Sublieme tekst](http://www.sublimetext.com) (cross-platform, shareware).
+- [Notepad++](https://notepad-plus-plus.org/) (Windows, gratis).
+- Vim](http://www.vim.org/) en [Emacs](https://www.gnu.org/software/emacs/) zijn ook trendy als je weet hoe je ze moet gebruiken.
 
-## Let's not argue
+## Laten we geen ruzie maken
 
-The editors in the lists above are those that either I or my friends whom I consider good developers have been using for a long time and are happy with.
+Er zijn andere grote editors in onze grote wereld. Kies degene die je het leukst vindt.
 
-There are other great editors in our big world. Please choose the one you like the most.
-
-The choice of an editor, like any other tool, is individual and depends on your projects, habits, and personal preferences.
+De keuze van een redacteur is, net als elke andere tool, individueel en hangt af van je projecten, gewoontes en persoonlijke voorkeuren.
