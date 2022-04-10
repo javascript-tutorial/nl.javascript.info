@@ -1,15 +1,15 @@
-# Type Conversions
+# Type Conversies
 
-Most of the time, operators and functions automatically convert the values given to them to the right type.
+Gewoonlijk converteren operators en functies de aan hen gegeven waarden automatisch naar het juiste type.
 
-For example, `alert` automatically converts any value to a string to show it. Mathematical operations convert values to numbers.
+`alert` converteert bijvoorbeeld elke waarde automatisch naar een tekenreeks om het tonen. Wiskundige bewerkingen converteren waarden naar getallen.
 
-There are also cases when we need to explicitly convert a value to the expected type.
+Er zijn ook gevallen waarin we moeten een waarde uitdrukkelijk converteren naar het verwachte type.
 
-```smart header="Not talking about objects yet"
-In this chapter, we won't cover objects. For now we'll just be talking about primitives.
+```smart header="Nog niet over objecten gesproken"
+In dit hoofdstuk, we zullen niet bespreken objecten. Voor nu zullen we het alleen over primitieven hebben.
 
-Later, after we learn about objects, in the chapter <info:object-toprimitive> we'll see how objects fit in.
+Later, nadat we hebben leren over objecten, zullen we in het hoofdstuk <info:object-toprimitive> zien hoe objecten passen.
 ```
 
 ## String Conversion
