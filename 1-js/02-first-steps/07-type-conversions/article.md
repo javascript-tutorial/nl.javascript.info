@@ -12,25 +12,25 @@ In dit hoofdstuk, we zullen niet bespreken objecten. Voor nu zullen we het allee
 Later, nadat we hebben leren over objecten, zullen we in het hoofdstuk <info:object-toprimitive> zien hoe objecten passen.
 ```
 
-## String Conversion
+## Tekenreeks Conversie
 
-String conversion happens when we need the string form of a value.
+Tekenreeks conversie gebeurt wanneer we hebben de tekenreeksvorm van een waarde nodig.
 
-For example, `alert(value)` does it to show the value.
+`alert(value)` doet het bijvoorbeeld om de waarde te tonen.
 
-We can also call the `String(value)` function to convert a value to a string:
+We kunnen ook aan de `String(value)` functie roepen om een waarde naar een tekenreeks te converteren:
 
 ```js run
 let value = true;
 alert(typeof value); // boolean
 
 *!*
-value = String(value); // now value is a string "true"
+value = String(value); // nu is value een tekenreeks "true"
 alert(typeof value); // string
 */!*
 ```
 
-String conversion is mostly obvious. A `false` becomes `"false"`, `null` becomes `"null"`, etc.
+Tekenreeks conversie is meestal duidelijk. Een `false` wordt `"false"`, `null` wordt `"null"`, ezv.
 
 ## Numeric Conversion
 
