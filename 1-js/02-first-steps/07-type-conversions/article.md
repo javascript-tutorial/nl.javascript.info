@@ -18,7 +18,7 @@ Tekenreeks conversie gebeurt wanneer we hebben de tekenreeksvorm van een waarde 
 
 `alert(value)` doet het bijvoorbeeld om de waarde te tonen.
 
-We kunnen ook aan de `String(value)` functie roepen om een waarde naar een tekenreeks te converteren:
+We kunnen ook aan de `String(value)` (tekenreeks) functie roepen om een waarde naar een tekenreeks te converteren:
 
 ```js run
 let value = true;
@@ -32,58 +32,59 @@ alert(typeof value); // string
 
 Tekenreeks conversie is meestal duidelijk. Een `false` wordt `"false"`, `null` wordt `"null"`, ezv.
 
-## Numeric Conversion
+## Numerieke Conversie
 
-Numeric conversion happens in mathematical functions and expressions automatically.
+Numerieke conversie gebeurt automatisch in wiskundige functie en uitdrukkingen.
 
 For example, when division `/` is applied to non-numbers:
+Wanneer bijvoorbeeld verdeling `/` wordt toegepast op niet-getallen:
 
 ```js run
-alert( "6" / "2" ); // 3, strings are converted to numbers
+alert( "6" / "2" ); // 3, tekenreeksen worden geconverteerd naar getallen
 ```
 
-We can use the `Number(value)` function to explicitly convert a `value` to a number:
+We kunnen de `Number(value)` (nummer) functie gebruiken om een `value` uitdrukkelijk naar een getal converteren:
 
 ```js run
 let str = "123";
 alert(typeof str); // string
 
-let num = Number(str); // becomes a number 123
+let num = Number(str); // wordt een getal 123
 
 alert(typeof num); // number
 ```
 
-Explicit conversion is usually required when we read a value from a string-based source like a text form but expect a number to be entered.
+Expliciete conversie is gewoonlijk vereist wanneer we een waarde uit een op tekenreeks gebaseerde bron zoals een tekstformulier lezen, maar wervachten dat er een getal wordt ingevoerd.
 
-If the string is not a valid number, the result of such a conversion is `NaN`. For instance:
+Als de tekenreeks geen geldig getal is, is het resultaat van een dergelijke conversie `NaN` (niet een getal). Bijvoorbeeld:
 
 ```js run
-let age = Number("an arbitrary string instead of a number");
+let age = Number("een willekeurig tekenreeks in plaats van een getal");
 
-alert(age); // NaN, conversion failed
+alert(age); // NaN, conversie mislukt
 ```
 
-Numeric conversion rules:
+Numerieke conversie regels:
 
-| Value |  Becomes... |
-|-------|-------------|
-|`undefined`|`NaN`|
-|`null`|`0`|
-|<code>true&nbsp;and&nbsp;false</code> | `1` and `0` |
-| `string` | Whitespaces from the start and end are removed. If the remaining string is empty, the result is `0`. Otherwise, the number is "read" from the string. An error gives `NaN`. |
+| Waarde | Wordt... |
+| ------ | -------- |
+| `undefined` | `NaN` |
+| `null` | `0` |
+| <code>true&nbsp;en&nbsp;false</code> | `1` and `0` |
+| `string` | Witruimte vanaf het begin en het einde worden verwijderd. Als de resterende tekenreeks leeg is, is het resultaat `0`. En anders is het getal "gelezen" uit de tekenreeks. Een fout geeft `NaN`. |
 
-Examples:
+Voorbeelden:
 
 ```js run
 alert( Number("   123   ") ); // 123
-alert( Number("123z") );      // NaN (error reading a number at "z")
+alert( Number("123z") );      // NaN (fout bij het lezen van een getal op "z")
 alert( Number(true) );        // 1
 alert( Number(false) );       // 0
 ```
 
-Please note that `null` and `undefined` behave differently here: `null` becomes zero while `undefined` becomes `NaN`.
+Houd er rekening mee dat `null` en `undefined` gedragen hier anders: `null` wordt nul terwijl `undefined` `NaN` wordt.
 
-Most mathematical operators also perform such conversion, we'll see that in the next chapter.
+Meeste wiskundige operators uitvoeren ook een dergelijke conversie, dat zullen we zien in het volgende hoofdstuk.
 
 ## Boolean Conversion
 
