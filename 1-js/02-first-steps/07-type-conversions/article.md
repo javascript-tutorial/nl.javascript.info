@@ -36,7 +36,6 @@ Tekenreeks conversie is meestal duidelijk. Een `false` wordt `"false"`, `null` w
 
 Numerieke conversie gebeurt automatisch in wiskundige functie en uitdrukkingen.
 
-For example, when division `/` is applied to non-numbers:
 Wanneer bijvoorbeeld verdeling `/` wordt toegepast op niet-getallen:
 
 ```js run
@@ -86,66 +85,67 @@ Houd er rekening mee dat `null` en `undefined` gedragen hier anders: `null` word
 
 Meeste wiskundige operators uitvoeren ook een dergelijke conversie, dat zullen we zien in het volgende hoofdstuk.
 
-## Boolean Conversion
+## Booleaanse Conversie
 
-Boolean conversion is the simplest one.
+Booleanse conversie is de gemakkelijkste.
 
-It happens in logical operations (later we'll meet condition tests and other similar things) but can also be performed explicitly with a call to `Boolean(value)`.
+Het gebeurt in logische bewerkingen (later zullen we conditietests en andere soortgelijke dingen ontmoeten), maar kan ook expliciet worden uitgevoerd met een oproep naar `Boolean(value)`.
 
-The conversion rule:
+De conversieregel:
 
-- Values that are intuitively "empty", like `0`, an empty string, `null`, `undefined`, and `NaN`, become `false`.
-- Other values become `true`.
+- Waarden die intuïtief "leeg" zijn, zoals `0`, een lege tekenreeks, `null`, `undefined` en `NaN` worden `false`.
+- Andere waarden worden `true`.
 
-For instance:
+Voorbeelden:
 
 ```js run
 alert( Boolean(1) ); // true
 alert( Boolean(0) ); // false
 
-alert( Boolean("hello") ); // true
+alert( Boolean("hallo") ); // true
 alert( Boolean("") ); // false
 ```
 
-````warn header="Please note: the string with zero `\"0\"` is `true`"
-Some languages (namely PHP) treat `"0"` as `false`. But in JavaScript, a non-empty string is always `true`.
+````warn header="Let op: de tekenreeks met nul `\"0\"` is `true`"
+Sommige talen (namelijk PHP) behandelen `"0"` als `false`. Maar in JavaScript is een niet-lege tekenreeks altijd `true`.
 
 ```js run
 alert( Boolean("0") ); // true
-alert( Boolean(" ") ); // spaces, also true (any non-empty string is true)
+alert( Boolean(" ") ); // spaties, ook true (elke niet-lege tekenreeks is true)
 ```
 ````
 
-## Summary
+## Overzicht
 
-The three most widely used type conversions are to string, to number, and to boolean.
+De drie meest gebruikte type conversies zijn naar tekenreeks, naar getaal en naar boolean.
 
-**`String Conversion`** -- Occurs when we output something. Can be performed with `String(value)`. The conversion to string is usually obvious for primitive values.
+**`Tekenreeks Conversie`** -- Gebeurt als we iets uitvoeren. Kan worden uitgevoerd met `String(value)` (tekenreeks). De conversie naar tekenreeks ligt meestal voor de hand voor primitieve waarden.
 
-**`Numeric Conversion`** -- Occurs in math operations. Can be performed with `Number(value)`.
+**`Numerieke Conversie`** -- Gebeurt in wiskundige bewerkingen. Kan worden uitgevored met `Number(value)` (getal).
 
-The conversion follows the rules:
-
-| Value |  Becomes... |
-|-------|-------------|
-|`undefined`|`NaN`|
-|`null`|`0`|
-|<code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
-| `string` | The string is read "as is", whitespaces from both sides are ignored. An empty string becomes `0`. An error gives `NaN`. |
-
-**`Boolean Conversion`** -- Occurs in logical operations. Can be performed with `Boolean(value)`.
-
-Follows the rules:
-
-| Value |  Becomes... |
-|-------|-------------|
-|`0`, `null`, `undefined`, `NaN`, `""` |`false`|
-|any other value| `true` |
+De conversie volgt de regels:
 
 
-Most of these rules are easy to understand and memorize. The notable exceptions where people usually make mistakes are:
+| Waarde | Wordt... |
+| ------ | -------- |
+| `undefined` | `NaN` |
+| `null` | `0` |
+| <code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
+| `string` | De tekenreeks wordt gelezen zoals het is, witruimten aan beide zijden worden genegeerd. Een lege tekenreeks wordt `0`. Een fout geeft `NaN`. |
 
-- `undefined` is `NaN` as a number, not `0`.
-- `"0"` and space-only strings like `"   "` are true as a boolean.
+**`Booleaanse Conversie`** -- Gebeurt in logische bewerkingen. Kan worden uitgevoerd met `Boolean(value)`.
 
-Objects aren't covered here. We'll return to them later in the chapter <info:object-toprimitive> that is devoted exclusively to objects after we learn more basic things about JavaScript.
+Volgt de regels:
+
+| Waarde | Wordt... |
+| ------ | -------- |
+| `0`, `null`, `undefined`, `NaN`, `""` | `false` |
+| elke andere waarde | `true` |
+
+
+De meeste van deze regels zijn gemakkelijk te begrijpen en te onthouden. De opmerkelijke uitzonderingen waar mensen gewoonlijk fouten maken zijn:
+
+- `undefined` is `NaN` als een getal, niet `0`.
+- `"0"` en tekenreeksen met alleen spaties zoals `"   "` zijn waar als een boolean.
+
+Objecten wordt hier niet behandeld. We komen er later op terug in het hoofdstuk <info:object-toprimitive> dat uitsluitend aan objecten gewijd is, nadat we meer basisdingen over JavaScript hebben geleerd.
