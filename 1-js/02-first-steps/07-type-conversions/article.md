@@ -1,150 +1,151 @@
-# Type Conversions
+# Type Conversies
 
-Most of the time, operators and functions automatically convert the values given to them to the right type.
+Gewoonlijk converteren operators en functies de aan hen gegeven waarden automatisch naar het juiste type.
 
-For example, `alert` automatically converts any value to a string to show it. Mathematical operations convert values to numbers.
+`alert` converteert bijvoorbeeld elke waarde automatisch naar een tekenreeks om het tonen. Wiskundige bewerkingen converteren waarden naar getallen.
 
-There are also cases when we need to explicitly convert a value to the expected type.
+Er zijn ook gevallen waarin we moeten een waarde uitdrukkelijk converteren naar het verwachte type.
 
-```smart header="Not talking about objects yet"
-In this chapter, we won't cover objects. For now we'll just be talking about primitives.
+```smart header="Nog niet over objecten gesproken"
+In dit hoofdstuk, we zullen niet bespreken objecten. Voor nu zullen we het alleen over primitieven hebben.
 
-Later, after we learn about objects, in the chapter <info:object-toprimitive> we'll see how objects fit in.
+Later, nadat we hebben leren over objecten, zullen we in het hoofdstuk <info:object-toprimitive> zien hoe objecten passen.
 ```
 
-## String Conversion
+## Tekenreeks Conversie
 
-String conversion happens when we need the string form of a value.
+Tekenreeks conversie gebeurt wanneer we hebben de tekenreeksvorm van een waarde nodig.
 
-For example, `alert(value)` does it to show the value.
+`alert(value)` doet het bijvoorbeeld om de waarde te tonen.
 
-We can also call the `String(value)` function to convert a value to a string:
+We kunnen ook aan de `String(value)` (tekenreeks) functie roepen om een waarde naar een tekenreeks te converteren:
 
 ```js run
 let value = true;
 alert(typeof value); // boolean
 
 *!*
-value = String(value); // now value is a string "true"
+value = String(value); // nu is value een tekenreeks "true"
 alert(typeof value); // string
 */!*
 ```
 
-String conversion is mostly obvious. A `false` becomes `"false"`, `null` becomes `"null"`, etc.
+Tekenreeks conversie is meestal duidelijk. Een `false` wordt `"false"`, `null` wordt `"null"`, ezv.
 
-## Numeric Conversion
+## Numerieke Conversie
 
-Numeric conversion happens in mathematical functions and expressions automatically.
+Numerieke conversie gebeurt automatisch in wiskundige functie en uitdrukkingen.
 
-For example, when division `/` is applied to non-numbers:
+Wanneer bijvoorbeeld verdeling `/` wordt toegepast op niet-getallen:
 
 ```js run
-alert( "6" / "2" ); // 3, strings are converted to numbers
+alert( "6" / "2" ); // 3, tekenreeksen worden geconverteerd naar getallen
 ```
 
-We can use the `Number(value)` function to explicitly convert a `value` to a number:
+We kunnen de `Number(value)` (nummer) functie gebruiken om een `value` uitdrukkelijk naar een getal converteren:
 
 ```js run
 let str = "123";
 alert(typeof str); // string
 
-let num = Number(str); // becomes a number 123
+let num = Number(str); // wordt een getal 123
 
 alert(typeof num); // number
 ```
 
-Explicit conversion is usually required when we read a value from a string-based source like a text form but expect a number to be entered.
+Expliciete conversie is gewoonlijk vereist wanneer we een waarde uit een op tekenreeks gebaseerde bron zoals een tekstformulier lezen, maar wervachten dat er een getal wordt ingevoerd.
 
-If the string is not a valid number, the result of such a conversion is `NaN`. For instance:
+Als de tekenreeks geen geldig getal is, is het resultaat van een dergelijke conversie `NaN` (niet een getal). Bijvoorbeeld:
 
 ```js run
-let age = Number("an arbitrary string instead of a number");
+let age = Number("een willekeurig tekenreeks in plaats van een getal");
 
-alert(age); // NaN, conversion failed
+alert(age); // NaN, conversie mislukt
 ```
 
-Numeric conversion rules:
+Numerieke conversie regels:
 
-| Value |  Becomes... |
-|-------|-------------|
-|`undefined`|`NaN`|
-|`null`|`0`|
-|<code>true&nbsp;and&nbsp;false</code> | `1` and `0` |
-| `string` | Whitespaces from the start and end are removed. If the remaining string is empty, the result is `0`. Otherwise, the number is "read" from the string. An error gives `NaN`. |
+| Waarde | Wordt... |
+| ------ | -------- |
+| `undefined` | `NaN` |
+| `null` | `0` |
+| <code>true&nbsp;en&nbsp;false</code> | `1` and `0` |
+| `string` | Witruimte vanaf het begin en het einde worden verwijderd. Als de resterende tekenreeks leeg is, is het resultaat `0`. En anders is het getal "gelezen" uit de tekenreeks. Een fout geeft `NaN`. |
 
-Examples:
+Voorbeelden:
 
 ```js run
 alert( Number("   123   ") ); // 123
-alert( Number("123z") );      // NaN (error reading a number at "z")
+alert( Number("123z") );      // NaN (fout bij het lezen van een getal op "z")
 alert( Number(true) );        // 1
 alert( Number(false) );       // 0
 ```
 
-Please note that `null` and `undefined` behave differently here: `null` becomes zero while `undefined` becomes `NaN`.
+Houd er rekening mee dat `null` en `undefined` gedragen hier anders: `null` wordt nul terwijl `undefined` `NaN` wordt.
 
-Most mathematical operators also perform such conversion, we'll see that in the next chapter.
+Meeste wiskundige operators uitvoeren ook een dergelijke conversie, dat zullen we zien in het volgende hoofdstuk.
 
-## Boolean Conversion
+## Booleaanse Conversie
 
-Boolean conversion is the simplest one.
+Booleanse conversie is de gemakkelijkste.
 
-It happens in logical operations (later we'll meet condition tests and other similar things) but can also be performed explicitly with a call to `Boolean(value)`.
+Het gebeurt in logische bewerkingen (later zullen we conditietests en andere soortgelijke dingen ontmoeten), maar kan ook expliciet worden uitgevoerd met een oproep naar `Boolean(value)`.
 
-The conversion rule:
+De conversieregel:
 
-- Values that are intuitively "empty", like `0`, an empty string, `null`, `undefined`, and `NaN`, become `false`.
-- Other values become `true`.
+- Waarden die intuïtief "leeg" zijn, zoals `0`, een lege tekenreeks, `null`, `undefined` en `NaN` worden `false`.
+- Andere waarden worden `true`.
 
-For instance:
+Voorbeelden:
 
 ```js run
 alert( Boolean(1) ); // true
 alert( Boolean(0) ); // false
 
-alert( Boolean("hello") ); // true
+alert( Boolean("hallo") ); // true
 alert( Boolean("") ); // false
 ```
 
-````warn header="Please note: the string with zero `\"0\"` is `true`"
-Some languages (namely PHP) treat `"0"` as `false`. But in JavaScript, a non-empty string is always `true`.
+````warn header="Let op: de tekenreeks met nul `\"0\"` is `true`"
+Sommige talen (namelijk PHP) behandelen `"0"` als `false`. Maar in JavaScript is een niet-lege tekenreeks altijd `true`.
 
 ```js run
 alert( Boolean("0") ); // true
-alert( Boolean(" ") ); // spaces, also true (any non-empty string is true)
+alert( Boolean(" ") ); // spaties, ook true (elke niet-lege tekenreeks is true)
 ```
 ````
 
-## Summary
+## Overzicht
 
-The three most widely used type conversions are to string, to number, and to boolean.
+De drie meest gebruikte type conversies zijn naar tekenreeks, naar getaal en naar boolean.
 
-**`String Conversion`** -- Occurs when we output something. Can be performed with `String(value)`. The conversion to string is usually obvious for primitive values.
+**`Tekenreeks Conversie`** -- Gebeurt als we iets uitvoeren. Kan worden uitgevoerd met `String(value)` (tekenreeks). De conversie naar tekenreeks ligt meestal voor de hand voor primitieve waarden.
 
-**`Numeric Conversion`** -- Occurs in math operations. Can be performed with `Number(value)`.
+**`Numerieke Conversie`** -- Gebeurt in wiskundige bewerkingen. Kan worden uitgevored met `Number(value)` (getal).
 
-The conversion follows the rules:
-
-| Value |  Becomes... |
-|-------|-------------|
-|`undefined`|`NaN`|
-|`null`|`0`|
-|<code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
-| `string` | The string is read "as is", whitespaces from both sides are ignored. An empty string becomes `0`. An error gives `NaN`. |
-
-**`Boolean Conversion`** -- Occurs in logical operations. Can be performed with `Boolean(value)`.
-
-Follows the rules:
-
-| Value |  Becomes... |
-|-------|-------------|
-|`0`, `null`, `undefined`, `NaN`, `""` |`false`|
-|any other value| `true` |
+De conversie volgt de regels:
 
 
-Most of these rules are easy to understand and memorize. The notable exceptions where people usually make mistakes are:
+| Waarde | Wordt... |
+| ------ | -------- |
+| `undefined` | `NaN` |
+| `null` | `0` |
+| <code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
+| `string` | De tekenreeks wordt gelezen zoals het is, witruimten aan beide zijden worden genegeerd. Een lege tekenreeks wordt `0`. Een fout geeft `NaN`. |
 
-- `undefined` is `NaN` as a number, not `0`.
-- `"0"` and space-only strings like `"   "` are true as a boolean.
+**`Booleaanse Conversie`** -- Gebeurt in logische bewerkingen. Kan worden uitgevoerd met `Boolean(value)`.
 
-Objects aren't covered here. We'll return to them later in the chapter <info:object-toprimitive> that is devoted exclusively to objects after we learn more basic things about JavaScript.
+Volgt de regels:
+
+| Waarde | Wordt... |
+| ------ | -------- |
+| `0`, `null`, `undefined`, `NaN`, `""` | `false` |
+| elke andere waarde | `true` |
+
+
+De meeste van deze regels zijn gemakkelijk te begrijpen en te onthouden. De opmerkelijke uitzonderingen waar mensen gewoonlijk fouten maken zijn:
+
+- `undefined` is `NaN` als een getal, niet `0`.
+- `"0"` en tekenreeksen met alleen spaties zoals `"   "` zijn waar als een boolean.
+
+Objecten wordt hier niet behandeld. We komen er later op terug in het hoofdstuk <info:object-toprimitive> dat uitsluitend aan objecten gewijd is, nadat we meer basisdingen over JavaScript hebben geleerd.
