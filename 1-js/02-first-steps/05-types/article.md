@@ -46,6 +46,7 @@ Naast reguliere getallen zijn er zogenaamde "speciale numerieke waarden" die ook
     alert("geen nummer" / 2 ); // NaN, een dergelijke verdeling is foutief.
     ```
 
+<<<<<<< HEAD
     NaN' is kleverig. Elke verdere operatie op `NaN` geeft `NaN` terug:
 
     ```js lopen
@@ -53,6 +54,17 @@ Naast reguliere getallen zijn er zogenaamde "speciale numerieke waarden" die ook
     ```
 
     Dus, als er ergens een `NaN` is in een wiskundige uitdrukking, dan verspreidt het zich naar het hele resultaat.
+=======
+    `NaN` is sticky. Any further mathematical operation on `NaN` returns `NaN`:
+
+    ```js run
+    alert( NaN + 1 ); // NaN
+    alert( 3 * NaN ); // NaN
+    alert( "not a number" / 2 - 1 ); // NaN
+    ```
+
+    So, if there's a `NaN` somewhere in a mathematical expression, it propagates to the whole result (there's only one exception to that: `NaN ** 0` is `1`).
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 ```smart header="Wiskundige bewerkingen zijn veilig"
 Rekenen is "veilig" in JavaScript. We kunnen alles doen: delen door nul, niet-numerieke reeksen behandelen als getallen, enz.
@@ -64,11 +76,28 @@ Speciale numerieke waarden behoren formeel tot het type "nummer". Natuurlijk zij
 
 We zien meer over het werken met getallen in het hoofdstuk <info:nummer>.
 
-## BigInt
+## BigInt [#bigint-type]
 
+<<<<<<< HEAD
 In JavaScript kan het type "getal" geen gehele waarden vertegenwoordigen die groter zijn dan <code>(2<sup>53</sup>-1)</code> (dat is `9007199254740991`), of minder dan <code>-(2<sup>53</sup>-1)</code> voor negatieven. Het is een technische beperking die wordt veroorzaakt door hun interne representatie.
 
 Voor de meeste doeleinden is dat voldoende, maar soms hebben we echt grote getallen nodig, bijvoorbeeld voor cryptografie of microseconde-precisie tijdstempels.
+=======
+In JavaScript, the "number" type cannot safely represent integer values larger than <code>(2<sup>53</sup>-1)</code> (that's `9007199254740991`), or less than <code>-(2<sup>53</sup>-1)</code> for negatives.
+
+To be really precise, the "number" type can store larger integers (up to <code>1.7976931348623157 * 10<sup>308</sup></code>), but outside of the safe integer range <code>±(2<sup>53</sup>-1)</code> there'll be a precision error, because not all digits fit into the fixed 64-bit storage. So an "approximate" value may be stored.
+
+For example, these two numbers (right above the safe range) are the same:
+
+```js
+console.log(9007199254740991 + 1); // 9007199254740992
+console.log(9007199254740991 + 2); // 9007199254740992
+```
+
+So to say, all odd integers greater than <code>(2<sup>53</sup>-1)</code> can't be stored at all in the "number" type.
+
+For most purposes <code>±(2<sup>53</sup>-1)</code> range is quite enough, but sometimes we need the entire range of really big integers, e.g. for cryptography or microsecond-precision timestamps.
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 Het `BigInt` type is recentelijk toegevoegd aan de taal om gehele getallen van willekeurige lengte weer te geven.
 
@@ -81,6 +110,7 @@ const bigInt = 1234567890123456789012345678901234567890n;
 
 Omdat `BigInt` nummers zelden nodig zijn, behandelen we ze hier niet, maar wijden ze een apart hoofdstuk <info:bigint>. Lees het als je zulke grote getallen nodig hebt.
 
+<<<<<<< HEAD
 
 ```smart header="Compatibiliteitsproblemen"
 Op dit moment wordt `BigInt` ondersteund in Firefox/Chrome/Edge/Safari, maar niet in IE.
@@ -88,6 +118,8 @@ Op dit moment wordt `BigInt` ondersteund in Firefox/Chrome/Edge/Safari, maar nie
 
 U kunt [*MDN* BigInt compatibiliteitstabel](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility) controleren om te weten welke versies van een browser worden ondersteund.
 
+=======
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 ## String
 
 Een string in JavaScript moet worden omgeven door aanhalingstekens.
@@ -211,6 +243,7 @@ Het `symbool` wordt gebruikt om unieke identifiers voor objecten te maken. We mo
 
 ## Het type operator [#type-type van]
 
+<<<<<<< HEAD
 De `type` operator geeft het type van het argument terug. Het is nuttig wanneer we waarden van verschillende typen anders willen verwerken of gewoon een snelle controle willen doen.
 
 Het ondersteunt twee vormen van syntaxis:
@@ -221,6 +254,11 @@ Het ondersteunt twee vormen van syntaxis:
 Met andere woorden, het werkt met haakjes of zonder. Het resultaat is hetzelfde.
 
 De aanroep naar `typeof x` geeft een tekenreeks met de naam van het type:
+=======
+The `typeof` operator returns the type of the operand. It's useful when we want to process values of different types differently or just want to do a quick check.
+
+A call to `typeof x` returns a string with the type name:
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 ```js
 typeof undefined; // "ongedefinieerd"
@@ -250,14 +288,33 @@ typeof alert // "functie" (3)
 
 De laatste drie regels hebben wellicht extra uitleg nodig:
 
+<<<<<<< HEAD
 1. `Math` is een ingebouwd object dat wiskundige bewerkingen uitvoert. We leren het in het hoofdstuk <info:nummer>. Hier dient het alleen als voorbeeld van een object.
 2. Het resultaat van `type nul` is `object`. Dat is een officieel erkende fout in `typeof` gedrag, afkomstig uit de begintijd van JavaScript en bewaard voor compatibiliteit. Zeker, `null` is geen object. Het is een speciale waarde met een eigen type.
 3. Het resultaat van `typeof alert` is `functie`, omdat `alert` een functie is. We zullen functies bestuderen in de volgende hoofdstukken waar we ook zullen zien dat er geen speciaal "functie"-type is in JavaScript. Functies behoren tot het objecttype. Maar `typeof` behandelt ze anders, waardoor `functie` terugkomt. Dat komt ook uit de begintijd van JavaScript. Technisch gezien is dergelijk gedrag niet correct, maar kan het in de praktijk wel handig zijn.
 
 ## Samenvatting
+=======
+1. `Math` is a built-in object that provides mathematical operations. We will learn it in the chapter <info:number>. Here, it serves just as an example of an object.
+2. The result of `typeof null` is `"object"`. That's an officially recognized error in `typeof`, coming from very early days of JavaScript and kept for compatibility. Definitely, `null` is not an object. It is a special value with a separate type of its own. The behavior of `typeof` is wrong here.
+3. The result of `typeof alert` is `"function"`, because `alert` is a function. We'll study functions in the next chapters where we'll also see that there's no special "function" type in JavaScript. Functions belong to the object type. But `typeof` treats them differently, returning `"function"`. That also comes from the early days of JavaScript. Technically, such behavior isn't correct, but can be convenient in practice.
+
+```smart header="The `typeof(x)` syntax"
+You may also come across another syntax: `typeof(x)`. It's the same as `typeof x`.
+
+To put it clear: `typeof` is an operator, not a function. The parentheses here aren't a part of `typeof`. It's the kind of parentheses used for mathematical grouping.
+
+Usually, such parentheses contain a mathematical expression, such as `(2 + 2)`, but here they contain only one argument `(x)`. Syntactically, they allow to avoid a space between the `typeof` operator and its argument, and some people like it.
+
+Some people prefer `typeof(x)`, although the `typeof x` syntax is much more common.
+```
+
+## Summary
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 Er zijn 8 basisgegevenstypes in JavaScript.
 
+<<<<<<< HEAD
 - `number` voor getallen van welke aard dan ook: geheel getal of drijvend punt, gehele getallen worden beperkt door <code>±(2<sup>53</sup>-1)</code>.
 - De `bigint` is voor gehele getallen van willekeurige lengte.
 - `string` voor strings. Een string kan nul of meer karakters hebben, er is geen apart type enkelvoudige karakters.
@@ -266,11 +323,29 @@ Er zijn 8 basisgegevenstypes in JavaScript.
 - `undefined` voor niet-toegewezen waarden -- een op zichzelf staand type dat een enkele waarde `ongedefinieerd` heeft.
 - `object` voor complexere gegevensstructuren.
 - `symbol` voor unieke identifiers.
+=======
+- Seven primitive data types:
+    - `number` for numbers of any kind: integer or floating-point, integers are limited by <code>±(2<sup>53</sup>-1)</code>.
+    - `bigint` for integer numbers of arbitrary length.
+    - `string` for strings. A string may have zero or more characters, there's no separate single-character type.
+    - `boolean` for `true`/`false`.
+    - `null` for unknown values -- a standalone type that has a single value `null`.
+    - `undefined` for unassigned values -- a standalone type that has a single value `undefined`.
+    - `symbol` for unique identifiers.
+- And one non-primitive data type:
+    - `object` for more complex data structures.
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 De `type van` operator geeft ons de mogelijkheid om te zien welk type in een variabele is opgeslagen.
 
+<<<<<<< HEAD
 - Twee vormen: `type van x` of `type van (x)`.
 - Geeft als resultaat een string met de naam van het type, zoals `"string"`.
 - Voor `null` geeft `"object"-- dit is een fout in de taal, het is eigenlijk geen object.
+=======
+- Usually used as `typeof x`, but `typeof(x)` is also possible.
+- Returns a string with the name of the type, like `"string"`.
+- For `null` returns `"object"` -- this is an error in the language, it's not actually an object.
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 In de volgende hoofdstukken zullen we ons concentreren op primitieve waarden en als we er eenmaal mee bekend zijn, gaan we over op objecten.
