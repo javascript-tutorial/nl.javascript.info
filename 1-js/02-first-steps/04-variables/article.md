@@ -24,7 +24,11 @@ Nu kunnen we er wat gegevens in zetten door gebruik te maken van de opdrachtbehe
 let bericht;
 
 *!*
+<<<<<<< HEAD
 bericht = 'Hallo'; // sla de string op
+=======
+message = 'Hello'; // store the string 'Hello' in the variable named message
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 */!*
 ```
 
@@ -63,11 +67,20 @@ let leeftijd = 25 jaar;
 let bericht = 'Hallo';
 ```
 
+<<<<<<< HEAD
 Sommige mensen definiëren ook meerdere variabelen in deze multiline-stijl:
 ```js geen-beschermdheid
 let gebruiker = 'John',
   leeftijd = 25 jaar,
   bericht = 'Hallo';
+=======
+Some people also define multiple variables in this multiline style:
+
+```js no-beautify
+let user = 'John',
+  age = 25,
+  message = 'Hello';
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ```
 
 ...of zelfs in de "komma-eerste" stijl:
@@ -87,22 +100,37 @@ In oudere scripts kunt u ook een ander sleutelwoord vinden: `var` in plaats van 
 *! *Var*/! * bericht = 'Hallo';
 ```
 
+<<<<<<< HEAD
 Het `var` trefwoord is *allemaal* hetzelfde als `let`. Het verklaart ook een variabele, maar op een iets andere, "ouderwetse" manier.
 
 Er zijn subtiele verschillen tussen `let` en `var`, maar die zijn voor ons nog niet van belang. We zullen ze in detail behandelen in het hoofdstuk <info:var>.
+=======
+The `var` keyword is *almost* the same as `let`. It also declares a variable but in a slightly different, "old-school" way.
+
+There are subtle differences between `let` and `var`, but they do not matter to us yet. We'll cover them in detail in the chapter <info:var>.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ````
 
 ## Een levensechte analogie
 
 We kunnen het concept van een "variabele" gemakkelijk begrijpen als we het ons voorstellen als een "doos" voor gegevens, met een unieke sticker erop.
 
+<<<<<<< HEAD
 De variabele `boodschap` kan bijvoorbeeld worden voorgesteld als een doos met het label `boodschap` met de waarde `Hallo!' erin:
+=======
+For instance, the variable `message` can be imagined as a box labelled `"message"` with the value `"Hello!"` in it:
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 ![](variabele.svg)
 
 We kunnen elke waarde in de doos stoppen.
 
+<<<<<<< HEAD
 We kunnen het ook zo vaak veranderen als we willen:
+=======
+We can also change it as many times as we want:
+
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ```js run
 let bericht;
 
@@ -148,12 +176,21 @@ let bericht = "Dat"; // SyntaxError: 'bericht' is al gedeclareerd
 Dus, we moeten een keer een variabele aangeven en er dan naar verwijzen zonder `let`.
 ````
 
+<<<<<<< HEAD
 ```smart header="Functionele talen"
 Het is interessant om op te merken dat er [functionele](https://nl.wikipedia.org/wiki/Functioneel_programmeren) programmeertalen bestaan, zoals [Scala](http://www.scala-lang.org/) of [Erlang](http://www.erlang.org/) die het veranderen van variabele waarden verbieden.
+=======
+```smart header="Functional languages"
+It's interesting to note that there exist so-called [pure functional](https://en.wikipedia.org/wiki/Purely_functional_programming) programming languages, such as [Haskell](https://en.wikipedia.org/wiki/Haskell), that forbid changing variable values.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 In dergelijke talen, als de waarde eenmaal is opgeslagen "in de box", is het er voor altijd. Als we iets anders moeten opslaan, dwingt de taal ons om een nieuwe box te maken (een nieuwe variabele te declareren). We kunnen de oude niet hergebruiken.
 
+<<<<<<< HEAD
 Hoewel het op het eerste gezicht misschien een beetje vreemd lijkt, zijn deze talen wel degelijk in staat tot een serieuze ontwikkeling. Meer nog, er zijn gebieden zoals parallelle berekeningen waar deze beperking bepaalde voordelen biedt. Het bestuderen van zo'n taal (zelfs als je niet van plan bent om hem binnenkort te gebruiken) is aan te raden om de geest te verbreden.
+=======
+Though it may seem a little odd at first sight, these languages are quite capable of serious development. More than that, there are areas like parallel computations where this limitation confers certain benefits.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ```
 
 ## Variabele naamgeving [#variabele naamgeving]
@@ -192,18 +229,30 @@ let mijn-naam; // koppeltekens '-' zijn niet toegestaan in de naam
 ```
 
 ```smart header="Case matters"
+<<<<<<< HEAD
 De variabelen `apple` en `AppLE` zijn twee verschillende variabelen.
 ```
 
 ````smart header="Niet-Latijnse letters zijn toegestaan, maar niet aanbevolen".
 Het is mogelijk om elke taal te gebruiken, inclusief cyrillische letters of zelfs hiërogliefen, zoals deze:
+=======
+Variables named `apple` and `APPLE` are two different variables.
+```
+
+````smart header="Non-Latin letters are allowed, but not recommended"
+It is possible to use any language, including Cyrillic letters, Chinese logograms and so on, like this:
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 ```js
 let имя = '...';
 let 我 = "...";
 ```
 
+<<<<<<< HEAD
 Technisch gezien is er hier geen sprake van een fout. Dergelijke namen zijn toegestaan, maar er is een internationale conventie om Engels te gebruiken in variabele namen. Zelfs als we een klein script schrijven, kan het een lange levensduur hebben. Mensen uit andere landen moeten het misschien een tijdje lezen.
+=======
+Technically, there is no error here. Such names are allowed, but there is an international convention to use English in variable names. Even if we're writing a small script, it may have a long life ahead. People from other countries may need to read it sometime.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ````
 
 ````warn header="Gereserveerde namen".
@@ -258,12 +307,20 @@ const myBirthday = '18.04.1982';
 myBirthday = '01.01.2001'; // fout, kan de constante niet opnieuw toewijzen!
 ```
 
+<<<<<<< HEAD
 Wanneer een programmeur er zeker van is dat een variabele nooit zal veranderen, kan hij deze met `const` aangeven om dat feit te garanderen en duidelijk aan iedereen te communiceren.
 
+=======
+When a programmer is sure that a variable will never change, they can declare it with `const` to guarantee and communicate that fact to everyone.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 #### Hoofdletterconstanten
 
+<<<<<<< HEAD
 Er is een wijdverbreide praktijk om constanten te gebruiken als aliassen voor moeilijk te onthouden waarden die voorafgaand aan de uitvoering bekend zijn.
+=======
+There is a widespread practice to use constants as aliases for difficult-to-remember values that are known before execution.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Dergelijke constanten worden met hoofdletters en onderstrepingen benoemd.
 
@@ -288,16 +345,29 @@ Voordelen:
 
 Wanneer moeten we hoofdletters gebruiken voor een constante en wanneer moeten we deze normaal noemen? Laten we dat duidelijk maken.
 
+<<<<<<< HEAD
 Een "constante" zijn betekent gewoon dat de waarde van een variabele nooit verandert. Maar er zijn constanten die voor de uitvoering bekend zijn (zoals een hexadecimale waarde voor rood) en er zijn constanten die *berekend* zijn in run-time, tijdens de uitvoering, maar niet veranderen na hun initiële opdracht.
 
 Bijvoorbeeld:
+=======
+Being a "constant" just means that a variable's value never changes. But some constants are known before execution (like a hexadecimal value for red) and some constants are *calculated* in run-time, during the execution, but do not change after their initial assignment.
+
+For instance:
+
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ```js
 const paginaLaadTijd = /* tijd die een webpagina nodig heeft om te laden */;
 ```
 
+<<<<<<< HEAD
 De waarde van `pageLoadTime` is niet bekend voordat de pagina wordt geladen, dus wordt deze normaal gesproken genoemd. Maar het is nog steeds een constante omdat het niet verandert na de opdracht.
 
 Met andere woorden, hoofdnaamconstanten worden alleen gebruikt als aliassen voor "hard-coded" waarden.  
+=======
+The value of `pageLoadTime` is not known before the page load, so it's named normally. But it's still a constant because it doesn't change after the assignment.
+
+In other words, capital-named constants are only used as aliases for "hard-coded" values.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 ## Noem de dingen goed
 
@@ -305,18 +375,31 @@ Over variabelen gesproken, er is nog iets heel belangrijks.
 
 Een naam van een variabele moet een schone, voor de hand liggende betekenis hebben, die de gegevens beschrijft die hij opslaat.
 
+<<<<<<< HEAD
 Het benoemen van variabelen is een van de belangrijkste en meest complexe vaardigheden in het programmeren. Een snelle blik op de namen van variabelen kan onthullen welke code door een beginner versus een ervaren ontwikkelaar is geschreven.
 
 In een echt project wordt de meeste tijd besteed aan het aanpassen en uitbreiden van een bestaande codebasis in plaats van aan het schrijven van iets dat volledig losstaat van de rest. Als we na een tijdje teruggaan naar wat code, is het veel gemakkelijker om informatie te vinden die goed gelabeld is. Of, met andere woorden, wanneer de variabelen goede namen hebben.
+=======
+Variable naming is one of the most important and complex skills in programming. A glance at variable names can reveal which code was written by a beginner versus an experienced developer.
+
+In a real project, most of the time is spent modifying and extending an existing code base rather than writing something completely separate from scratch. When we return to some code after doing something else for a while, it's much easier to find information that is well-labelled. Or, in other words, when the variables have good names.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Besteed alstublieft tijd aan het bedenken van de juiste naam voor een variabele, voordat u deze afkondigt. Als u dat doet, betaalt u het geld terug.
 
 Een aantal goede-tot-volgorde regels zijn dat wel:
 
+<<<<<<< HEAD
 - Gebruik menselijk leesbare namen zoals `gebruikersNaam` of `winkelKar`.
 - Blijf uit de buurt van afkortingen of korte namen zoals `a`, `b`, `c`, tenzij je echt weet wat je doet.
 - Maak namen maximaal beschrijvend en beknopt. Voorbeelden van slechte namen zijn `data` en `waarde`. Zulke namen zeggen niets. Het is alleen toegestaan om ze te gebruiken als de context van de code het uitzonderlijk duidelijk maakt naar welke gegevens of waarde de variabele verwijst.
 - Maak afspraken over termen binnen je team en in je eigen hoofd. Als een bezoeker van een site een "gebruiker" wordt genoemd, dan moeten we gerelateerde variabelen `huidigeGebruiker` of `nieuweGebruiker` noemen in plaats van `huidigeBezoeker` of `nieuweManInDeStad`.
+=======
+- Use human-readable names like `userName` or `shoppingCart`.
+- Stay away from abbreviations or short names like `a`, `b`, and `c`, unless you know what you're doing.
+- Make names maximally descriptive and concise. Examples of bad names are `data` and `value`. Such names say nothing. It's only okay to use them if the context of the code makes it exceptionally obvious which data or value the variable is referencing.
+- Agree on terms within your team and in your mind. If a site visitor is called a "user" then we should name related variables `currentUser` or `newUser` instead of `currentVisitor` or `newManInTown`.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Klinkt dat eenvoudig? Inderdaad, maar het creëren van beschrijvende en beknopte namen voor variabelen in de praktijk is dat niet. Ga ervoor.
 
